@@ -1,0 +1,110 @@
+FULL Doc: 
+https://www.markdownguide.org/
+
+https://www.markdownguide.org/hacks
+
+- Tables
+
+*** Table
+
+| Command                                            | Description                               | 
+| -------------------------------------------------- | ----------------------------------------- |
+| dd if=/dev/zero of=disk.img bs=512 count=2000      | create a virtual disk of 1MB              |
+| xxd -s 1024 -l 512 disk.img                        | read 512 bytes starting at 1024 byte      |
+
+*** Line Break(new line)
+  Add 2 spaces at the line end. Exp:
+  a__
+  b__
+  c
+  where _ is white space.
+  
+*** Links 
+  [I'm an inline-style link](https://www.google.com)
+  
+*** List
+1. certificat négatif:
+...* En ligne : www.directinfo.ma
+...* Centre Régional d’Investissement / Guichet OMPIC
+...* Frais: 230 dh
+2. item 2..
+...You can have properly indented paragraphs within list items
+
+*** List with Code (ADD 2 spaces at the end of the line)
+- JVM Setting for a Server Group: **domain.xml**    
+  All servers of this group inherit these settings.     
+	```xml
+	<server-group name="myapp-server-goup" profile="full">
+        <jvm name="default">
+            <heap size="128m" max-size="512m"/>
+        </jvm>
+	```
+
+*** Headings
+
+## Heading level 2
+
+Or:
+
+**Heading level 2**
+-------------------------------
+
+# Heading level 1
+
+Or :
+
+**Heading level 1**
+=================================
+
+*** Code
+```xml
+<Resource name="jdbc/myDS" auth="Container"
+       type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+       factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"/>
+```
+
+```sh
+    export PATH=/bin:/sbin
+```
+
+Code:
+> ./add-user.sh
+
+
+*** Images
+  ![alt txt](images/Weblogic-Dashboard.png)
+  
+
+**Table of content:**
+- [Modules & Directives](#modules--directives)
+	- [Options](#options)
+- [htaccess Files](#htaccess-files)
+- [Virtual Hosts](#virtual-hosts) 
+- [Load Balancing](#load-balancing)     
+     
+     
+** Emoji
+
+https://gist.github.com/rxaviers/7360908
+
+	:memo: 
+	⚠️ :warning:
+	❗
+
+	❌ :x:
+	❗ :heavy_exclamation_mark:
+	‼️ :bangbang:
+	✔️ :heavy_check_mark:
+	✅ :white_check_mark:
+	🆗 :ok:
+	📧 :email:
+	💡 :bulb:
+	🔑 :key:
+	 	🔧 :wrench:
+		🆔 :id:
+     
+      
+  
+  
+  
+
