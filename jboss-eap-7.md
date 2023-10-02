@@ -26,7 +26,8 @@ These notes are based on Jboss EAP 7.4 and Wildfly 23 and 29
 	- [Cluster](#cluster)
 10. [Miscs](#10-miscs)
 11. [Common Errors](#11-common-errors)
-	
+
+{:toc}
 
 **1. QuickStart**
 -------------------------------------------------
