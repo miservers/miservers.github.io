@@ -1,8 +1,0 @@
----
-- hosts: appservers
-  roles:
-    - common
-    - apache
-    - tomcat
-
-...
