@@ -230,7 +230,7 @@ Whereis a service is defined
 	$ xmodmap -e 'keycode <value>='
 	 
 	E.g
-	$xmodmap -e 'keycode 76='
+	$ xmodmap -e 'keycode 76='
 
 
 

@@ -41,3 +41,7 @@ Technical environment:
 - High Availability
 	- Cluster
 	- Failover
+
+**Nice CVs**
+--------------------------------
+- https://chaidarun.com/projects : in jekyll
