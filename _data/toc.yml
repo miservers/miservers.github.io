@@ -1,5 +1,13 @@
+- title: App Servers
+  slug: /docs/app-servers
+   teaser: All the basics to set up and use passbolt
+  items:
+    - title: Tomcat
+      url: /tomcat
+      icon: fa-compass
+      teaser: ssssss
 - title: Production
-  slug: production
+  slug: /docs/production
   teaser: All the basics to set up and use passbolt
   items:
     - title: Load-balancing
