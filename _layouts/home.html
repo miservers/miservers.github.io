@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+{% include head.html %}
+<body>
+<div id="container" class="help page help-home background">
+{% include header.html %}
+
+<div class="panel main">
+    <div class="panel left">
+        {% include sidebar.html selected=page.slug %}
+    </div>
+
+	<div class="panel middle">
+		<div class="grid grid-responsive-12">
+			{% include breadcrumbs.html slug=page.slug %}
+			
+			{{content}}
+		</div>
+	</div>
+	
+</div>
+{% include footer.html %}
+</div>
+{% include analytics.html %}
+</body>
+</html>

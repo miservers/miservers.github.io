@@ -1,61 +1,14 @@
-Production
----------------------
-- [Production](production)
-- [Load-balancing](load-balancing)
-- [Jmeter](jmeter)	
-- [Nagios](nagios)
-- [CFT](cft)
+---
+title: My Help homepage
+layout: home
+---
 
-App Servers
----------------------
-- [Tomcat](tomcat)
-- [Jboss EAP 7](jboss-eap-7)
-- [Jboss v4, v5, v6](jboss4.5.6)  
-- [Weblogic](weblogic)
-
-Web Servers
----------------------
-- [Apache](apache)
-- [Apache Dev](apache-dev)
-
-Middleware
----------------------
-- [ActiveMQ](activeMQ)	
-- [IBM MQ](IBM-MQ)
-
-JVM
----------------------
-- [JVM](jvm)
-- [JVM Implementation](jvm-implementation)
-
-Linux & Unix
----------------------
-- [Linux](linux)
-- [Unix](unix)
-- [Networking](linux-networking)
-- [Systemd](linux-systemd)	
-- [Apt, Yum](linux-apt-yum-pkg)
-- [DHCP](linux-dhcp)
-- [DNS](linux-dns)	
-- [FS, Disks](linux-FS-disk)
-- [Hardware](linux-hardware)
-- [Memory, CPU](linux-memory-cpu)	
-- [Ubuntu](ubuntu)
-
-Data Base
-----------------------
-- [Oracle](oracle)
-- [Mysql](mysql)
-- [Postgresql](postgresql)	
-
-Scripting
----------------------
-- [Shell](scripting-shell)
-
-
-Developpement
----------------------
-- [Java](java-dev)
-- [Java EE](java-ee-dev)
-
-
+{% include breadcrumbs.html slug=page.slug %}
+{% include cards/section-cards.html slug="production" %}
+{% include cards/section-cards.html slug="start" %}
+{% include cards/section-cards.html slug="basics" %}
+{% include cards/section-cards.html slug="hosting" %}
+{% include cards/section-cards.html slug="configure" %}
+{% include cards/section-cards.html slug="extend" %}
+{% include cards/section-cards.html slug="contribute" %}
+{% include cards/section-cards.html slug="legal" %}

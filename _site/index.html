@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Middleware Help | My Help homepage</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=firefox">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Middleware Notes.">
+    <meta property="og:image" content="http://localhost:4000/assets/img/background/og_preview.jpg" />
+    <meta property="og:title" content="My Help homepage" />
+    <meta property="og:description" content="Middleware Notes." />
+    <link rel="stylesheet" href="http://localhost:4000/assets/css/help.min.css">
+    <link rel="stylesheet" href="http://localhost:4000/assets/css/highlight.css">
+    <link rel="stylesheet" href="http://localhost:4000/assets/css/cookie-eu-banner.css">
+    <link rel="stylesheet" href="http://localhost:4000/assets/css/custom.css">
+    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="shortcut icon" type="image/x-icon" href="http://localhost:4000/assets/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Middleware Tips" href="http://localhost:4000/feed.xml">
+</head>
+
+<body>
+<div id="container" class="help page help-home background">
+    <header>
+        <div class="header first ">
+            <nav class="greedy">
+                <div class="top navigation primary">
+                    <ul class="links clearfix">
+                        <li class="home with-text"><a href="http://www.passbolt.com/"><span>home</span></a></li>
+                        <li class="left"><a href="https://community.passbolt.com/"><span>forum</span></a></li>
+                        <li class="left"><a href="https://www.passbolt.com/blog"><span>blog</span></a></li>
+                        <li class="left selected"><a href="https://help.passbolt.com/" class="highlighted"><span>help</span></a></li>
+                    </ul>
+                    <button class="hidden" count="0">more</button>
+                    <ul class="hidden-links hidden"></ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="header second">
+        <div class="col1">
+            <div class="logo no-img">
+                <h1><span>Passbolt</span></h1>
+            </div>
+        </div>
+        <div class="col2 search-wrapper">
+            <h2 class="visuallyhidden">Help Search</h2>
+            <div>
+                <form class="search ready" action="/search.html" method="get">
+                    <div class="input required">
+                        <label for="search-box">Search</label>
+                        <input id="search-box" name="query" maxlength="64" placeholder="Help search" class="fuzzy-search" type="search">
+                    </div>
+                    <button value="search">
+                        <i class="fa fa-fw fa-search"></i>
+                        <span class="text visuallyhidden">search</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col3">
+            <div class="edit-on-github">
+                <a href="https://github.com/miservers/miservers.github.io/edit/master/index.md" class="button">
+                    <i class="fa fa-github-alt fa-fw"></i> Edit on github</a>
+            </div>
+        </div>
+    </div>
+
+
+<div class="panel main">
+    <div class="panel left">
+        <div class="navigation-help" role="navigation">
+    <ul>
+        <li><h2>Notes</h2></li>
+        
+        <li >
+            
+            	<a href="http://localhost:4000/production">Production</a>
+            
+        </li>
+        
+        <li >
+            
+            	<a href="http://localhost:4000/discover">Introduction</a>
+            
+        </li>
+        
+        <li >
+            
+            	<a href="/hosting/install" >Installation</a>
+        	
+        </li>
+        
+        <li >
+            
+            	<a href="http://localhost:4000/hosting">Hosting</a>
+            
+        </li>
+        
+        <li >
+            
+            	<a href="http://localhost:4000/configure">Configure</a>
+            
+        </li>
+        
+        <li >
+            
+            	<a href="http://localhost:4000/extend">Extend</a>
+            
+        </li>
+        
+        <li >
+            
+            	<a href="http://localhost:4000/contribute">Contribute</a>
+            
+        </li>
+        
+        <li >
+            
+            	<a href="http://localhost:4000/legal">Small print</a>
+            
+        </li>
+        
+    </ul>
+</div>
+    </div>
+
+	<div class="panel middle">
+		<div class="grid grid-responsive-12">
+			<div class="row" id="introduction">
+    <div class="col12">
+        <div class="breadcrumbs">
+            <ul>
+                <li>
+                    <div class="main-cell">
+                        <a href="https://www.passbolt.com"><span>home</span></a>
+                    </div>
+                </li>
+                <li>
+                    <div class="main-cell">
+                        <a href="/"><span>help</span></a>
+                    </div>
+                </li>
+                
+                
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+			
+			<div class="row" id="introduction">
+    <div class="col12">
+        <div class="breadcrumbs">
+            <ul>
+                <li>
+                    <div class="main-cell">
+                        <a href="https://www.passbolt.com"><span>home</span></a>
+                    </div>
+                </li>
+                <li>
+                    <div class="main-cell">
+                        <a href="/"><span>help</span></a>
+                    </div>
+                </li>
+                
+                
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col12">
+        <h2>Production</h2>
+    </div>
+</div>
+<div class="row">
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/load-balancing">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-compass fa-fw"></i></span>
+		        <span class="tile-title">Load-balancing</span>
+		        <span class="tile-description">Frequently asked questions during first time use.</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/docs/jmeter">
+        
+	        
+	        	<div class="ribbon"><span>PRO</span></div>
+	        
+		        <span class="tile-teaser"><i class="fa fa-jmeter fa-fw"></i></span>
+		        <span class="tile-title">Jmeter</span>
+		        <span class="tile-description">How to install and remove the browser extensions.</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/nagios">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-lock fa-fw"></i></span>
+		        <span class="tile-title">Nagios</span>
+		        <span class="tile-description">Creating, editing, sharing and deleting passwords</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/cft">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-paper-plane fa-fw"></i></span>
+		        <span class="tile-title">CFT</span>
+		        <span class="tile-description">Sharing is caring (but only if you really have to).</span>
+            </a>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col12">
+        <h2>Hosting</h2>
+    </div>
+</div>
+<div class="row">
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/faq/hosting">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-server fa-fw"></i></span>
+		        <span class="tile-title">Hosting FAQ</span>
+		        <span class="tile-description">Frequently asked questions about hosting</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/hosting/install">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-cogs fa-fw"></i></span>
+		        <span class="tile-title">Installation</span>
+		        <span class="tile-description">How to install passbolt on your own server</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/hosting/update">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-refresh fa-fw"></i></span>
+		        <span class="tile-title">Update</span>
+		        <span class="tile-description">How to update a self-hosted passbolt instance</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/hosting/upgrade">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-refresh fa-fw"></i></span>
+		        <span class="tile-title">Upgrade</span>
+		        <span class="tile-description">How to upgrade passbolt.</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/hosting/backup">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-download fa-fw"></i></span>
+		        <span class="tile-title">Backup</span>
+		        <span class="tile-description">Guidelines to backup a passbolt instance</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="https://community.passbolt.com/c/installation-issues">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-life-saver fa-fw"></i></span>
+		        <span class="tile-title">Installation issues</span>
+		        <span class="tile-description">Do you need help installing passbolt?</span>
+            </a>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col12">
+        <h2>Configure</h2>
+    </div>
+</div>
+<div class="row">
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/https">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-bookmark fa-fw"></i></span>
+		        <span class="tile-title">Configure HTTPS</span>
+		        <span class="tile-description">How to setup HTTPS for secure communications</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/ldap/setup">
+        
+	        
+	        	<div class="ribbon"><span>PRO</span></div>
+	        
+		        <span class="tile-teaser"><i class="fa fa-address-book-o fa-fw"></i></span>
+		        <span class="tile-title">Configure LDAP</span>
+		        <span class="tile-description">How to configure the directory sync plugin</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/configure/account-recovery">
+        
+	        
+	        	<div class="ribbon"><span>PRO</span></div>
+	        
+		        <span class="tile-teaser"><i class="fa fa-key fa-fw"></i></span>
+		        <span class="tile-title">Configure Account Recovery</span>
+		        <span class="tile-description">How to configure Account Recovery</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/sso">
+        
+	        
+	        	<div class="ribbon"><span>PRO</span></div>
+	        
+		        <span class="tile-teaser"><i class="fa fa-address-book-o fa-fw"></i></span>
+		        <span class="tile-title">Configure SSO</span>
+		        <span class="tile-description">How to configure Single Sign-On</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/password-policies">
+        
+	        
+	        	<div class="ribbon"><span>PRO</span></div>
+	        
+		        <span class="tile-teaser"><i class="fa fa-key fa-fw"></i></span>
+		        <span class="tile-title">Configure Password Policies</span>
+		        <span class="tile-description">How to configure Password Policies</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/configure/rbac">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-cogs fa-fw"></i></span>
+		        <span class="tile-title">Configure RBAC</span>
+		        <span class="tile-description">How to configure Role-Based Access Control</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/ldap/ldap-with-ssl">
+        
+	        
+	        	<div class="ribbon"><span>PRO</span></div>
+	        
+		        <span class="tile-teaser"><i class="fa fa-address-book-o fa-fw"></i></span>
+		        <span class="tile-title">Configure LDAP with ssl</span>
+		        <span class="tile-description">How to configure the LDAP plugin with ssl (ldaps)</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/ldap/ldap-common-sync-error-messages">
+        
+	        
+	        	<div class="ribbon"><span>PRO</span></div>
+	        
+		        <span class="tile-teaser"><i class="fa fa-address-book-o fa-fw"></i></span>
+		        <span class="tile-title">Troubleshoot LDAP sync errors</span>
+		        <span class="tile-description">Common ldap synchronization errors and their meaning</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/configure/mfa/yubikey">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-key fa-fw"></i></span>
+		        <span class="tile-title">Configure Yubikey</span>
+		        <span class="tile-description">Use Yubikey OTP as multi factor authentication provider</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/mfa/duo">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-key fa-fw"></i></span>
+		        <span class="tile-title">Configure Duo</span>
+		        <span class="tile-description">Use Duo as multi factor authentication provider</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/mfa/totp">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-key fa-fw"></i></span>
+		        <span class="tile-title">Configure TOTP</span>
+		        <span class="tile-description">Use TOTP as multi factor authentication provider</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/configure/notification/email">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-envelope-o fa-fw"></i></span>
+		        <span class="tile-title">Configure Email Notifications</span>
+		        <span class="tile-description">How to manage email notification settings</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/email/setup">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-envelope-o fa-fw"></i></span>
+		        <span class="tile-title">Configure Email providers</span>
+		        <span class="tile-description">How to setup email providers</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/email/smtp-authentication">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-envelope-o fa-fw"></i></span>
+		        <span class="tile-title">Configure Email authentication</span>
+		        <span class="tile-description">How to configure your authentication method</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/faq/hosting/why-email-not-sent">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-envelope fa-fw"></i></span>
+		        <span class="tile-title">Troobleshoot Email config</span>
+		        <span class="tile-description">Common issues with emails</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/environment/reference">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-bookmark fa-fw"></i></span>
+		        <span class="tile-title">Environment variable reference</span>
+		        <span class="tile-description">Reference list of all environment variables</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/configure/database/credentials">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-database fa-fw"></i></span>
+		        <span class="tile-title">Update database credentials</span>
+		        <span class="tile-description">Update database credentials</span>
+            </a>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col12">
+        <h2>Extend</h2>
+    </div>
+</div>
+<div class="row">
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/api">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-code fa-fw"></i></span>
+		        <span class="tile-title">API Documentation</span>
+		        <span class="tile-description">Build on top of passbolt</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://api-reference.passbolt.com/">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-plug fa-fw"></i></span>
+		        <span class="tile-title">API Reference</span>
+		        <span class="tile-description">Browse API in Swagger UI</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/api/authentication">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-sign-in fa-fw"></i></span>
+		        <span class="tile-title">Authentication</span>
+		        <span class="tile-description">How does GPG Authentication work?</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://github.com/passbolt">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-github fa-fw"></i></span>
+		        <span class="tile-title">Github</span>
+		        <span class="tile-description">Want to see the code? This way!</span>
+            </a>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col12">
+        <h2>Contribute</h2>
+    </div>
+</div>
+<div class="row">
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/faq/contribute">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-group fa-fw"></i></span>
+		        <span class="tile-title">Contributor FAQ</span>
+		        <span class="tile-description">How to get started as a contributor</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://community.passbolt.com/c/backlog">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-plus-circle fa-fw"></i></span>
+		        <span class="tile-title">Feature requests</span>
+		        <span class="tile-description">Propose and vote for new ideas!</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/faq/contribute/bug-report">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-bug fa-fw"></i></span>
+		        <span class="tile-title">Bug report</span>
+		        <span class="tile-description">Who knows, maybe it is a feature?</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="http://localhost:4000/contribute/translation">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-language fa-fw"></i></span>
+		        <span class="tile-title">Translation</span>
+		        <span class="tile-description">Your language is missing or you discovered an error</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://careers.passbolt.com">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-money fa-fw"></i></span>
+		        <span class="tile-title">Get a job!</span>
+		        <span class="tile-description">Careers opportunity at passbolt.</span>
+            </a>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col12">
+        <h2>Small print</h2>
+    </div>
+</div>
+<div class="row">
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://www.passbolt.com/terms">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-balance-scale fa-fw"></i></span>
+		        <span class="tile-title">Terms of service</span>
+		        <span class="tile-description">Did you read the small print?</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://www.passbolt.com/privacy">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-street-view fa-fw"></i></span>
+		        <span class="tile-title">Privacy policy</span>
+		        <span class="tile-description">What we do with your data.</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="https://www.passbolt.com/legal/cla">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-pencil fa-fw"></i></span>
+		        <span class="tile-title">CLA Policy</span>
+		        <span class="tile-description">Contributor licence agreement</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://www.passbolt.com/code_of_conduct">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-handshake-o fa-fw"></i></span>
+		        <span class="tile-title">Code of conduct</span>
+		        <span class="tile-description">Because everyone should feel welcome</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 ">
+        
+        	<a class="tile" href="https://www.passbolt.com/credits">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-hand-peace-o fa-fw"></i></span>
+		        <span class="tile-title">Credits</span>
+		        <span class="tile-description">Passbolt would not be possible without...</span>
+            </a>
+    </div>
+    
+    
+    <div class="col4 last">
+        
+        	<a class="tile" href="http://localhost:4000/faq/legal">
+        
+	        
+		        <span class="tile-teaser"><i class="fa fa-question fa-fw"></i></span>
+		        <span class="tile-title">Legal FAQ</span>
+		        <span class="tile-description">Frequently asked questions about legal matters</span>
+            </a>
+    </div>
+    
+</div>
+
+
+		</div>
+	</div>
+	
+</div>
+    <footer>
+        <div class="footer">
+            <ul class="footer-links">
+                <li><a href="https://www.passbolt.com/licence">Terms</a></li>
+                <li><a href="https://www.passbolt.com/privacy">Privacy</a></li>
+                <li><a href="https://www.passbolt.com/credits">Credits</a></li>
+                <li><a href="https://careers.passbolt.com">Careers</a></li>
+            </ul>
+        </div>
+    </footer>
+    <div id="cookies-eu-banner" class="visually-hidden">
+        🍪 &nbsp; Do you accept cookies for statistical purposes?
+        <a href="https://www.passbolt.com/privacy" id="cookies-eu-more">(Read more)</a>
+        <a class="button primary" id="cookies-eu-accept">Accept</a>
+        <a id="cookies-eu-reject">No thanks!</a>
+    </div>
+
+
+</div>
+<script src="https://consent.cookiebot.com/uc.js" data-cbid="900808a8-f178-4994-b2ad-66bf3ccca5f7" data-blockingmode="auto" strategy="beforeInteractive"></script>
+<script src="http://localhost:4000/assets/js/matomo-tag-manager.js"></script>
+<script src="http://localhost:4000/assets/js/matomo-analytics.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.slim.min.js" integrity="sha384-/IFzzQmt1S744I+IQO4Mc1uphkxbXt1tEwjQ/qSw2p8pXWck09sLvqHmKDYYwReJ" crossorigin="anonymous"></script>
+<script src="http://localhost:4000/assets/js/analytics.js"></script>
+<script src="http://localhost:4000/assets/js/greedynav.js"></script>
+</body>
+</html>

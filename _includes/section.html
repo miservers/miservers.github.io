@@ -1,0 +1,18 @@
+{% for item in site.data.toc %}
+{% if item.slug == include.sidebar %}
+<div class="navigation-help" role="navigation">
+    <ul>
+        <li><h2>{{ item.title }}</h2></li>
+        {% for entry in item.items %}
+        {% if entry.slug == include.selected %}
+        <li class="selected">
+        {% else %}
+        <li>
+        {% endif %}
+            <a href="{{ entry.url | absolute_url }}">{{ entry.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endfor %}

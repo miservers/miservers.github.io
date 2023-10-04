@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+{% include head.html %}
+
+<body>
+    <div id="container" class="help page background">
+        {% include header.html %}
+        <div class="panel main" aria-label="Content">
+            <div class="panel left">
+                {% if page.categories[1] %}
+                {% include sub-section-page.html categories=page.categories slug=page.slug %}
+                {% else %}
+                {% include section.html sidebar=page.sidebar selected=page.slug %}
+                {% endif %}
+            </div>
+            <div class="panel middle" data-spy="scroll" data-target=".scrollspy">
+                <div class="grid grid-responsive-12">
+                    <article>
+                        {% include breadcrumbs.html %}
+                        {% include page-title.html %}
+                        {{ content }}
+                    </article>
+                </div>
+            </div>
+        </div>
+        {% include footer.html %}
+    </div>
+    {% include analytics.html %}
+</body>
+
+</html>
