@@ -1,6 +1,6 @@
 - title: App Servers
   slug: /docs/app-servers
-   teaser: All the basics to set up and use passbolt
+  teaser: All the basics to set up and use passbolt
   items:
     - title: Tomcat
       url: /tomcat
