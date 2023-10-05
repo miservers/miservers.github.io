@@ -9,7 +9,7 @@ layout: home
 First of all, download plugins-manager.jar and put it into lib/ext.  Install theses interesting plugins:
 
 - **Customer Thread Groups** : Stepping Thread Group and Concurrency Thread Group. 
-![alt txt](images/jmeter-plugin-Customer-Thread-Groups.png){:max-width="400px" width="100%" height="auto"}
+![alt txt](images/jmeter-plugin-Customer-Thread-Groups.png){:width="100%" height="auto"}
 
 - **3 Basic Graphs**
 - **5 Additional Graphs**
