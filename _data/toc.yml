@@ -7,7 +7,7 @@
       url: /docs/tomcat
       icon: fa-tomcat
       teaser: 
-    - title: Jboss EAP 7 / Wildfly
+    - title: Wildfly / JBoss EAP 7
       url: /docs/jboss-eap-7
       icon: fa-wildfly
       teaser: 

@@ -1,4 +1,9 @@
-These notes are based on Jboss EAP 7.4 and Wildfly 23 and 29
+---
+title: Wildfly / JBoss EAP 7
+layout: home
+---
+
+⚠️ **These notes are based on Jboss EAP 7.4 and Wildfly 29**
 
 **Table Of Contents**
 1. [QuickStart](#1-quickstart)
