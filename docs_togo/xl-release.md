@@ -10,8 +10,8 @@ XL Release is a DevOps tool for deployment orchestration.
 
 **Create the template**
 
-![alt txt](images/xl-release-template.PNG)
+![alt txt](../images/xl-release-template.PNG)
 
 **Create Release**
 
-![alt txt](images/xl-release-release.PNG)
+![alt txt](../images/xl-release-release.PNG)

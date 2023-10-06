@@ -23,7 +23,7 @@
 ------------------------
 Environment : IBM MQ 9.3, Centos 7.4
 
-![](./images/IBM-MQ-2.drawio.png)
+![](../images/IBM-MQ-2.drawio.png)
 
 ### History
 - 2014: IBM MQ 
@@ -354,7 +354,7 @@ http://webspherepundit.com/websphere-mq
 
 ### Single way communication between two QMs
 
-![ibm mq](./images/IBM-MQ-2mq.drawio.png)
+![ibm mq](../images/IBM-MQ-2mq.drawio.png)
 
 **QM1 to QM2** : Messages are sent by a JMS application to QM1 wich transmit them to a remote queue manager QM2. In this scenario, there is no communication in the direction from QM2 to QM1.
 

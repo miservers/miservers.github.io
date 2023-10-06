@@ -15,7 +15,7 @@ Use PaowerShell
 ## IIS
 #### Instal IIS	on Windows 10
 Config panel -> Programs -> Tur windows fetures on/off
-![alt txt](images/IIS-Installation.PNG)
+![alt txt](../images/IIS-Installation.PNG)
 
 Console IIS: http://localhost/iishelp/iis/misc/default.asp
 
@@ -23,7 +23,7 @@ Console IIS: http://localhost/iishelp/iis/misc/default.asp
 
 In the Start Search box, type **inetmgr**.
    
-![alt txt](images/IIS-manager.PNG)
+![alt txt](../images/IIS-manager.PNG)
    
 #### Add a web site
 

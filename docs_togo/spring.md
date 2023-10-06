@@ -1,3 +1,3 @@
 ### Spring MVC
-![](./images/java/spring-mvc.png)
+![](../images/java/spring-mvc.png)
 

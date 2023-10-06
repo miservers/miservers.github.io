@@ -518,7 +518,7 @@ ThreadPool(Not using Executor) :
           currentThreadCount
           connectionCount"
 
-![alt txt](images/Tomcat-Thread-Monitoring-By-JMC.png)
+![alt txt](../images/Tomcat-Thread-Monitoring-By-JMC.png)
 
 Mbean name can be "http-bio-8080" on tomcat 6 & 7. 
 
@@ -535,7 +535,7 @@ Recommandation : In Tomcat 7 you must use Executor.
                         host=[hostname],class=javax.sql.DataSource,name="[JNDI name]"
     Attributes: numActive, numIdle
 
-![alt txt](images/Tomcat-JDBC-Pool-Monitoring-JMC.png)
+![alt txt](../images/Tomcat-JDBC-Pool-Monitoring-JMC.png)
 
 #### Request Throughput
     JMX Bean: Catalina:type=GlobalRequestProcessor,name="[depends]"
@@ -555,7 +555,7 @@ Tomcat Configuring GUI.
   bin/Tomcat8w.exe //ES//‎service-name  (Attention pas despace dans Tomcat 8)
   
 ```
-![alt txt](images/Tomcat-Windows-Config.PNG)
+![alt txt](../images/Tomcat-Windows-Config.PNG)
 
 
 

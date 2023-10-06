@@ -2,10 +2,10 @@
 
 ## Maven
 How Maven works  
-![](images/java/how-maven-works.jpg)
+![](../images/java/how-maven-works.jpg)
 
 Maven Directory structure  
-![](images/java/Maven_directory-structure.png)
+![](../images/java/Maven_directory-structure.png)
 
 Plugins   
 plugings syntax:   
@@ -15,7 +15,7 @@ pluging examples:
    mvn compiler:compile
 
 Maven lifecycle  
-![](images/java/maven-lifecycle.png)
+![](../images/java/maven-lifecycle.png)
 
 
 
@@ -28,7 +28,7 @@ JPA providers :
  - **EclipseLink**: open source, derivated from oracle TopLink.   
  
 ### Spring MVC
-![](images/java/spring-mvc.png)
+![](../images/java/spring-mvc.png)
 
 How Spring bootstaps using *web.xml* ?  
  1. the Server (servlet container) instanciate **DispatcherServlet** defined in *web.xml*

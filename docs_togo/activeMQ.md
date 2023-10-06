@@ -25,7 +25,7 @@ Messages sent to a Topic will be delivered to actively(only) listening subscribe
 **Web Console**
 > http://192.168.56.103:8161/admin   user/pass:admin/admin
 
-![](images/activemq-console.png)
+![](../images/activemq-console.png)
 
 
 **Remote Access**   
@@ -73,7 +73,7 @@ Environment: Apache Artemis 2.30
 
 Producers
 
-![](images/artemis-producers.png)
+![](../images/artemis-producers.png)
 
 ### Examples of JMS Client:
 
