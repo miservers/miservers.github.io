@@ -16,7 +16,6 @@ nav_order: 2
 
 ---
 
-
 ⚠️ **These notes are based on Jboss EAP 7.4 and Wildfly 29**
 
 **QuickStart**
