@@ -1,13 +1,27 @@
 - title: App Servers
-  slug: /docs/app-servers
+  url: /docs/menu/app-servers
+  slug: app-servers
   teaser: All the basics to set up and use passbolt
   items:
     - title: Tomcat
-      url: /tomcat
-      icon: fa-compass
-      teaser: ssssss
+      url: /docs/tomcat
+      icon: fa-tomcat
+      teaser: 
+    - title: Jboss EAP 7 / Wildfly
+      url: /docs/jboss-eap-7
+      icon: fa-wildfly
+      teaser: 
+    - title: Weblogic
+      url: /docs/weblogic
+      icon: fa-wildfly
+      teaser: 
+    - title: Jboss v4, v5, v6
+      url: /docs/jboss4.5.6
+      icon: fa-jboss4
+      teaser: 
 - title: Production
-  slug: /docs/production
+  url: /docs/menu/production
+  slug: production
   teaser: All the basics to set up and use passbolt
   items:
     - title: Load-balancing

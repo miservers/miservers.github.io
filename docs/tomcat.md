@@ -1,3 +1,8 @@
+---
+title: Tomcat
+layout: home
+---
+
 **Table of content:**
 - [Set Up](#set-up)
 - [Tomcat 10 Administration](#tomcat-10-administration) 
