@@ -1,9 +1,20 @@
-**Table Of Contents**
-- [Linux Admin](#linux-admin)
-- [Perfoemances](#perfoemances)
-- [SSH](#ssh)
-- [VI](#vi)
-- [NFS](#nfs)
+---
+layout: default
+title: Linux
+parent: Linux
+nav_order: 1
+---
+
+# Linux
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 ## Linux Admin
 
@@ -236,10 +247,4 @@ Enable Root to connect via ssh
 
     sed -i 's/prohibit-password/yes/' /etc/ssh/sshd_config
 
-
-rm: cannot remove 'MQServer7': Operation not permitted
-
-    chmod ugo+w -R MQServer7
-    chattr -i -a  MQServer7
-    lsattr -a  MQServer7   
 

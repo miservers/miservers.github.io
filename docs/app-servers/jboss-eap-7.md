@@ -1,19 +1,9 @@
 ---
 layout: default
-title: Wildfly / JBoss EAP 7
+title: Wildfly - JBoss EAP 7
 parent: App Servers
+has_toc: true
 nav_order: 2
----
-
-# Wildfly / JBoss EAP 7
-{: .no_toc }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
 ---
 
 ⚠️ **These notes are based on Jboss EAP 7.4 and Wildfly 29**
@@ -78,7 +68,7 @@ CLIs:
 	 /server-group=myapp-server-group/jvm=default:write-attribute(name=heap-size, value=128m)
 
 
-**2. Domain Setup**
+**Domain Setup**
 ------------------------------------------------------ 
 A **Domain** consists of a domain controller, host controllers, server groups per host.
 
@@ -187,7 +177,7 @@ This is necessary if you want to create server instances on the Machine running 
 https://www.dbi-services.com/blog/jboss-eap-7-domain-configuration/
 
 
-**3. Application deployment** 
+**Application deployment** 
 --------------------------------
 **Managed Domain**
 
@@ -209,7 +199,7 @@ Deployment Status:
 
 
      
-**4. Configuration**
+**Configuration**
 ----------------------------------------
 ### 4.1 Doamin Configuration Files
 
@@ -320,7 +310,7 @@ Steps to declare a new resource adapter:
 
 5. Test
 
-**5. CLI**
+**CLI**
 ----------------------
 https://octopus.com/blog/using-the-wildfly-cli
 
@@ -406,7 +396,7 @@ The main diffence with the standalone, is that subsystems are not located in the
 ### 5.7 domain.xml and CLI
 ![](/docs/images/Jboss-EAP-7.4.domain-cli.drawio.png) 
 
-**6. Monitoring**
+**Monitoring**
 ------------------------------
 ### Metrics
 /extension=org.wildfly.extension.metrics:add
@@ -430,7 +420,7 @@ http://192.168.56.103:9990/metrics
  
 /profile=full/subsystem=health:add
 
-**7. Performance Tuning**
+**Performance Tuning**
 -------------------------------
 ### 7.1 JVM Settings 
 **Domain**  
@@ -487,7 +477,7 @@ Standalone:
 ### 7.3 VisualVM
 Todo
 
-**8. Security**
+**Security**
 ----------------------
 ### RBAC
 
@@ -520,7 +510,7 @@ Deprecated. No longer supported from Wildfly 25.
 ### Elytron
 
 
-**9. High Availability**
+**High Availability**
 -------------------------------------
 High availability can be guaranted by Load Balancing or Failover. 
 
@@ -661,7 +651,7 @@ Create Instances:
 
 ### Failover																																																						
 
-**10. Miscs**
+**Miscs**
 -------------------------------------
 ### Jboss EAP, Wildfly and JBoss AS Versions
 
@@ -676,7 +666,7 @@ Create Instances:
 | 5.x        | -       | 5.y           |
 | 4.x        | -       | 4.y           |
 
-**11. Common Errors**
+**Common Errors**
 --------------------------------
 ### Fatal Boot Error: Domain cannot start
 Start the the domain controller in ADMIN-ONLY mode and correct the error
@@ -684,6 +674,6 @@ Start the the domain controller in ADMIN-ONLY mode and correct the error
 	./domain.sh  --admin-only ...
 
 
-**12. References**
+**References**
 --------------------------------
 - https://www.jtips.info/WildFly

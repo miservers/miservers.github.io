@@ -1,8 +1,20 @@
-**Table of Contents**
-- [Apt](#apt)
-- [Dpkg](#dpkg)
-- [Yum](#yum)
+---
+layout: default
+title: APT - Yum - PKG
+parent: Linux
+nav_order: 2
+---
 
+# {{page.title}}
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 ### Apt
 
