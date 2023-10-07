@@ -9,7 +9,7 @@ layout: home
 First of all, download plugins-manager.jar and put it into lib/ext.  Install theses interesting plugins:
 
 - **Customer Thread Groups** : Stepping Thread Group and Concurrency Thread Group. 
-![alt txt](../images/jmeter-plugin-Customer-Thread-Groups.png){:width="100%" height="auto"}
+![alt txt](/docs/images/jmeter-plugin-Customer-Thread-Groups.png){:width="100%" height="auto"}
 
 - **3 Basic Graphs**
 - **5 Additional Graphs**
@@ -26,12 +26,12 @@ First of all, download plugins-manager.jar and put it into lib/ext.  Install the
 ### How to Record Senariis 
 
 Create and Configure a Thread Group:  
-![alt txt](../images/jmeter-thread-group.png)
+![alt txt](/docs/images/jmeter-thread-group.png)
 
 set the number of simultanuous users
 
 Create a recorder:  
-![alt txt](../images/jmeter-http-test-script-recorder.png)
+![alt txt](/docs/images/jmeter-http-test-script-recorder.png)
 
 Set Controler target to the created thread-group
 
@@ -45,10 +45,10 @@ Thread : virtual user
 
 #### Result tree 
 Test Plan>Add>Listener>View Results Tree
-![alt txt](../images/jmeter-result-tree.png)
+![alt txt](/docs/images/jmeter-result-tree.png)
 
 #### HTTP Request Defaults
-![alt txt](../images/jmeter-http-request-defaults.png)
+![alt txt](/docs/images/jmeter-http-request-defaults.png)
 
 #### User Defined Variables
 

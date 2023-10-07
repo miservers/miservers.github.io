@@ -22,7 +22,7 @@ nav_order: 2
 -------------------------------------------------
 #### Domain Architecture 
 
-![jboss](../images/Jboss-EAP-7.4.-Domain.drawio.png)
+![jboss](/docs/images/Jboss-EAP-7.4.-Domain.drawio.png)
 
 ### Standalone
 **Start/Stop**: Standalone Mode
@@ -404,7 +404,7 @@ The main diffence with the standalone, is that subsystems are not located in the
 		Others Operations: stop, restart, reload, read-operation-names
 
 ### 5.7 domain.xml and CLI
-![](../images/Jboss-EAP-7.4.domain-cli.drawio.png)
+![](/docs/images/Jboss-EAP-7.4.domain-cli.drawio.png) 
 
 **6. Monitoring**
 ------------------------------
@@ -530,7 +530,7 @@ Cluster is made available by jgroup, infinspan and modcluster subsystems. *ha* a
 ### Cluster
 Environment: Wildfly 29, Centos 7
 
-![](../images/Wildfly-29.-Cluster.drawio.png)
+![](/docs/images/Wildfly-29.-Cluster.drawio.png)
 
 ⚠️ NOT recommended to set up domain controller and host controller on the same machine/vm. 
 
@@ -646,11 +646,11 @@ Environment: Wildfly 29, Centos 7
 
 3. **Create a server group with HA capabilities**
 
-![](../images/wildfly-29-cluster2.png)
+![](/docs/images/wildfly-29-cluster2.png)
 
 Create Instances:
 
-![](../images/wildfly-29-cluster3.png)
+![](/docs/images/wildfly-29-cluster3.png)
 
 
 	```xml

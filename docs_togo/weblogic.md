@@ -94,7 +94,7 @@ activate()
 ```
 
 **Activate Debug using Console**  
-![alt txt](../images/weblogic-debug.png)
+![alt txt](/docs/images/weblogic-debug.png)
 
 #### Configuration des rôles et utilisateurs 
     Domain Structure > Security Realms > myrealm
@@ -187,7 +187,7 @@ On console: Preferences>Extensions>diagnostics-console-extension
 Dashboard  
 http://localhost:7001/console/dashboard  
 Graphing Data With the Dashboard. you can access it from Home page.
-  ![alt txt](../images/Weblogic-Dashboard.png)
+  ![alt txt](/docs/images/Weblogic-Dashboard.png)
 
 
 
