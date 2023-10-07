@@ -2,7 +2,6 @@
 layout: default
 title: Wildfly - JBoss EAP 7
 parent: App Servers
-has_toc: true
 nav_order: 2
 ---
 
