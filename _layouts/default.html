@@ -19,7 +19,8 @@ layout: table_wrappers
      	  {% if page.has_children != false and page.has_toc != false %}
             {% include components/children_nav.html %}
           {% endif %}
-{% include components/page_toc.html %}
+
+{% include toc.html html=content %}
 		
   
           {% if site.heading_anchors != false %}
