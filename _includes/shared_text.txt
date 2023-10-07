@@ -1,0 +1,1 @@
+https://github.com/allejo/jekyll-toc/blob/master/_includes/toc.html
