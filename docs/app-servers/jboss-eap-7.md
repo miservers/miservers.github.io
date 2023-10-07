@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page_toc
 title: Wildfly - JBoss EAP 7
 parent: App Servers
 nav_order: 2
