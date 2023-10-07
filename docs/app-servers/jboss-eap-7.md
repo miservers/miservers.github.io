@@ -4,7 +4,7 @@ title: Wildfly - JBoss EAP 7
 parent: App Servers
 nav_order: 2
 ---
-
+{:toc}
 
 ⚠️ **These notes are based on Jboss EAP 7.4 and Wildfly 29**
 
