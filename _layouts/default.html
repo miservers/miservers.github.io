@@ -16,25 +16,19 @@ layout: table_wrappers
       {% include components/breadcrumbs.html %}
 	  <div id="main-content" class="main-content">
 		<main>
-<<<<<<< HEAD
      	  {% if page.has_children == true and page.has_toc != false %}
             {% include components/children_nav.html %}
           {% endif %}
 
-=======
-     	  {% if page.has_children != false and page.has_toc != false %}
-            {% include components/children_nav.html %}
-          {% endif %}
-
-{% include toc.html html=content %}
+			{% include toc.html html=content sanitize=true class="inline_toc" ordered=true h_min=2 h_max=3%}
 		
-  
->>>>>>> d783f49b07aa246f45c188b20009936b3b739950
-          {% if site.heading_anchors != false %}
+            {% if site.heading_anchors != false %}
             {% include vendor/anchor_headings.html html=content beforeHeading="true" anchorBody="<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><use xlink:href=\"#svg-link\"></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
           {% else %}
-  {{ content }}
-          {% endif %}
+  			
+		  {{ content }}
+         
+		  {% endif %}
 
         </main>
         {% include components/footer.html %}

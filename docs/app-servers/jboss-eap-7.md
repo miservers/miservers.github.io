@@ -6,18 +6,11 @@ nav_order: 2
 ---
 
 
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
-
 ⚠️ **These notes are based on Jboss EAP 7.4 and Wildfly 29**
 
 **QuickStart**
 -------------------------------------------------
-#### Domain Architecture 
+### Domain Architecture 
 
 ![jboss](/docs/images/Jboss-EAP-7.4.-Domain.drawio.png)
 

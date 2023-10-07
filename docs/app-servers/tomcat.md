@@ -5,15 +5,6 @@ parent: App Servers
 nav_order: 2
 ---
 
-# Tomcat
-{: .no_toc }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
 ## Set Up
 -------------------------------------------------
 HowTo set up Tomcat 10: [RUNNING.txt](https://tomcat.apache.org/tomcat-10.1-doc/RUNNING.txt)
