@@ -37,7 +37,7 @@ exclude:
    - vendor/cache/
    - vendor/gems/
    - vendor/ruby/
-   - togo_docs
+   - togo_docs/
  # specific to the theme website:
    - bin/
    - lib/
