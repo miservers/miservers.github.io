@@ -1,0 +1,7 @@
+collections:
+  app-servers:
+    output: true
+    order:
+      - jboss-eap-7.md
+      - weblogic.md
+  collections_dir: docs
