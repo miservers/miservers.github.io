@@ -1,24 +1,9 @@
-**Table of content:**
-- [Apache Web Server Basics]
-- [Modules & Directives](#modules--directives)
-	- [DocumentRoot](#documentroot)
-	- [Directory](#directory)
-	- [Location](#location)
-	- [Options](#options)
-	- [Require]
-	- [Deny , Allow , Order]
-- [htaccess Files](#htaccess-files)
-- [Virtual Hosts](#virtual-hosts) 
-- [Load Balancing](#load-balancing)
-- [MIME Types]
-- [URL Mapping]
-- [Directory Indexing]
-- [Performance Tuning]
-- [Handlers and Filters]
-- [SSI]
-- [Security](#security)
-	- [HTTPS](#https)
-- [Known Errors](#known-errors)
+---
+layout: default
+title: Apache
+parent: App Servers
+nav_order: 4
+---
 
 ## Apache Web Server Basics
 ----------------------------------

@@ -2,7 +2,7 @@
 layout: default
 title: Weblogic
 parent: App Servers
-nav_order: 2
+nav_order: 3
 ---
 
 ## Weblogic 12
