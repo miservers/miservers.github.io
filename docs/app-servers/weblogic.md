@@ -103,7 +103,7 @@ activate()
 **Activate Debug using Console**  
 ![alt txt](/docs/images/weblogic-debug.png)
 
-#### Configuration des rôles et utilisateurs 
+### Configuration des rôles et utilisateurs 
     Domain Structure > Security Realms > myrealm
     
     Onglet Users and Groups > Groups : add group « myAppUsers »
@@ -121,7 +121,7 @@ activate()
 
 	Tous les autres paramètres du realm/group/user/role laissés par défaut.
 
-#### Apache/Weblogic 
+## Apache/Weblogic 
 	<VirtualHost 10.0.0.52>
 		ServerName www.app1.safar.com
 		 <IfModule mod_weblogic.c>
@@ -171,24 +171,24 @@ https://www.dynatrace.com/blog/top-10-weblogic-performance-metrics-proactively-m
   to “SELECT 1 FROM DUAL” which bypasses the buffer cache so it’s not bad.
 - Set Seconds to trust an Idle Pool Connection to 10.
 - Cache for prepared statements must be set to 20 or higher. Setting this higher should be discussed with your DBA. 
-  The total number of cached cursors would be the cache setting*number of connections in pool*number of servers in 
-  cluster. This should be set very carefully. That calulation equates to the number of open cursors allowed per 
-  session, so if it is set too low then cursors are repeatedly closed and opened. This leads to excessive hard parsing
-  of SQL statements which can also lead to performance degradation. In fact “Bad Use of Cursors” is the number 2 point
-  on the “Top Ten Mistakes” list, and it says that this has an order of magnitude impact in performance, 
-  and is totally unscalable.  
-  Be carefaul : ORA-01000 maximum open cursors exceeded  
-    sql > SELECT value FROM v$parameter WHERE name = 'open_cursors';
-
-https://timegatetechnologies.wordpress.com/2013/10/22/weblogic-jdbc-connection-pool-misconfiguration-and-how-it-can-cause-serious-performance-problems/
+  The total number of cached cursors would be the cache setting*number of connections in pool*number of servers in cluster.   
+  This should be set very carefully. That calulation equates to the number of open cursors allowed per session, so if it is set too low then cursors are repeatedly closed and opened.   
+  This leads to excessive hard parsing of SQL statements which can also lead to performance degradation. 
+  In fact “Bad Use of Cursors” is the number 2 point on the “Top Ten Mistakes” list, and it says that this has an order of magnitude impact in performance, and is totally unscalable.  
+  
+  ❗Be carefaul :  ORA-01000 maximum open cursors exceeded
+    	
+		sql > SELECT value FROM v$parameter WHERE name = 'open_cursors';
 
 
 
 ## WLDF
 
-1. Copy WL_HOME\server\lib\console-ext\diagnostics-console-extension.jar into DOMAIN-DIR/console-ext  
+1. Copy of Console Jar
+
+		WL_HOME\server\lib\console-ext\diagnostics-console-extension.jar into DOMAIN-DIR/console-ext  
 2. Restart the Administration Server  
-3. **Activate diagnostics console extension**  
+3. **Activate diagnostics console extension**    
 On console: Preferences>Extensions>diagnostics-console-extension
 
 Dashboard  
