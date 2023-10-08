@@ -5,7 +5,7 @@ parent: Security
 nav_order: 1
 ---
 
-## Java KeyTool
+## Java KeyStore
 ---------------------------------
 ![Java KeyStore](/docs/images/javaKeyStore.jpg)
 
@@ -26,6 +26,9 @@ nav_order: 1
 ```sh
   -Djavax.net.debug=ssl or -Djavax.net.debug=ssl:handshake or -Djavax.net.debug=all
 ```
+
+## Keytool
+---------------------------------
 
 **Generate a Java keystore and key pair**
 ```sh
