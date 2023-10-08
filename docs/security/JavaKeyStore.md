@@ -1,12 +1,14 @@
 ---
 layout: default
-title: Java KeyTool
+title: Java KeyStore
 parent: Security
 nav_order: 1
 ---
 
 ## Java KeyTool
 ---------------------------------
+![Java KeyStore](/docs/images/javaKeyStore.jpg)
+
 **Difference between KeyStore and TrustStore**  
   KeyStore contain credentials, TrustStore verify credentials
 
