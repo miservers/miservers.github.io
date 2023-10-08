@@ -1,3 +1,11 @@
+---
+layout: default
+title: Postgresql
+parent: Data Base
+nav_order: 3
+---
+
+
 Env: Centos 7, Postgresql 9
 
 ### SetUp 

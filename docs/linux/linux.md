@@ -5,18 +5,7 @@ parent: Linux
 nav_order: 1
 ---
 
-# Linux
-{: .no_toc }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
-
-## Linux Admin
+## Admin Commands
 
 Shortcuts:
 ```
@@ -93,7 +82,7 @@ Run 100000 requests, 100 ones at time:
     openssl rand -base64 32
 	
 	
-### Crontab
+## Crontab
 Create/Edit a job evry 5 minutes:  
 
 	$ crontab -e
@@ -106,7 +95,7 @@ List of current user jobs:
 	
 
 
-## Perfoemances
+## Performances
 
 ### SAR
 
@@ -190,6 +179,7 @@ Execute a commande from vi
 vi: Terminal too wide
 
 	# stty columns 160
+
 
 
 ## NFS

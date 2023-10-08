@@ -1,3 +1,10 @@
+---
+layout: default
+title: DHCP
+parent: Linux
+nav_order: 8
+---
+
 ### DHCP 
 Dynamic Host Configuration Protocol  
 

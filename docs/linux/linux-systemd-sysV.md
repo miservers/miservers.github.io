@@ -1,6 +1,9 @@
-**Table Of Contents**
-- [Systemd](#systemd)
-- [SysV](#sysv)
+---
+layout: default
+title: Systemd - sysV
+parent: Linux
+nav_order: 6
+---
 
 ## Systemd
 Ubuntu 20.04

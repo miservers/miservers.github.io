@@ -1,6 +1,12 @@
-### Misc
+---
+layout: default
+title: Oracle
+parent: Data Base
+nav_order: 1
+---
 
-Check driver version
+
+### Check Driver Version
 
 	java -jar ojdbc6.jar -getversion
 	you can also view the jdbc version in META-INF/MANIFEST.MF 

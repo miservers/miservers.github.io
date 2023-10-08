@@ -1,3 +1,10 @@
+---
+layout: default
+title: DNS
+parent: Linux
+nav_order: 7
+---
+
 **Bind**   
 is used on the most majority of name servers existing in the world(root dns servers included).
 

@@ -1,4 +1,12 @@
-### Disk & FS
+---
+layout: default
+title: File Systems
+parent: Linux
+nav_order: 3
+---
+
+
+## Disk & FS
 ------------------------------------------
 List all block devices:
  

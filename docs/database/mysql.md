@@ -1,3 +1,10 @@
+---
+layout: default
+title: MySql
+parent: Data Base
+nav_order: 2
+---
+
 ### Installation
 
     apt install mysql-server

@@ -1,11 +1,19 @@
-Env. Ubuntu 20.04, Centos 7
+---
+layout: default
+title: Networking
+parent: Linux
+nav_order: 5
+---
 
-### Memos
+
+**Env. Ubuntu 20.04, Centos 7**
+
+## Memos
 Wich IP is pinging me?
 
 	$ tcpdump -n -i enp0s8 icmp and icmp[icmptype]=icmp-echo
 
-
+## IP
 ### IP vs Ifconfig
 IP is a replacement for ifconfig command. IP command is orginazed on two layers: Link Layer(**ip link**), IP Layer(**ip a**).
 
@@ -71,22 +79,25 @@ Open connections
 	netstat -np | grep 8080
 	lsof -nPp 2552257 | grep 8080     ; -P : for numerique ports 
 
-	
-### TCPDUMP & Wireshark
+
+### Linux Bridge and Tap
+
+![](/docs/images/Linux-Virtual-Network-Bridge.png)
+
+
+### TCPDUMP
 
 	tcpdump -v -A -s 0  port 8080 and host 192.168.1.1  -w capt.log   
 	
+### Wireshark
 	use Wireshark to read capt.log
 	 
 	 
-### Linux Bridge and Tap
-
-![](../documentation/images/Linux-Virtual-Network-Bridge.png)
 
  
 ## FireWalls
--------------------------
-### Firewalld : firewall-cmd Utility
+------------------
+### Firewalld 
 Default firewall on CentOS 7.
 
 Stop/Start

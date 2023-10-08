@@ -1,3 +1,10 @@
+---
+layout: default
+title: Weblogic
+parent: App Servers
+nav_order: 2
+---
+
 ## Weblogic 12
 
 ### Installation

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Hardware
+parent: Linux
+nav_order: 9
+---
+
 
 __lshw: List Hardware__
 
