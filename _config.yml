@@ -22,7 +22,7 @@ repository: miservers/miservers.github.io # for github-metadata
 permalink: pretty
 sass:
   sass_dir: _sass
-include: ['docs']
+#include: ['docs']
 markdown: kramdown
 
 exclude:
