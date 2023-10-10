@@ -14,3 +14,62 @@
 .grey {
 	color: grey;
   }
+
+
+
+.card {
+	float: left;
+	padding: 5px;
+	height: 150px;
+	background: lightgrey;
+	border-radius: 30px;
+	overflow: hidden;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	transition: all 1s ease-in-out;
+	background: radial-gradient(circle at 100% 107%, #93ff89 0%, #9cb8ec 30%, #00ffee77 60%, #62c2fe 100%);
+}
+
+.card-title {
+	text-align: center;
+}
+.cards {
+	max-width: 1200px;
+	display: grid;
+	gap: 1rem;
+	margin: 0 -5px;
+  }
+
+.cards:after {
+	content: "";
+	display: grid;
+	clear: left;
+  }
+ 
+.flex-card-image {
+	height: 50%;
+	width:auto;
+	border-radius: 12px;
+}
+
+  
+  @media (min-width: 100Px) and (max-width: 480px) {
+	.cards { grid-template-columns: repeat(2, 1fr); 
+	display: grid;
+	margin-bottom: 20px;
+	}
+  }
+
+
+  @media(min-width: 481Px) and (max-width: 1024px) {
+	.cards { grid-template-columns: repeat(3, 1fr); 
+	display: grid;
+	margin-bottom: 20px;
+	}
+  }
+
+  @media (min-width: 1025px) {
+	.cards { grid-template-columns: repeat(5, 1fr); 
+	display: grid;
+	margin-bottom: 20px;
+	}
+  }
