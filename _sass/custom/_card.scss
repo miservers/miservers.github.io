@@ -1,4 +1,4 @@
-.card {
+.card0 {
 	float: left;
 	padding: 5px;
 	height: 150px;
@@ -9,7 +9,28 @@
 	margin-top: 25px;
 }
 
-.card-image {
+.card {
+background-color: #fff;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.card:hover {
+  transform: translateY(-0.5%);
+  box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.2);
+}
+
+
+card-imgage {
+  display: block;
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+}
+
+.card-image0 {
 	height: 50%;
 	width:auto;
 	border-radius: 12px;
