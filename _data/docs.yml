@@ -12,18 +12,24 @@ app-servers:
     url: docs/app-servers/weblogic
     icon: docs/images/icon/fa-weblogic.png
 
-  - title: Weblogic 2
-    url: docs/app-servers/weblogic
-    icon: docs/images/icon/fa-weblogic.png
+  - title: Apache
+    url: docs/app-servers/apache
+    icon: docs/images/icon/fa-apache.jpg
 
-  - title: Weblogic 3
-    url: docs/app-servers/weblogic
-    icon: docs/images/icon/fa-weblogic.png
+data-base:
+  - title: Oracle
+    url: docs/database/oracle
+    icon: docs/images/icon/fa-oracle.png
+  - title: MySQL
+    url: docs/database/oracle
+    icon: docs/images/icon/fa-mysql.png
+  - title: Postgresql
+    url: docs/database/oracle
+    icon: docs/images/icon/fa-postgresql.png
 
-  - title: Weblogic 4
-    url: docs/app-servers/weblogic
-    icon: docs/images/icon/fa-weblogic.png
+linux:
+  - title: Linux
+    url: docs/linux
+    icon: docs/images/icon/fa-linux.png
 
-  - title: Weblogic 6
-    url: docs/app-servers/weblogic
-    icon: docs/images/icon/fa-weblogic.png
+  

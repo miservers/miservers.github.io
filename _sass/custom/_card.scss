@@ -1,45 +1,31 @@
-.card0 {
-	float: left;
-	padding: 5px;
-	height: 150px;
-	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-	transition: all 1s ease-in-out;
-	background: #8f64f3b6;
-	border-radius: 15px;
-	margin-top: 25px;
-}
-
 .card {
-background-color: #fff;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   overflow: hidden;
-  box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 5px red;
   cursor: pointer;
   transition: 0.2s;
+  background-color: #8f64f3b6;
 }
+
 .card:hover {
   transform: translateY(-0.5%);
-  box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 5px 5px blue;
 }
 
 
 .card img {
   display: block;
-  width: 100%;
-  height: 18rem;
+  width: 80%;
+  height: 100px;
   object-fit: cover;
-  background-color: #8f64f3b6;
+  margin: auto;
+  margin-top: 0.3rem;
 }
 
-.card-image0 {
-	height: 50%;
-	width:auto;
-	border-radius: 12px;
-}
 
 .card span {
 	font-weight: 600;
-	color: white;
+	color: blue;
 	text-align: center;
 	display: block;
 	padding-top: 10px;
@@ -54,16 +40,6 @@ background-color: #fff;
 	padding-top: 3px;
 	font-size: 12px;
 }
-
-.card .img0 {
-	width: 70px;
-	height: 80px;
-	background: #6b64f3;
-	border-radius: 15px;
-	margin: auto;
-	margin-top: 25px;
-}
-
 .cards {
 	max-width: 1200px;
 	display: grid;
