@@ -233,8 +233,29 @@ Whereis a service is defined
 	$ xmodmap -e 'keycode 76='
 
 
+**Speed up Boot Time**
 
+	$ sudo systemd-analyze time
+	
+	$ sudo systemd-analyze blame
+	  6.954s NetworkManager-wait-online.service                 
+	  4.817s plymouth-quit-wait.service                         
+	  2.972s uml-utilities.service 
+	  ...
+	$ sudo systemd-analyze critical-chain
 
+	$ systemctl get-default
+       graphical.target
+	
+	$ systemd-analyze critical-chain graphical.target
+    
+
+**Modify Grub Paramter**
+
+	$ sudo vim /etc/default/grub
+	  GRUB_CMDLINE_LINUX_DEFAULT="quiet splash systemd.restore_state=0"
+	$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+	$ reboot
 
 
 

@@ -42,6 +42,7 @@ A Service is defined as **Unit**. Unit files end with **.service**
 | # journalctl -p err                         | By Level               |
 
 
+
 ### Systemd Commands
 
 | Command             			| Description                       |
