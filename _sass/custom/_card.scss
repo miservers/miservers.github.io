@@ -17,7 +17,6 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 }
 
 .card img {
-  width: inherit;
   height: 130px;
   border-radius: 0.5rem;
   object-fit: cover;
@@ -98,7 +97,7 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 	margin: 0 -5px;
   }
 
-.cardsZ:after {
+.cards:after {
 	content: "";
 	display: grid;
 	clear: left;
