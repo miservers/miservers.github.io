@@ -1,8 +1,10 @@
 
 .cards {
-  display: block;
+  display: grid;
   justify-content: space-around;
   flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 -5px;
 }
 
 .card {
