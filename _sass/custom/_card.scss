@@ -16,10 +16,11 @@
 .card img {
   display: block;
   width: 80%;
-  height: 50px;
+  height: 130px;
   object-fit: cover;
   margin: auto;
   margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 
@@ -70,7 +71,7 @@
   }
 
   @media (min-width: 1025px) {
-	.cards { grid-template-columns: repeat(8, 1fr); 
+	.cards { grid-template-columns: repeat(6, 1fr); 
 	display: grid;
 	margin-bottom: 20px;
 	}
