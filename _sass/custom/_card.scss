@@ -1,11 +1,12 @@
 
 .cards {
-  z-index: 0;
+  display: block;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
 .card {
+  display: block;
   margin: 1rem auto;
   height: 130px;
   border-radius: 0.5rem;
