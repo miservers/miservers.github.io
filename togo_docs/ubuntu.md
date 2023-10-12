@@ -226,6 +226,8 @@ Whereis a service is defined
 --------------
 **How To disable a key on the keyboard**
 
+	Test Keyboard: https://keyboard-test.space/
+	
 	$ xev -event keyboard
 	$ xmodmap -e 'keycode <value>='
 	 
