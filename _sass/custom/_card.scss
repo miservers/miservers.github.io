@@ -16,7 +16,7 @@
 .card img {
   display: block;
   width: 80%;
-  height: 100px;
+  height: 50px;
   object-fit: cover;
   margin: auto;
   margin-top: 0.3rem;
@@ -63,14 +63,14 @@
 
 
   @media(min-width: 481Px) and (max-width: 1024px) {
-	.cards { grid-template-columns: repeat(3, 1fr); 
+	.cards { grid-template-columns: repeat(6, 1fr); 
 	display: grid;
 	margin-bottom: 20px;
 	}
   }
 
   @media (min-width: 1025px) {
-	.cards { grid-template-columns: repeat(5, 1fr); 
+	.cards { grid-template-columns: repeat(8, 1fr); 
 	display: grid;
 	margin-bottom: 20px;
 	}

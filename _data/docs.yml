@@ -6,7 +6,7 @@ app-servers:
  
   - title: Tomcat 
     url: docs/app-servers/tomcat
-    icon: docs/images/icon/fa-tomcat.png
+    icon: docs/images/icon/fa-tomcat.jpeg
 
   - title: Weblogic 
     url: docs/app-servers/weblogic
