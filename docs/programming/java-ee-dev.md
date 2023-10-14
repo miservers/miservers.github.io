@@ -1,4 +1,9 @@
-
+---
+layout: default
+title: Java EE
+parent: Programming
+nav_order: 2
+---
 
 ## Maven
 How Maven works  

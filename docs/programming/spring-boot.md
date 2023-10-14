@@ -1,3 +1,13 @@
+---
+layout: default
+title: Spring Boot
+parent: Programming
+nav_order: 4
+---
+
+### Spring MVC
+![](/docs/images/java/spring-mvc.png)
+
 ### RESTful with Jpa dependencies
  * spring-boot-starter-web
  * spring-boot-starter-data-jpa

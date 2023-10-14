@@ -1,3 +1,10 @@
+---
+layout: default
+title: React.js
+parent: Programming
+nav_order: 4
+---
+
 ### Node.JS internals
 Node.JS is server runtime mainly composed of google V8 engine and libuv. V8 compiles javascript code into a native machine code at runtime. 
 libuv gives node.js access to the underlying server filesystem and UDP/TCP sockets.
@@ -273,7 +280,7 @@ function App() {
  return (
      return (
     <div className="App" style={myStyle}>
-      <h2 style={{backgroundColor: "lightblue", color: "red"}}>List of Users</h2>
+      <h2 style={backgroundColor: "lightblue", color: "red"}>List of Users</h2>
     </div>
   );
 }
@@ -282,7 +289,7 @@ function App() {
 **Center a block**
 
 ~~~html
-    <div style={{textAlign: "center"}}>
+    <div style={textAlign: "center"}>
       <button type="button"> HELLOO </button>
     </div>
 ~~~
@@ -723,7 +730,7 @@ export default function PatientRecord () {
 ** Custom a Button**
 
 ~~~html
-<Button type="submit"  variant="contained" color="primary" style={{backgroundColor: 'green'}}>
+<Button type="submit"  variant="contained" color="primary" style={backgroundColor: 'green'}>
 ~~~
 
 ### ANT Design

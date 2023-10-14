@@ -1,35 +1,46 @@
-icon_dir: docs/images/icon
 app-servers:
-  - title: Wildfly JBoss EAP
-    url: docs/app-servers/jboss-eap-7
-    icon: docs/images/icon/fa-wildfly.png
- 
-  - title: Tomcat 
-    url: docs/app-servers/tomcat
-    icon: docs/images/icon/fa-tomcat.png
+  title: App Servers
+  url: docs/app-servers
+  items:
+    - title: Wildfly JBoss EAP
+      slug: jboss-eap-7
+      icon: fa-wildfly.png
+   
+    - title: Tomcat 
+      slug: tomcat
+      icon: fa-tomcat.png
 
-  - title: Weblogic 
-    url: docs/app-servers/weblogic
-    icon: docs/images/icon/fa-weblogic.png
+    - title: Weblogic 
+      slug: weblogic
+      icon: fa-weblogic.png
 
-  - title: Apache
-    url: docs/app-servers/apache
-    icon: docs/images/icon/fa-apache.jpg
+    - title: Apache
+      slug: apache
+      icon: fa-apache.jpg
 
 data-base:
-  - title: Oracle
-    url: docs/database/oracle
-    icon: docs/images/icon/fa-oracle.png
-  - title: MySQL
-    url: docs/database/oracle
-    icon: docs/images/icon/fa-mysql.png
-  - title: Postgresql
-    url: docs/database/oracle
-    icon: docs/images/icon/fa-postgresql.png
+  title: Data Base
+  url: docs/database
+  items:
+    - title: Oracle
+      slug: oracle
+      icon: fa-oracle.png
+    - title: MySQL
+      slug: mysql
+      icon: fa-mysql.png
+    - title: Postgresql
+      slug: postgresql
+      icon: fa-postgresql.png
 
 linux:
-  - title: Linux
-    url: docs/linux
-    icon: docs/images/icon/fa-linux.png
+  title: Linux
+  url: docs/linux
+  items:
+    - title: Linux
+      slug: linux
+      icon: fa-linux.png
 
+    - title: Scripting Shell
+      slug: scripting-shell
+      icon: fa-scripting-shell.png
   

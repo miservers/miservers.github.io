@@ -1,3 +1,9 @@
+---
+layout: default
+title: Java
+parent: Programming
+nav_order: 1
+---
 
 ### Eclipse optimisation
  [7-tips-to-speed-up-eclipse](http://www.nicolasbize.com/blog/7-tips-to-speed-up-eclipse/)  

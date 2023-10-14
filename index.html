@@ -4,41 +4,19 @@ title: Home
 nav_order: 1
 description: "Middlware Home"
 permalink: /
+icon_dir: docs/images/icon
 ---
 
-<p class="label">App Servers</p>
+{% for category in site.data.docs %}
+	<p class="label">{{category[1].title}}</p>
+	<div class="cards">
+	{% for item in category[1].items %}
+		<div class="card">
+		  <a href="{{category[1].url}}/{{item.slug}}" >
+		    <img src="{{page.icon_dir}}/{{item.icon}}"   alt="">
+			</a>
+		</div>
+	{% endfor %} 
+	</div>
+{% endfor %} 
 
-{% assign items = site.data.docs['app-servers'] %} 
-<div class="cards">
-{% for item in items %}
-	<div class="card">
-	  <a href="{{ item.url }}" >
-	    <img src="{{ item.icon }}"   alt="">
-		</a>
-	</div>
-{% endfor %} 
-</div>
-
-<p class="label">Linux</p>
-{% assign items = site.data.docs['linux'] %} 
-<div class="cards">
-{% for item in items %}
-	<div class="card">
-	  <a href="{{ item.url }}" >
-	    <img src="{{ item.icon }}"   alt="">
-		</a>
-	</div>
-{% endfor %} 
-</div>
- 
-<p class="label">Data Base</p>
-{% assign items = site.data.docs['data-base'] %} 
-<div class="cards">
-{% for item in items %}
-	<div class="card">
-	  <a href="{{ item.url }}" >
-	    <img src="{{ item.icon }}"   alt="">
-		</a>
-	</div>
-{% endfor %} 
-</div>

@@ -1,11 +1,19 @@
+---
+layout: default
+title: Javascript
+parent: Programming
+nav_order: 3
+---
 
-#### JavaScript Demos
+### JavaScript Demos
 [javascript-demo.html](../java-workspace/javascript-lab/javascript-demo.html)
 
-#### ES6 Features
+### ES6 Features
+
 http://es6-features.org
 
-#### Adding event handlers
+### Adding event handlers
+
 ~~~js
 document.getElementById(id).onclick = function() { code }
 
@@ -17,12 +25,13 @@ document.getElementById("button1").onclick = function() {
                                     window.alert("button 1 clicked!");};
 ~~~
 
-#### Event object
+### Event object
 When a W3C event listener’s event occurs and it calls its associated function, it  passes a single argument to the function—a reference to the event object.   
 Event properties:
  * type : The event that occurred (click, focus, blur, etc.)
  * target : The element to which the event occurred 
  * value
+ 
 ~~~html
 <script>
   function sayHello () {
@@ -35,15 +44,17 @@ Event properties:
 ~~~
 
 
-#### Objects
+### Objects
 **Plain Object**  
-~~~javascript
+
+~~~js
 const obj = { a: 'foo', b: 42, c: {} }; //c is an object attribute
 obj.a = 'bar';
 ~~~
 
-#### Modules 
+### Modules 
  1. Create a module **Products.mjs** 
+ 
 ~~~js
 var totalSale=0; 
   
@@ -58,6 +69,7 @@ export { totalSale};
 ~~~
 
 2. Using it in **Index.mjs**:
+
 ~~~js
 import {totalSale, sell} from './Products.mjs'
 
@@ -71,12 +83,14 @@ console.log('totalSale' , totalSale, 'DH , milk stock=',  item.stock);
 ~~~
 
  3. Run this module on Node JS
+ 
 ~~~
   node --experimental-modules Index.mjs
 ~~~
 
-#### Function expression
+### Function expression
 Function expression is a normal function but stored in a variable. Function expression are usufull to pass a function as a parameter of another function. In the example bellow **square** is called **callback functions**.
+
 ~~~js
 const square = function (n) {return n*n; };
 
@@ -92,12 +106,13 @@ let squares = fmap(square,numbers);
 console.log(squares); //=> [0, 1, 4, 25, 100]
 ~~~
 
-#### Display Blob image
+### Display Blob image
+
 ~~~js
 <img className="pic__photo" src={"data:image/png;base64," + patient.picture.blob} />
 ~~~
 
-#### Arrow function expression
+### Arrow function expression
 [Syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)  
 
 ~~~js
@@ -113,6 +128,7 @@ let myfunc = (param1, param2, ..., paramN) => expression
 * **(...args) => { body }**: we need an explicit return to return something.  
 
 **map** is predefined on array object
+
 ~~~javascript
 numbers = [0, 1, 2, 5, 10]
 
@@ -122,16 +138,19 @@ console.log(cubes); // [0, 1, 8, 125, 1000]
 ~~~ 
 
 that is equivalent to 
+
 ~~~javascript
 cubes = numbers.map(n => {return n*n*n;});
 ~~~ 
 
 And because function has only one instruction
+
 ~~~javascript
 cubes = numbers.map(n => (n*n*n));
 ~~~ 
 
-#### Maps
+### Maps
+
 ~~~js
 var users = [
 			    {id : 1, name: "Reynolds"},
@@ -145,13 +164,15 @@ const ids = users.map(user => user.id);
 console.log (ids);  // [1, 2, 3]
 ~~~
 
-#### ForEach
+### ForEach
+
 ~~~js
 users.forEach (user => console.log('id=', user.id, 'username=', user.name));
 ~~~
 
-#### Methods
+### Methods
 Methods are functions stored are object properties
+
 ~~~js
 // Object 
 var person = {
@@ -166,13 +187,14 @@ var person = {
 console.log("Full name " + person.fullName());
 ~~~
 
-#### Strict mode
+### Strict mode
 To enable the full javascript new features, you must use strict mode. In this mode "bad syntax" will be treated as real errors(not declared variable is not allowed,etc). 
+
 ~~~js
 'use strict';
 ~~~
 
-#### Destructuring assignment
+### Destructuring assignment
 The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.
 
 ~~~js
@@ -183,7 +205,7 @@ console.log(rest);  // output: Array [30,40,50]
 ~~~
 
 
-#### this
+### this
  * In a method, *this* refers to the owner object.
  * Alone, *this* refers to the global object.
  * In a function, *this* refers to the global object.
@@ -191,8 +213,9 @@ console.log(rest);  // output: Array [30,40,50]
  * In an event, *this* refers to the element that received the event.
  * Methods like call(), and apply() can refer *this* to any object.
 
-#### Promise
+### Promise
 This code continue its execution, without waiting timout for the promise to be resolved. 
+
 ~~~js
 const promise1 = new Promise((resolve, reject) => {
                         let done = true
@@ -215,8 +238,9 @@ setTimeout(() => console.log(promise1), 5000);
 // output: promise1 resolved
 ~~~          
 
-#### async
+### async
 async make a function return a promise. func2 is the same as func3
+
 ~~~js
 const func2 = async () => {
     return 'test_async'
@@ -233,8 +257,10 @@ func3().then (v => console.log(v))
 //output: test_async with promise
 ~~~
 
-#### async/await
+### async/await
+
 This code
+
 ~~~js
 const getFirstUserData1 = () => {
     return fetch('https://jsonplaceholder.typicode.com/users') // get users list
@@ -247,6 +273,7 @@ getFirstUserData1()
 ~~~ 
 
 Is same as
+
 ~~~js
 const getFirstUserData2 = async () => {
     const response = await fetch('https://jsonplaceholder.typicode.com/users') // get users list
@@ -278,13 +305,14 @@ Object.keys(arr).map(k => console.log(arr[k])); // 1 2 3
 ~~~
 
 
-#### JavaScript References
+### JavaScript References
  * https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide
 
 
 ## AngularJS
 -----------
 ### Two-way Binding
+
 ~~~html
 <div ng-app="myApp" ng-controller="myCtrl">
   Name: <input ng-model="firstname">

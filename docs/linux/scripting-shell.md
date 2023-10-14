@@ -1,14 +1,9 @@
-**Table Of Contents**  
-- [Slect](#select)
-- [Case](#case)
-- [Arithmetic expressions](#arithmetic-expressions)
-- [Expr](#expr)
-- [Substitution temporaire](#substitution-temporaire)
-- [Copy dir to dir](#special-chars)
-- [test](#test)
-- [IF](#if)
-- [Check file](#check-file)
-- [Parameters parsing](#parameters-parsing)
+---
+layout: default
+title: Scripting Shell
+parent: Linux
+nav_order: 1.5
+---
 
 Envrionment: Bash
 
