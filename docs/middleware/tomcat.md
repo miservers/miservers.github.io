@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Tomcat
-parent: App Servers
+parent: Middleware
 nav_order: 2
 ---
 

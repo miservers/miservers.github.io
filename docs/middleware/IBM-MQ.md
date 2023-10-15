@@ -1,23 +1,9 @@
-**Table Of Contents**
-- [QuickStart](#quickstart)
-	- [History](#history)
-	- [Installing IBM MQ](#installing-ibm-mq)
-- [Configuration](#configuration)
-	- [Queue Manager](#queue-manager)
-	- [Channels](#channels)
-	- [Listeners](#listeners)
-	- [Authentication](#authentication)
-	- [Authorization](#authorization)
-	- [Active/Passive multi-instances](#activepassive-multi-instances)
-	- [Commands](#commands)
-	- [Logs](#logs)
-- [MQSC : MQ Script Commands](#mqsc--mq-script-commands)
-- [MQ Explorer](#mq-explorer)
-- [Use cases](#use-cases)
-	* [Single way communication between two QMs](#single-way-communication-between-two-qms)
-- [Resolved Errors](#resolved-errors)
-- [Websphere MQ](#websphere-mq)
-- [Docs](#docs)
+---
+layout: default
+title: IBM MQ
+parent: Middleware
+nav_order: 6
+---
 
 **QuickStart**
 ------------------------

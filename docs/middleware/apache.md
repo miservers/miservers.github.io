@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Apache
-parent: App Servers
+parent: Middleware
 nav_order: 4
 ---
 

@@ -1,6 +1,6 @@
-app-servers:
-  title: App Servers
-  url: docs/app-servers
+middleware:
+  title: Middleware
+  url: docs/middleware
   items:
     - title: Wildfly JBoss EAP
       slug: jboss-eap-7
@@ -17,6 +17,22 @@ app-servers:
     - title: Apache
       slug: apache
       icon: fa-apache.jpg
+
+    - title: ActiveMQ
+      slug: ActiveMQ
+      icon: fa-activemq.png
+
+    - title: IBM MQ
+      slug: IBM-MQ
+      icon: fa-ibm-mq.png
+
+    - title: CFT
+      slug: cft
+      icon: fa-cft.png
+
+    - title: JMeter
+      slug: jmeter
+      icon: fa-jmeter.png
 
 data-base:
   title: Data Base

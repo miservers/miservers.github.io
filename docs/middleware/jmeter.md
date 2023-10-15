@@ -1,6 +1,8 @@
 ---
+layout: default
 title: Jmeter
-layout: home
+parent: Middleware
+nav_order: 8
 ---
 
 ## Installation

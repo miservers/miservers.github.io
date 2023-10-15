@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Weblogic
-parent: App Servers
+parent: Middleware
 nav_order: 3
 ---
 

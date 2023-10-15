@@ -1,3 +1,10 @@
+---
+layout: default
+title: CFT
+parent: Middleware
+nav_order: 7
+---
+
 ### Transferts  dans un état donné ?
     CFTUTIL listcat state=K
 
