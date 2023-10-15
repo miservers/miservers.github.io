@@ -19,7 +19,7 @@ middleware:
       icon: fa-apache.jpg
 
     - title: ActiveMQ
-      slug: ActiveMQ
+      slug: activeMQ
       icon: fa-activemq.png
 
     - title: IBM MQ
@@ -53,10 +53,13 @@ linux:
   url: docs/linux
   items:
     - title: Linux
-      slug: linux
+      slug: index
       icon: fa-linux.png
 
     - title: Scripting Shell
       slug: scripting-shell
       icon: fa-scripting-shell.png
   
+    - title: Networking
+      slug: linux-networking
+      icon: fa-networking.png
