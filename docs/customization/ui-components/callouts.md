@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Callouts
-parent: Customization
+parent: UI Components
+grand_parent: Customization
 nav_order: 7
 ---
 

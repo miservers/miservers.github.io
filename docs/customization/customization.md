@@ -2,7 +2,7 @@
 layout: default
 title: Customization
 parent: Customization
-nav_order: 2
+nav_order: 6
 ---
 
 # Customization

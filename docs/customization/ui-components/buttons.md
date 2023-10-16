@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Buttons
-parent: Customization
-nav_order: 2
+parent: UI Components
+ngrand_parent: Customization
+av_order: 2
 ---
 
 # Buttons
@@ -56,7 +57,7 @@ GitHub Flavored Markdown does not support the `button` element, so you'll have t
 
 ### Button size
 
-Wrap the button in a container that uses the [font-size utility classes]({% link docs/customization/typography.md %}) to scale buttons:
+Wrap the button in a container that uses the [font-size utility classes]({% link docs/customization/utilities/typography.md %}) to scale buttons:
 
 <div class="code-example" markdown="1">
 <span class="fs-6">
@@ -79,7 +80,7 @@ Wrap the button in a container that uses the [font-size utility classes]({% link
 
 ### Spacing between buttons
 
-Use the [margin utility classes]({% link docs/customization/layout.md %}#spacing) to add spacing between two buttons in the same block.
+Use the [margin utility classes]({% link docs/customization/utilities/layout.md %}#spacing) to add spacing between two buttons in the same block.
 
 <div class="code-example" markdown="1">
 [Button with space](https://just-the-docs.com){: .btn .btn-purple .mr-2 }

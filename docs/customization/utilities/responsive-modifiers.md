@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Responsive Modifiers
-parent: Customization
+parent: Utilities
+grand_parent: Customization
 ---
 
 # Responsive modifiers

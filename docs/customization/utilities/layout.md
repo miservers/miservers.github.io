@@ -1,7 +1,8 @@
 ---
 layout: default
-title: Layout-utils
-parent: Customization
+title: Layout
+parent: Utilities
+grand_parent: Customization
 ---
 
 # Layout Utilities

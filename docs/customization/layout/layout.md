@@ -1,8 +1,10 @@
 ---
 title: Layout
 layout: default
-parent: Customization
-nav_order: 8.5
+nav_order: 4.5
+parent: Layout
+grand_parent: Customization
+has_children: true
 ---
 
 # Layout

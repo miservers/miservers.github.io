@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Tables
-parent: Customization
+parent: UI Components
+grand_parent: Customization
 nav_order: 4
 ---
 

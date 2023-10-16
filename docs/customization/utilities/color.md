@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Color
-parent: Customization
+parent: Utilities
+grand_parent: Customization
 ---
 
 # Color Utilities

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Lists
-parent: Customization
+parent: UI Components
+grand_parent: Customization
 nav_order: 5
 ---
 

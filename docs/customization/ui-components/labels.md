@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Labels
-parent: Customization
+parent: UI Components
+grand_parent: Customization
 nav_order: 3
 ---
 
