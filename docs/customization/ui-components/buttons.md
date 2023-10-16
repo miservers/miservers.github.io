@@ -2,8 +2,8 @@
 layout: default
 title: Buttons
 parent: UI Components
-ngrand_parent: Customization
-av_order: 2
+grand_parent: Customization
+nav_order: 2
 ---
 
 # Buttons
