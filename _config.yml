@@ -26,7 +26,6 @@ sass:
 markdown: kramdown
 
 exclude:
- # from https://github.com/jekyll/jekyll/blob/master/lib/site_template/_config.yml:
    - .sass-cache/
    - .jekyll-cache/
    - gemfiles/
@@ -55,7 +54,7 @@ exclude:
    - fixtures/
 
 # Set a path/url to a logo that will be displayed instead of the title
-logo: "/assets/images/miservers.jpg"
+logo: "/assets/images/miservers.png"
 
 # Enable or disable the site search
 # Supports true (default) or false

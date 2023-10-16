@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Search
+parent: Customization
 nav_order: 8
 ---
 

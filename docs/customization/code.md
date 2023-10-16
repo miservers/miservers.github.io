@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Code
-parent: UI Components
-has_children: true
+parent: Customization
 nav_order: 6
 ---
 
