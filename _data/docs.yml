@@ -61,5 +61,10 @@ linux:
       icon: fa-scripting-shell.png
   
     - title: Networking
-      slug: linux-networking
+      slug: networking
       icon: fa-networking.png
+
+    - title: KVM
+      slug: kvm
+      icon: fa-kvm.png
+    

@@ -5,6 +5,10 @@ parent: Linux
 nav_order: 7
 ---
 
+Find my DNS server ip
+
+	$ nmcli dev show | grep 'IP4.DNS'
+
 **Bind**   
 is used on the most majority of name servers existing in the world(root dns servers included).
 
