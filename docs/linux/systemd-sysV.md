@@ -8,9 +8,11 @@ nav_order: 6
 ## Systemd
 Ubuntu 20.04
 
+### Getting Started
+
 A Service is defined as **Unit**. Unit files end with **.service**
 
-**Systemd Units Location**
+**Systemd Units Locations**
    
 	# man systemd.unit
 
@@ -27,9 +29,10 @@ A Service is defined as **Unit**. Unit files end with **.service**
 
 	/etc/systemd/journald.conf
 
-**Systemd Logs**
+### Logs
 
-**journalctl** is a command to view and manage Systemd logs, wich are stored in binary format under <ins>/var/log/journal</ins>.
+{: .highlight }
+**journalctl** is a command to view and manage Systemd logs, wich are stored in binary format under **/var/log/journal**.
 
 | Command             | Description                               |
 | ------------------- | ----------------------------------------- |

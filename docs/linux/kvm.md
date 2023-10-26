@@ -64,7 +64,13 @@ and Restart libvirtd
 
 	sudo systemctl restart libvirtd
 
-#### Creating VMs using virt-install
+
+### Virtual Machine Manager
+Practical tool to manage your VMs: create, delete, start, stop, clone,etc
+
+![](/docs/images/linux-kvm-virt-manager.png)
+
+### Creating VMs using virt-install
 
 	$ virt-install \
 		  --name centos1 \
@@ -75,12 +81,30 @@ and Restart libvirtd
 		  --cdrom /tmp/CentOS-7-x86_64-Minimal-2009.iso \
 		  --os-variant centos7
 
-### Network
-Linux Bridge:
+### Start/Stop VMs by Command Line
+
+List of VMs
+
+	$ virsh list --all  
+
+	Id   Name      State
+	2    centos1   running
+	-    vm1       shut off
+
+Start a VM
+	
+	$ virsh start centos1
+
+Stop a VM
+
+	$ virsh shutdown centos1
+
+
+### Linux Bridge
 
 ![alt](/docs/images/linux-bridge.drawio.png)
 
-#### Create a Bridge
+### Create a Bridge
 Using **netui**. netui stand for Network Manager text User Inteface.
 
 	$ sudo netui
@@ -96,4 +120,26 @@ Choose [Add], and [Bridge]
 	br0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
     link/ether d2:58:93:2c:82:10 brd ff:ff:ff:ff:ff:ff
     inet 192.168.122.254/24 brd 192.168.122.255 ....
+
+### Connect the Guest to the Bridge
+
+If the Guest is a Centos 7/ redhat
+
+	$ cat /etc/sysconfig/network-scripts/ifcfg-eth0
+		TYPE=Ethernet
+		BOOTPROTO=dhcp
+		NAME=eth0
+		UUID=599b4ccc-12f4-45cf-ab8f-915dc8db7a5b
+		DEVICE=eth0
+		ONBOOT=yes
+		BRIDGE=virbr0
+		NETBOOT=no
+		NM_CONTROLLED=no
+
+{: .warning }
+if BRIDGE is set, NM_CONTROLLED must be set to no.
+
+retart NM (Network Manager)
+
+	$ systemctl restart network
 

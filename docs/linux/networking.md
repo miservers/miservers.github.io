@@ -13,6 +13,31 @@ Wich IP is pinging me?
 
 	$ tcpdump -n -i enp0s8 icmp and icmp[icmptype]=icmp-echo
 
+## Network Manager
+### Configure a Static IP
+List all net devices: **nmcli**
+
+	$ nmcli d
+	
+	DEVICE  TYPE      STATE      CONNECTION 
+	eth0    ethernet  connected  eth0       
+	lo      loopback  unmanaged  --     
+
+* Edit **/etc/sysconfig/network-scripts/ifcfg-eth0** 
+
+![](/docs/images/linux-static-ip.png)
+
+* Or use **nmtui**  
+	
+	$ nmtui
+
+![](/docs/images/linux-nmtui-edit.png)
+
+Restart NM
+
+	$ systemctl restart network
+
+
 ## IP
 ### IP vs Ifconfig
 IP is a replacement for ifconfig command. IP command is orginazed on two layers: Link Layer(**ip link**), IP Layer(**ip a**).

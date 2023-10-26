@@ -9,6 +9,53 @@ Find my DNS server ip
 
 	$ nmcli dev show | grep 'IP4.DNS'
 
+## dnsmasq
+
+dnsmasq is a lightweight DNS server and DHCP server. it can be used for a small number of servers.
+
+In this memo: **DNS Server : 192.168.122.11(centos1)** on Centos 7.
+
+### DNS Configuration 
+
+[dnsmasq Configuration tuto](https://linuxhint.com/dnsmasq-ubuntu-tutorial/)
+
+Configuration file :  /etc/dnsmasq.conf
+
+	port=53
+	domain-needed
+	bogus-priv
+	strict-order
+	expand-hosts
+	domain=miservers.com
+	listen-address=127.0.0.1, 192.168.122.11
+	cache-size=1000
+
+DNS Servers must be declared in : /etc/resolv.conf
+
+	nameserver 192.168.122.11
+	nameserver 8.8.8.8
+
+Hosts must be defined in : /etc/hosts
+
+	192.168.122.11 centos1 
+	192.168.122.57 centos2 
+
+Restart dnsmasd
+
+	$ systemctl restart dnsmasq
+
+Tests
+
+	$ dig centos1.miservers.com
+
+### DHCP Configuration
+
+<dhcp>
+      <range start="192.168.122.2" end="192.168.122.254"/>
+    </dhcp>
+	
+## Bind
+
 **Bind**   
 is used on the most majority of name servers existing in the world(root dns servers included).
 
