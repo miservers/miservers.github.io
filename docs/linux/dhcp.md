@@ -11,11 +11,18 @@ Dynamic Host Configuration Protocol
 ![DHCP handshake](/docs/images/DHCPHandshake.png)  
 Client send a broadcast packet(DISCOVER) to request an IP. DHCP server propose(OFFER) an IP. Client confirm(Request) this IP. DHCP server send back an ACK, signaling that all is ok.
 
+####  DHCP Packet
+ 
+![DHCP Header](/docs/images/DHCP-Packet.png)  
 
-**Environment**  
-Ubuntu 18.04, netplan removed, ifupdown installed
+![DHCP handshake](/docs/images/DHCPHandshake-2.png)  
+
+
+### dnsmasq 
+dnsmasq is a lightweight DNS/DHCP Server.  See [dnsmasq dhcp](/docs/linux/dns/)
 
 ### DHCP Server Installation 
+Ubuntu 18.04
 
 install packet: **isc-dhcp-server**
  

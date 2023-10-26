@@ -48,12 +48,48 @@ Tests
 
 	$ dig centos1.miservers.com
 
+
 ### DHCP Configuration
 
-<dhcp>
-      <range start="192.168.122.2" end="192.168.122.254"/>
-    </dhcp>
+Configuration file :  /etc/dnsmasq.conf
+
+	## LOG DHCP
+	log-dhcp
+	## Options GLOBALES ##
+	dhcp-option=option:dns-server,192.168.122.11
+	dhcp-option=option:domain-name,miservers.com
+	dhcp-leasefile=/var/lib/dnsmasq/dnsmasq.leases
+	dhcp-authoritative
 	
+	## PROD LAN Subnet ##
+	dhcp-range=prodlan,192.168.122.100,192.168.122.150,255.255.255.0,1h
+	dhcp-option=prodlan,option:router,192.168.122.1
+	dhcp-option=prodlan,option:netmask,255.255.255.0
+	
+	# PC Bureau Informatique : Static IP
+	dhcp-host=prodlan,ab:cd:64:b4:44:fe,192.168.122.20
+
+	## LAN DEV Subnet  ##
+	dhcp-range=devlan,192.168.47.10,192.168.47.80,255.255.255.0,30m
+	dhcp-option=devlan,option:router,192.168.47.240
+	dhcp-option=devlan,option:netmask,255.255.255.0
+	
+	# Blacklist test
+	dhcp-host=devlan,2c:27:d7:01:71:08,ignore
+ 
+
+Set Up Static IPs
+
+	dhcp-host=ef:cd:ef:12:23:fe,my-host,192.168.122.4,infinite
+
+Configure a Client Host 
+
+	[root@centso2]$ cat /etc/resolv.conf
+	search miservers.com
+	nameserver 192.168.122.11
+
+
+
 ## Bind
 
 **Bind**   
