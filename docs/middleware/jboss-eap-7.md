@@ -516,9 +516,12 @@ High availability can be guaranted by Load Balancing or Failover.
 
 Cluster is made available by jgroup, infinspan and modcluster subsystems. *ha* and *full-ha* profiles enable these subsystems.
 
+**Reference**: [Clustering and Domain Setup Walkthrough](https://docs.wildfly.org/29/High_Availability_Guide.html#Clustering_and_Domain_Setup_Walkthrough)
+
 
 ### Cluster
 Environment: Wildfly 29, Centos 7
+
 
 ![](/docs/images/Wildfly-29.-Cluster.drawio.png)
 
@@ -643,12 +646,27 @@ Create Instances:
 ![](/docs/images/wildfly-29-cluster3.png)
 
 
-	```xml
-	```
+4. **Deploy an Cluster Demo**
 
-	```xml
-	```
+	https://github.com/liweinan/cluster-demo
 
+web.xml
+	
+	```xml
+	<distributable/>
+	```
+put.jsp
+
+	```jsp
+	<%
+    session.setAttribute("current.time", new java.util.Date());
+	%>
+	```
+Generate the war :
+
+	`
+	$ mvn package
+	`
 ### Failover																																																						
 
 **Miscs**

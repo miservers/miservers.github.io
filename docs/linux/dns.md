@@ -77,6 +77,7 @@ Configuration file :  /etc/dnsmasq.conf
 	# Blacklist test
 	dhcp-host=devlan,2c:27:d7:01:71:08,ignore
  
+dhcp-leasefile : The dnsmasq service stores its leases in /var/lib/misc/dnsmasq.leases
 
 Set Up Static IPs
 
