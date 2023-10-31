@@ -648,7 +648,7 @@ Create Instances:
 
 4. **Deploy an Cluster Demo**
 
-	https://github.com/liweinan/cluster-demo
+	[github.com/liweinan/cluster-demo](https://github.com/liweinan/cluster-demo)
 
 **web.xml**
 	
