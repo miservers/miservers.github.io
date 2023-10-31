@@ -650,23 +650,30 @@ Create Instances:
 
 	https://github.com/liweinan/cluster-demo
 
-web.xml
+**web.xml**
 	
-	```xml
-	<distributable/>
-	```
-put.jsp
+```xml
+  <distributable/>
+```
 
-	```jsp
-	<%
-    session.setAttribute("current.time", new java.util.Date());
-	%>
-	```
-Generate the war :
+**put.jsp**
 
-	`
-	$ mvn package
-	`
+```jsp
+  <%
+  session.setAttribute("current.time", new java.util.Date());
+  %>
+```
+
+**Generate the war** : `$ mvn package`
+
+Deploy It! on myapp-server-group
+
+Test Session Replication: 
+- http://192.168.56.104:8080/cluster-demo/put.jsp
+- http://192.168.56.103:8080/cluster-demo/get.jsp
+
+
+
 ### Failover																																																						
 
 **Miscs**

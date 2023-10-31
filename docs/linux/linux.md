@@ -150,35 +150,16 @@ this package contains utilities like arp, ifconfig, netstat, rarp, nameif and ro
   # sudo systemctl restart sshd
 ```
 
-## VI
+## VI Quick reference
 
-Remplace String:
-
-   :%s/TOMCAT/JBOSS/g
-
-
-Change Color:
-
-    create file ~/.vimrc with content:
-	  syntax on
-	  colorscheme desert
-
-Execute edited script from vi:
-
-	:! ./% arg1 
-	:! sh -x % arg1
-	% Repalace the current open file
-	
-    :w !sh -x
-	:w !bash
-
-Execute a commande from vi
-
-    :! ls -l
-
-vi: Terminal too wide
-
-	# stty columns 160
+| Command               | Description            | 
+|:----------------------|:-----------------------|
+| :%s/TOMCAT/JBOSS/g    | Substitute Strings     |
+| :! ./% arg1           | Execute edited script  |
+| :! ls -l              | Execute a commande     |
+| Ctrl+f, Ctrl+b        | Move Screen Forward/Backword|           
+| $, 0                  | move cursor end/beginning of line|
+| :n                    | go to line n           |
 
 
 
