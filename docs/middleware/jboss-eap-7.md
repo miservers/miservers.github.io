@@ -673,6 +673,20 @@ Test Session Replication:
 - http://192.168.56.103:8080/cluster-demo/get.jsp
 
 
+#### Mod_Cluster Configuration
+
+	yum install httpd
+
+
+https://www.modcluster.io/downloads/
+
+Install Dependencies : Centos 7
+
+	yum install cmake gcc make autoconf apr-util apr-util-devel apr apr-devel httpd httpd-devel
+
+	yum group install "Development Tools"
+
+	yum install m4  perl autoconf automake libtool make patch python
 
 ### Failover																																																						
 
