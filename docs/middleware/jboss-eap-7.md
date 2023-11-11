@@ -582,7 +582,7 @@ Environment: Wildfly 29, Centos 7
 	```
 
 	```xml
- 	<interfaces>
+    <interfaces>
         <interface name="management">
             <inet-address value="${jboss.bind.address.management:192.168.56.104}"/>
         </interface>
@@ -674,11 +674,14 @@ Test Session Replication:
 
 
 #### Mod_Cluster Configuration
+Env.: Centos Stream 9
+
+{: .warning }
+Error compiling mod_cluster under Centos 7 du to the old version of G++ compiler. 
+
+Install httpd server
 
 	yum install httpd
-
-
-https://www.modcluster.io/downloads/
 
 Install Dependencies : Centos 7
 
@@ -686,7 +689,12 @@ Install Dependencies : Centos 7
 
 	yum group install "Development Tools"
 
-	yum install m4  perl autoconf automake libtool make patch python
+Download modCluster and Compile it: See the native/README
+
+>https://www.modcluster.io/downloads/
+
+
+
 
 ### Failover																																																						
 
