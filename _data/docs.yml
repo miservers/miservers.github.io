@@ -34,6 +34,11 @@ middleware:
       slug: jmeter
       icon: fa-jmeter.png
 
+    - title: Load Balancing
+      slug: load-balancing
+      icon: fa-load-balancing.png
+
+
 data-base:
   title: Data Base
   url: docs/database

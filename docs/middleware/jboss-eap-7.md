@@ -673,28 +673,33 @@ Test Session Replication:
 - http://192.168.56.103:8080/cluster-demo/get.jsp
 
 
-#### Mod_Cluster Configuration
-Env.: Centos Stream 9
+### Mod Cluster
 
 {: .warning }
-Error compiling mod_cluster under Centos 7 du to the old version of G++ compiler. 
+Error compiling mod_cluster under Centos 7 du to the old version of G++ compiler. Compilation OK on Centos Stream 9.
 
-Install httpd server
+- Install httpd server
 
 	yum install httpd
 
-Install Dependencies : Centos 7
-
-	yum install cmake gcc make autoconf apr-util apr-util-devel apr apr-devel httpd httpd-devel
-
-	yum group install "Development Tools"
-
-Download modCluster and Compile it: See the native/README
+- Download modCluster and Compile it: See the native/README
 
 >https://www.modcluster.io/downloads/
 
 
+- Copy into /etc/httpd/modules:
 
+	mod_advertise.so  mod_lbmethod_cluster.so  mod_manager.so  mod_proxy_cluster.so
+
+- LoadModules in http.conf
+
+	LoadModule mod_lbmethod_cluster modules/mod_lbmethod_cluster.so
+	LoadModule manager_module modules/mod_manager.so
+	LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
+	LoadModule advertise_module modules/mod_advertise.so
+
+{: .warning }
+Comment out mod_proxy_balancer.so because of conflict.
 
 ### Failover																																																						
 

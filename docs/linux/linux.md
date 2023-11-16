@@ -158,8 +158,10 @@ this package contains utilities like arp, ifconfig, netstat, rarp, nameif and ro
 | :! ./% arg1           | Execute edited script  |
 | :! ls -l              | Execute a commande     |
 | Ctrl+f, Ctrl+b        | Move Screen Forward/Backword|           
+| shift+g               | move the cursor to endfile  |
 | $, 0                  | move cursor end/beginning of line|
 | :n                    | go to line n           |
+
 
 
 
