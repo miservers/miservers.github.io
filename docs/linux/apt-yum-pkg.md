@@ -54,8 +54,9 @@ dpkg: https://www.cyberciti.biz/howto/question/linux/dpkg-cheat-sheet.php
 
 ### Yum
 
-	$ yum install [package-name]
-	$ yum remove [package-name]
+	$ yum install pkg-name
+	$ yum remove pkg-name
+	$  yum search pkg-name
 	$ yum list available
 	$ yum list installed
 	$ yum list installed | grep nfs

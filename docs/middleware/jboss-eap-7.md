@@ -508,10 +508,13 @@ Use Console : Heading 'Access Control'. Password is named Realm.
 Deprecated. No longer supported from Wildfly 25.
 
 ### Elytron
+TODO 
+
+### Enable HTTPS on Management Console
 
 
 **High Availability**
--------------------------------------
+------------------------------------------------------
 High availability can be guaranted by Load Balancing or Failover. 
 
 Cluster is made available by jgroup, infinspan and modcluster subsystems. *ha* and *full-ha* profiles enable these subsystems.
@@ -664,19 +667,22 @@ Create Instances:
   %>
 ```
 
-**Generate the war** : `$ mvn package`
+**Generate the war** : 
+
+	$ mvn package
 
 Deploy It! on myapp-server-group
 
-Test Session Replication: 
-- http://192.168.56.104:8080/cluster-demo/put.jsp
-- http://192.168.56.103:8080/cluster-demo/get.jsp
+Test Session Replication:
+
+  - http://192.168.56.104:8080/cluster-demo/put.jsp
+  - http://192.168.56.103:8080/cluster-demo/get.jsp
 
 
 ### Mod Cluster
 
 {: .warning }
-Error compiling mod_cluster under Centos 7 du to the old version of G++ compiler. Compilation OK on Centos Stream 9.
+Error compiling mod_cluster under Centos 7 du to the old version of G++ compiler. Compilation OK on Centos Stream 9, BUT httpd service faild to start!!.
 
 - Install httpd server
 
@@ -684,22 +690,8 @@ Error compiling mod_cluster under Centos 7 du to the old version of G++ compiler
 
 - Download modCluster and Compile it: See the native/README
 
->https://www.modcluster.io/downloads/
-
-
-- Copy into /etc/httpd/modules:
-
-	mod_advertise.so  mod_lbmethod_cluster.so  mod_manager.so  mod_proxy_cluster.so
-
-- LoadModules in http.conf
-
-	LoadModule mod_lbmethod_cluster modules/mod_lbmethod_cluster.so
-	LoadModule manager_module modules/mod_manager.so
-	LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
-	LoadModule advertise_module modules/mod_advertise.so
-
-{: .warning }
-Comment out mod_proxy_balancer.so because of conflict.
+### Mod JK
+See [Load Balancing](/docs/middleware/load-balancing/#mod_jk-wildfly)
 
 ### Failover																																																						
 
