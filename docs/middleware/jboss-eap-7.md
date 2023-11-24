@@ -512,6 +512,14 @@ TODO
 
 ### Enable HTTPS on Management Console
 
+Using HTTP Console:
+ 
+![alt](/docs/images/wildfly-29-management-https.png)
+
+![alt](/docs/images/wildfly-29-management-https.png)
+
+Access to Secure Console: https://centos1:9993/console/
+
 
 **High Availability**
 ------------------------------------------------------
