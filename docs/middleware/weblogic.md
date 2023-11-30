@@ -5,7 +5,16 @@ parent: Middleware
 nav_order: 3
 ---
 
-## Weblogic 12
+**Environment**: Weblogic 14c, Centos Stream 9
+
+### Domain Concepts
+
+![alt](/docs/images/weblogic-concepts.gif)
+
+- [x] [Weblogic Documentation](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/administer.html)
+- [x] [See This Blog](https://middlewareadmin-pavan.blogspot.com/2021/01/weblogic-14c-horizontal-cluster-setup.html
+)
+- [x] [Installing Weblogic] (https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlsig/installing-and-configuring-oracle-weblogic-server-and-coherence.pdf)
 
 ### Installation
 Installer
