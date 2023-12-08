@@ -17,6 +17,18 @@ nav_order: 3
 - [x] [Installing Weblogic] (https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlsig/installing-and-configuring-oracle-weblogic-server-and-coherence.pdf)
 
 ### Installation
+
+Create a User
+
+	 useradd wlsadmin -g ora 
+
+[x] [Pre_installation Tasks](https://docs.oracle.com/cd/E21764_01/install.1111/b32474/silent_install.htm#ASINS224)
+Silent Installation:
+
+	java -jar <installer file> -silent -responseFile <response file location> -invPtrLoc <absolute path to the file> 
+
+
+
 Installer
 ```sh
 java -jar fmw_12.2.1.2.0_wls_quick.jar ORACLE_HOME=/opt/weblogic
