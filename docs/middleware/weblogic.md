@@ -14,15 +14,57 @@ nav_order: 3
 - [x] [Weblogic Documentation](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/administer.html)
 - [x] [See This Blog](https://middlewareadmin-pavan.blogspot.com/2021/01/weblogic-14c-horizontal-cluster-setup.html
 )
-- [x] [Installing Weblogic] (https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlsig/installing-and-configuring-oracle-weblogic-server-and-coherence.pdf)
+- [x] [Silent Installation] (https://oracle-base.com/articles/12c/weblogic-silent-installation-12c)
 
 ### Installation
 
-Create a User
+Create a new group and user.
 
-	 useradd wlsadmin -g ora 
+	groupadd  oinstall
+	useradd  oracle -g oinstall 
+	passwd oracle
 
-[x] [Pre_installation Tasks](https://docs.oracle.com/cd/E21764_01/install.1111/b32474/silent_install.htm#ASINS224)
+Create the directories:
+
+	mkdir -p /u01/app/oracle/middleware
+	mkdir -p /u01/app/oracle/config/domains
+	mkdir -p /u01/app/oracle/config/applications
+	chown -R oracle:oinstall /u01
+	chmod -R 775 /u01/
+
+SetUp profile vars: /home/oracle/.bash_profile
+
+	export MW_HOME=/u01/app/oracle/middleware
+	export WLS_HOME=$MW_HOME/wlserver
+	export WL_HOME=$WLS_HOME
+
+	export JAVA_HOME=/opt/jdk
+	export PATH=$JAVA_HOME/bin:$PATH
+
+Create [Response File](https://docs.oracle.com/middleware/1212/core/OUIRF/response_file.htm#OUIRF391)
+
+/u01/software/wls.rsp
+
+	[ENGINE]
+	Response File Version=1.0.0.0.0
+	[GENERIC]
+	ORACLE_HOME=/u01/app/oracle/middleware
+	INSTALL_TYPE=WebLogic Server
+	MYORACLESUPPORT_USERNAME=
+	MYORACLESUPPORT_PASSWORD=<SECURE VALUE>
+	DECLINE_SECURITY_UPDATES=true
+	SECURITY_UPDATES_VIA_MYORACLESUPPORT=false
+	PROXY_HOST=
+	PROXY_PORT=
+	PROXY_USER=
+	PROXY_PWD=<SECURE VALUE>
+	COLLECTOR_SUPPORTHUB_URL=
+
+Specify an Oracle inventory location: Create a File  /u01/software/oraInst.loc
+
+	inventory_loc=/u01/app/oraInventory
+	inst_group=oinstall
+
 Silent Installation:
 
 	java -jar <installer file> -silent -responseFile <response file location> -invPtrLoc <absolute path to the file> 
