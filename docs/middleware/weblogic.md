@@ -65,10 +65,9 @@ Specify an Oracle inventory location: Create a File  /u01/software/oraInst.loc
 	inventory_loc=/u01/app/oraInventory
 	inst_group=oinstall
 
-Silent Installation:
+WebLogic Silent Installation
 
-	java -jar <installer file> -silent -responseFile <response file location> -invPtrLoc <absolute path to the file> 
-
+	$JAVA_HOME/bin/java -Xmx1024m -jar /opt/fmw_12.2.1.4.0_wls_lite_generic.jar -silent -responseFile /u01/software/wls.rsp -invPtrLoc /u01/software/oraInst.loc
 
 
 Installer
