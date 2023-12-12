@@ -11,26 +11,30 @@ nav_order: 3
 
 ![alt](/docs/images/weblogic-concepts.gif)
 
+- [x] [Silent Installation](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c)
 - [x] [Weblogic Documentation](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/administer.html)
 - [x] [See This Blog](https://middlewareadmin-pavan.blogspot.com/2021/01/weblogic-14c-horizontal-cluster-setup.html
 )
-- [x] [Silent Installation] (https://oracle-base.com/articles/12c/weblogic-silent-installation-12c)
 
 ### Installation
 
 Create a new group and user.
 
-	groupadd  oinstall
-	useradd  oracle -g oinstall 
-	passwd oracle
+~~~sh
+$ groupadd  oinstall
+$ useradd  oracle -g oinstall 
+$ passwd oracle
+~~~
 
 Create the directories:
 
-	mkdir -p /u01/app/oracle/middleware
-	mkdir -p /u01/app/oracle/config/domains
-	mkdir -p /u01/app/oracle/config/applications
-	chown -R oracle:oinstall /u01
-	chmod -R 775 /u01/
+~~~sh
+$ mkdir -p /u01/app/oracle/middleware
+$ mkdir -p /u01/app/oracle/config/domains
+$ mkdir -p /u01/app/oracle/config/applications
+$ chown -R oracle:oinstall /u01
+$ chmod -R 775 /u01/
+~~~
 
 SetUp profile vars: /home/oracle/.bash_profile
 
@@ -38,12 +42,11 @@ SetUp profile vars: /home/oracle/.bash_profile
 	export WLS_HOME=$MW_HOME/wlserver
 	export WL_HOME=$WLS_HOME
 
-	export JAVA_HOME=/opt/jdk
+	export JAVA_HOME=/opt/jdk1.8.0_381
 	export PATH=$JAVA_HOME/bin:$PATH
 
-Create [Response File](https://docs.oracle.com/middleware/1212/core/OUIRF/response_file.htm#OUIRF391)
+Create [Response File](https://docs.oracle.com/middleware/1212/core/OUIRF/response_file.htm#OUIRF391):   **/u01/software/wls.rsp**
 
-/u01/software/wls.rsp
 
 	[ENGINE]
 	Response File Version=1.0.0.0.0
@@ -60,27 +63,28 @@ Create [Response File](https://docs.oracle.com/middleware/1212/core/OUIRF/respon
 	PROXY_PWD=<SECURE VALUE>
 	COLLECTOR_SUPPORTHUB_URL=
 
-Specify an Oracle inventory location: Create a File  /u01/software/oraInst.loc
+Specify an Oracle inventory location: **/u01/software/oraInst.loc**
 
 	inventory_loc=/u01/app/oraInventory
 	inst_group=oinstall
 
 WebLogic Silent Installation
 
-	$JAVA_HOME/bin/java -Xmx1024m -jar /opt/fmw_12.2.1.4.0_wls_lite_generic.jar -silent -responseFile /u01/software/wls.rsp -invPtrLoc /u01/software/oraInst.loc
+~~~sh
+$ $JAVA_HOME/bin/java -Xmx1024m -jar /opt/fmw_12.2.1.4.0_wls_lite_generic.jar -silent -responseFile /u01/software/wls.rsp -invPtrLoc /u01/software/oraInst.loc
+~~~
 
 
-Installer
-```sh
-java -jar fmw_12.2.1.2.0_wls_quick.jar ORACLE_HOME=/opt/weblogic
-java -jar fmw_12.2.1.2.0_wls_quick.jar -help
-```
+### Create a Domain
 
-Create the Domain, 
-```sh
-oracle_common/common/bin/config.sh
-```
+~~~sh
+$ $MW_HOME/oracle_common/common/bin/config.sh
+~~~
+
 This wizard can create AdminServer( port 7001), nodemanager, managed nodes
+
+### Patching WebLogic Server
+See [this Blog](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c#patching-weblogic-server)
 
 ### Tree
 Domain:  
