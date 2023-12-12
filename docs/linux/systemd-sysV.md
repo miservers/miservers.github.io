@@ -6,7 +6,6 @@ nav_order: 6
 ---
 
 ## Systemd
-Ubuntu 20.04
 
 ### Getting Started
 
@@ -34,28 +33,32 @@ A Service is defined as **Unit**. Unit files end with **.service**
 {: .highlight }
 **journalctl** is a command to view and manage Systemd logs, wich are stored in binary format under **/var/log/journal**.
 
-| Command             | Description                               |
-| ------------------- | ----------------------------------------- |
-| # journalctl -xe    | Display paged Logs with explanation       |
-| # journalctl -b     | Current Boot Logs                         |
-| # journalctl -k     | Kernel Logs (like dmesg)                  |
-| # journalctl -u tomcat                      | By Unit                |
-| # journalctl -f                             |Tail                    |
-| # journalctl -b  -u tomcat -o json-pretty   | Display in Json Format |
-| # journalctl -p err                         | By Level               |
+~~~shell
+$ journalctl -xe    // Display paged Logs with explanation       
+$ journalctl -b     // Current Boot Logs                         
+$ journalctl -k     // Kernel Logs (like dmesg)                  
+$ journalctl -u tomcat                      // By Unit                
+$ journalctl -f                             // Tail                    
+$ journalctl -b  -u tomcat -o json-pretty   // Display in Json Format 
+$ journalctl -p err                         // By Level               
+~~~
 
+#### Purge journal logs
 
+~~~shell
+$ journalctl --disk-usage
+$ sudo journalctl --vacuum-size=200M
+~~~
 
 ### Systemd Commands
 
-| Command             			| Description                       |
-| ------------------------------| ----------------------------------|
-| # systemctl list-unit-files 	|  List Unit Files 				  	|
-| # systemctl list-units 		|  List Units  						|
-| # systemctl start tomcat  	|  Start a Service  				|
-| # systemctl status tomcat  	|  Status Of a Service  			|
-| # systemctl disable tomcat  	|  Disable a Service  				|
-
+~~~shell
+$ systemctl start|status|disable tomcat   //  Control a Service  				
+$ systemctl list-unit-files     //  List Unit Files 				  	
+$ systemctl list-units          //  List Units
+$ systemd-analyze blame         //  List services started on boot ordered by time
+$ systemd-analyze time          // Time required to boot the machine   						
+~~~	
 
 ###  Creating a New Service (Tomcat)
 
