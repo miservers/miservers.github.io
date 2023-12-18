@@ -16,7 +16,7 @@ nav_order: 3
 - [x] [See This Blog](https://middlewareadmin-pavan.blogspot.com/2021/01/weblogic-14c-horizontal-cluster-setup.html
 )
 
-### Installation
+### Installation. Silent
 
 Create a new group and user.
 
@@ -75,7 +75,7 @@ $ $JAVA_HOME/bin/java -Xmx1024m -jar /opt/fmw_12.2.1.4.0_wls_lite_generic.jar -s
 ~~~
 
 
-### Create a Domain
+### Create a Domain: GUI
 
 ~~~sh
 $ $MW_HOME/oracle_common/common/bin/config.sh
@@ -83,8 +83,47 @@ $ $MW_HOME/oracle_common/common/bin/config.sh
 
 This wizard can create AdminServer( port 7001), nodemanager, managed nodes
 
+### Create a Domain: using WLST
+
+- [x] See [This Article](https://docs.oracle.com/cd/E28280_01/install.1111/b32474/silent_install.htm#CHDGECID)
+
+~~~sh
+$ $MW_HOME/oracle_common/common/bin/wlst.sh create-domain-7001.py
+~~~
+
+**create-domain-7001.py**
+
+~~~py
+	#!/usr/bin/python
+	import os, sys
+	readTemplate('/u01/app/oracle/middleware/wlserver/common/templates/wls/wls.jar')
+	cd('/Security/base_domain/User/weblogic')
+	cmo.setPassword('changeit1')
+	cd('/Server/AdminServer')
+	cmo.setName('AdminServer')
+	cmo.setListenPort(7001)
+	cmo.setListenAddress('centos1')
+	writeDomain('/u01/app/oracle/middleware/Domains/myDomain')
+	closeTemplate()
+	exit()
+~~~
+
+
+
+
+
+### Create Clustered Domain
+
+- [x] See [This Article](https://oracle-base.com/articles/12c/weblogic-12c-clustered-domains-1212#create-the-clustered-domain)
+
 ### Patching WebLogic Server
-See [this Blog](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c#patching-weblogic-server)
+
+- [x] See [This Blog](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c#patching-weblogic-server)
+
+### Uninstall Weblogic: Silent
+	
+	$ $MW_HOME/oui/bin/deinstall.sh -silent
+
 
 ### Tree
 Domain:  
