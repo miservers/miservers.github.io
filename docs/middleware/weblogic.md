@@ -165,6 +165,15 @@ edit: **user_projects/domains/base_domain/servers/AdminServer/security/boot.prop
     sername=weblogic
     password=weblogic1
 
+#### Change AdminServer Password
+~~~sh
+$ $DOMAIN_HOME/bin/stopWebLogic.sh
+$ mv $DOMAIN_HOME/servers/AdminServer/data $DOMAIN_HOME/servers/AdminServer/data-old
+$ . $DOMAIN_HOME/bin/setDomainEnv.sh
+$ cd $DOMAIN_HOME/security
+$ java weblogic.security.utils.AdminAccount weblogic Change_it .
+~~~
+
 #### Node Manager Properties   
 ```
  $ cat base_domain/nodemanager/nodemanager.properties
