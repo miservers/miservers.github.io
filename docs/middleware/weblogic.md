@@ -7,16 +7,20 @@ nav_order: 3
 
 **Environment**: Weblogic 14c, Centos Stream 9
 
-### Domain Concepts
+### Domain Concepts  
+------------------------------------
 
 ![alt](/docs/images/weblogic-concepts.gif)
 
-- [x] [Silent Installation](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c)
 - [x] [Weblogic Documentation](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/administer.html)
 - [x] [See This Blog](https://middlewareadmin-pavan.blogspot.com/2021/01/weblogic-14c-horizontal-cluster-setup.html
 )
 
-### Installation. Silent
+
+### Installation: Silent
+------------------------------------
+
+- [x] [Silent Installation](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c)
 
 Create a new group and user.
 
@@ -41,6 +45,7 @@ SetUp profile vars: /home/oracle/.bash_profile
 	export MW_HOME=/u01/app/oracle/middleware
 	export WLS_HOME=$MW_HOME/wlserver
 	export WL_HOME=$WLS_HOME
+	export DOMAIN_HOME=$MW_HOME/user_projects/domains/myDomain
 
 	export JAVA_HOME=/opt/jdk1.8.0_381
 	export PATH=$JAVA_HOME/bin:$PATH
@@ -76,6 +81,7 @@ $ $JAVA_HOME/bin/java -Xmx1024m -jar /opt/fmw_12.2.1.4.0_wls_lite_generic.jar -s
 
 
 ### Create a Domain: GUI
+------------------------------------
 
 ~~~sh
 $ $MW_HOME/oracle_common/common/bin/config.sh
@@ -84,6 +90,7 @@ $ $MW_HOME/oracle_common/common/bin/config.sh
 This wizard can create AdminServer( port 7001), nodemanager, managed nodes
 
 ### Create a Domain: using WLST
+------------------------------------
 
 - [x] See [This Article](https://docs.oracle.com/cd/E28280_01/install.1111/b32474/silent_install.htm#CHDGECID)
 
@@ -94,33 +101,38 @@ $ $MW_HOME/oracle_common/common/bin/wlst.sh create-domain-7001.py
 **create-domain-7001.py**
 
 ~~~py
-	#!/usr/bin/python
-	import os, sys
-	readTemplate('/u01/app/oracle/middleware/wlserver/common/templates/wls/wls.jar')
-	cd('/Security/base_domain/User/weblogic')
-	cmo.setPassword('changeit1')
-	cd('/Server/AdminServer')
-	cmo.setName('AdminServer')
-	cmo.setListenPort(7001)
-	cmo.setListenAddress('centos1')
-	writeDomain('/u01/app/oracle/middleware/Domains/myDomain')
-	closeTemplate()
-	exit()
+#!/usr/bin/python
+import os, sys
+readTemplate('/u01/app/oracle/middleware/wlserver/common/templates/wls/wls.jar')
+cd('/Security/base_domain/User/weblogic')
+cmo.setPassword('changeit1')
+cd('/Server/AdminServer')
+cmo.setName('AdminServer')
+cmo.setListenPort(7001)
+cmo.setListenAddress('centos1')
+writeDomain('/u01/app/oracle/middleware/user_projects/domains/myDomain')
+closeTemplate()
+exit()
 ~~~
 
+SetUp profile vars: /home/oracle/.bash_profile
 
+	export DOMAIN_HOME=$MW_HOME/user_projects/domains/myDomain
 
 
 
 ### Create Clustered Domain
+------------------------------------
 
 - [x] See [This Article](https://oracle-base.com/articles/12c/weblogic-12c-clustered-domains-1212#create-the-clustered-domain)
 
 ### Patching WebLogic Server
+------------------------------------
 
 - [x] See [This Blog](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c#patching-weblogic-server)
 
 ### Uninstall Weblogic: Silent
+------------------------------------
 	
 	$ $MW_HOME/oui/bin/deinstall.sh -silent
 
@@ -133,40 +145,43 @@ Domain:
 -Dweblogic.RootDirectory=path : root directory, contains config/config.xml, servers etc	 
 
 ### Console
+---------------
+
 Url  
-  http://localhost:7001/console
+  http://centos1:7001/console
 
 Port
 
 Username/password
 
 
-### Config
-Start Weblogic without password prompt
-```
-  edit: user_projects/domains/base_domain/servers/AdminServer/security/boot.properties
-     sername=weblogic
-     password=weblogic1
-```
+### Weblogic Configuration
+--------------------
 
-Node Manager   
+#### Console User/Password
+
+edit: **user_projects/domains/base_domain/servers/AdminServer/security/boot.properties**
+
+    sername=weblogic
+    password=weblogic1
+
+#### Node Manager Properties   
 ```
  $ cat base_domain/nodemanager/nodemanager.properties
    ListenPort=5556
 ```
 
-### Arret/relance
+### Weblogic Start/Stop
+-------------------------------
 
-**Stop/start**
-AdminServer (Manager)
-```sh
-user_projects/domains/base_domain/bin/startWebLogic.sh
-```
+~~~sh
+$DOMAIN_HOME/bin/startNodeManager.sh
+$DOMAIN_HOME/bin/startWebLogic.sh      // Start AdminServer
+$DOMAIN_HOME/bin/stopWebLogic.sh
+$DOMAIN_HOME/bin/startManagedWebLogic.sh <managedServer>
+$DOMAIN_HOME/bin/stopManagedWebLogic.sh <managedServer>
+~~~
 
-Node Manager
-```sh
-user_projects/domains/base_domain/bin/startNodeManager.sh
-```
 
 ### JVM Options
 
