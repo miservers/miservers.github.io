@@ -12,7 +12,7 @@ nav_order: 3
 
 ![alt](/docs/images/weblogic-concepts.gif)
 
-- [x] [Weblogic Documentation](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/administer.html)
+- [x] [Weblogic Documentation](https://docs.oracle.com/middleware/1212/wls)
 - [x] [See This Blog](https://middlewareadmin-pavan.blogspot.com/2021/01/weblogic-14c-horizontal-cluster-setup.html
 )
 
@@ -137,9 +137,32 @@ SetUp profile vars: /home/oracle/.bash_profile
 	$ $MW_HOME/oui/bin/deinstall.sh -silent
 
 
-### Tree
-Domain:  
-/opt/weblogic/user_projects/domains/base_domain
+### Domain Tree
+	DOMAIN_HOME/myDomain
+		├── bin
+		│   ├── startManagedWebLogic.sh
+		│   ├── startNodeManager.sh
+		│   ├── startRSDaemon.sh
+		│   ├── startWebLogic.sh
+		│   ├── stopManagedWebLogic.sh
+		│   ├── stopNodeManager.sh
+		│   ├── stopRSDaemon.sh
+		│   └── stopWebLogic.sh
+		├── config
+		│   ├── config.xml
+		│   ├── deployments
+		│   ├── jdbc
+		│   ├── lifecycle-config.xml
+		│   ├── lifecycle-config.xml.lok
+		│   ├── nodemanager
+		│   ├── security
+		├── servers
+		│   ├── AdminServer
+		│   └── Server-0
+		└── tmp
+		    ├── 3305975478340.lok
+		    ├── 3450523061896.lok
+
 
 ### Config Vars
 -Dweblogic.RootDirectory=path : root directory, contains config/config.xml, servers etc	 
@@ -155,32 +178,26 @@ Port
 Username/password
 
 
-### Weblogic Configuration
---------------------
 
-#### Console User/Password
+### Change console/boot Password
+-------------------------------
 
-edit: **user_projects/domains/base_domain/servers/AdminServer/security/boot.properties**
+Edit Boot Identity File: **$DOMAIN_HOME/servers/AdminServer/security/boot.properties**
 
     sername=weblogic
-    password=weblogic1
+    password=Change_it
 
-#### Change AdminServer Password
-~~~sh
-$ $DOMAIN_HOME/bin/stopWebLogic.sh
-$ mv $DOMAIN_HOME/servers/AdminServer/data $DOMAIN_HOME/servers/AdminServer/data-old
-$ . $DOMAIN_HOME/bin/setDomainEnv.sh
-$ cd $DOMAIN_HOME/security
-$ java weblogic.security.utils.AdminAccount weblogic Change_it .
-~~~
+The first time the admin server start, it reads this file and overwrite it with encrypted username/password. 
 
-#### Node Manager Properties   
-```
- $ cat base_domain/nodemanager/nodemanager.properties
-   ListenPort=5556
-```
+### Node Manager Properties   
+-------------------------------
 
-### Weblogic Start/Stop
+Edit **$DOMAIN_HOME/nodemanager/nodemanager.properties**
+
+	ListenAddress=centos1	
+	ListenPort=5556
+
+### Start/Stop Weblogic
 -------------------------------
 
 ~~~sh
