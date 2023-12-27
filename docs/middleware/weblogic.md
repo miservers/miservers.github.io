@@ -5,9 +5,9 @@ parent: Middleware
 nav_order: 3
 ---
 
-**Environment**: Weblogic 14c, Centos Stream 9
+**Environment**: Weblogic 12c, Centos Stream 9
 
-### Domain Concepts  
+## Domain Concepts  
 ------------------------------------
 
 ![alt](/docs/images/weblogic-concepts.gif)
@@ -17,8 +17,10 @@ nav_order: 3
 )
 
 
-### Installation: Silent
+## Installation
 ------------------------------------
+
+### Installation: Silent
 
 - [x] [Silent Installation](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c)
 
@@ -36,6 +38,7 @@ Create the directories:
 $ mkdir -p /u01/app/oracle/middleware
 $ mkdir -p /u01/app/oracle/config/domains
 $ mkdir -p /u01/app/oracle/config/applications
+$ mkdir -p /u01/software
 $ chown -R oracle:oinstall /u01
 $ chmod -R 775 /u01/
 ~~~
@@ -79,9 +82,18 @@ WebLogic Silent Installation
 $ $JAVA_HOME/bin/java -Xmx1024m -jar /opt/fmw_12.2.1.4.0_wls_lite_generic.jar -silent -responseFile /u01/software/wls.rsp -invPtrLoc /u01/software/oraInst.loc
 ~~~
 
+### Patching WebLogic Server
+
+- [x] See [This Blog](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c#patching-weblogic-server)
+
+### Uninstall Weblogic: Silent
+	
+	$ $MW_HOME/oui/bin/deinstall.sh -silent
+
+## Domains
+---------------------------------
 
 ### Create a Domain: GUI
-------------------------------------
 
 ~~~sh
 $ $MW_HOME/oracle_common/common/bin/config.sh
@@ -90,7 +102,6 @@ $ $MW_HOME/oracle_common/common/bin/config.sh
 This wizard can create AdminServer( port 7001), nodemanager, managed nodes
 
 ### Create a Domain: using WLST
-------------------------------------
 
 - [x] See [This Article](https://docs.oracle.com/cd/E28280_01/install.1111/b32474/silent_install.htm#CHDGECID)
 
@@ -122,82 +133,100 @@ SetUp profile vars: /home/oracle/.bash_profile
 
 
 ### Create Clustered Domain
-------------------------------------
 
 - [x] See [This Article](https://oracle-base.com/articles/12c/weblogic-12c-clustered-domains-1212#create-the-clustered-domain)
 
-### Patching WebLogic Server
-------------------------------------
+On **machine1**:
 
-- [x] See [This Blog](https://oracle-base.com/articles/12c/weblogic-silent-installation-12c#patching-weblogic-server)
+~~~sh
+	$ cd $MW_HOME/oracle_common/common/bin
+	$ ./pack.sh -managed=true -domain=$DOMAIN_HOME -template=${DOMAIN_HOME}-template.jar -template_name=myDomain
+~~~
 
-### Uninstall Weblogic: Silent
-------------------------------------
-	
-	$ $MW_HOME/oui/bin/deinstall.sh -silent
+Transfer the generated jar to machine2:
+
+	$ scp ${DOMAIN_HOME}-template.jar oracle@centos2:~/
+
+On **machine2**:
+
+1. Install Weblogic Software
+2. Unpack the configuration
+
+~~~sh
+$ cd $MW_HOME/oracle_common/common/bin
+$ ./unpack.sh -domain=$DOMAIN_HOME -template=/home/oracle/myDomain-template.jar
+~~~
+
+Start Weblogic on **machine1**
+
+	$ $DOMAIN_HOME/startWebLogic.sh
+
+
+On **machine2**:
+
+- Enroll Second Machine
+
+~~~py
+connect('weblogic', 'Change_it', 't3://centos1:7001')
+
+nmEnroll('/u01/app/oracle/middleware/user_projects/domains/myDomain', '/u01/app/oracle/middleware/user_projects/domains/myDomain/nodemanager')
+
+disconnect()
+exit()
+~~~
+
+- Check that  **$MW_HOME/domain-registry.xml** contains:
+
+~~~xml
+<domain location="/u01/app/oracle/middleware/user_projects/domains/myDomain"/>
+~~~
+
+-  Check **$DOMAIN_HOME/nodemanager/nodemanager.domains** contains:
+
+		myDomain=/u01/app/oracle/middleware/user_projects/domains/myDomain
+
+
+-  Edit **$DOMAIN_HOME/nodemanager/nodemanager.properties**
+
+		ListenAddress=centos2	
+		ListenPort=5556
+
+-  Start NodeManager:
+
+		$ nohup DOMAIN_HOME/bin/startNodeManager.sh > /dev/null 2>&1 &
+
+- Add Machine2 on the Console
+
+![alt](/docs/images/weblogic-12c-machines.png)
+
 
 
 ### Domain Tree
 	DOMAIN_HOME/myDomain
 		├── bin
-		│   ├── startManagedWebLogic.sh
-		│   ├── startNodeManager.sh
-		│   ├── startRSDaemon.sh
-		│   ├── startWebLogic.sh
-		│   ├── stopManagedWebLogic.sh
-		│   ├── stopNodeManager.sh
-		│   ├── stopRSDaemon.sh
-		│   └── stopWebLogic.sh
+		    ├── startManagedWebLogic.sh
+		    ├── startNodeManager.sh
+		    ├── startRSDaemon.sh
+		    ├── startWebLogic.sh
+		    └── stopWebLogic.sh
 		├── config
-		│   ├── config.xml
-		│   ├── deployments
-		│   ├── jdbc
-		│   ├── lifecycle-config.xml
-		│   ├── lifecycle-config.xml.lok
-		│   ├── nodemanager
-		│   ├── security
+		    ├── config.xml
+		    ├── deployments
+		    ├── jdbc
+		    ├── nodemanager
+		    └── security
 		├── servers
-		│   ├── AdminServer
-		│   └── Server-0
+		    ├── AdminServer
+		    └── Server-0
 		└── tmp
-		    ├── 3305975478340.lok
-		    ├── 3450523061896.lok
+		    └── 3305975478340.lok
 
 
 ### Config Vars
--Dweblogic.RootDirectory=path : root directory, contains config/config.xml, servers etc	 
 
-### Console
----------------
+	-Dweblogic.RootDirectory=path : root directory, contains config/config.xml, servers etc	 
 
-Url  
-  http://centos1:7001/console
-
-Port
-
-Username/password
-
-
-
-### Change console/boot Password
--------------------------------
-
-Edit Boot Identity File: **$DOMAIN_HOME/servers/AdminServer/security/boot.properties**
-
-    sername=weblogic
-    password=Change_it
-
-The first time the admin server start, it reads this file and overwrite it with encrypted username/password. 
-
-### Node Manager Properties   
--------------------------------
-
-Edit **$DOMAIN_HOME/nodemanager/nodemanager.properties**
-
-	ListenAddress=centos1	
-	ListenPort=5556
-
-### Start/Stop Weblogic
+## Start/Stop Weblogic
 -------------------------------
 
 ~~~sh
@@ -208,13 +237,47 @@ $DOMAIN_HOME/bin/startManagedWebLogic.sh <managedServer>
 $DOMAIN_HOME/bin/stopManagedWebLogic.sh <managedServer>
 ~~~
 
+## Console
+---------------
+
+### Url
+
+ <a>http://centos1:7001/console</a>
+
+
+### Change console/boot Password
+
+Edit Boot Identity File: **$DOMAIN_HOME/servers/AdminServer/security/boot.properties**
+
+    sername=weblogic
+    password=Change_it
+
+The first time the admin server start, it reads this file and overwrite it with encrypted username/password. 
+
+## Configuration
+-------------------------------
+
+### Node Manager Properties   
+
+Edit **$DOMAIN_HOME/nodemanager/nodemanager.properties**
+
+	ListenAddress=centos1	
+	ListenPort=5556
+
+### Machines
+You should define machines wich are controlled by Node Manager Processes
+
+![alt](/docs/images/weblogic-12c-machines.png)
+
 
 ### JVM Options
 
-base_domain/startManagedWebLogic.sh
+	base_domain/startManagedWebLogic.sh
   
+### Enable Production Mode
+- Using Console :
 
-**Stop/start of server**
+![alt](/docs/images/weblogic-12c-production-mode.png)
 
 ### Logs
 
@@ -267,7 +330,23 @@ activate()
 
 	Tous les autres paramètres du realm/group/user/role laissés par défaut.
 
+## Deploy Applications
+-------------------------------
+How To Install an Application:
+- Example [benefits.war](https://www.oracle.com/webfolder/technetwork/tutorials/obe/fmw/wls/12c/12_1_3/03/deployapps.html)
+- Under Domain Structure, click **Deployments**. and follow screens 
+- On the review screen, select **No, I will review the configuration later**.
+
+- Activate Changes  
+	![alt](/docs/images/weblogic-12c-deploy-app-change.gif)
+
+- Start The Application  
+	![alt](/docs/images/weblogic-12c-deploy-app-start.png)
+
+- Test The Application <a>http://centos1:7010/benefits/</a>
+
 ## Apache/Weblogic 
+-------------------------------
 	<VirtualHost 10.0.0.52>
 		ServerName www.app1.safar.com
 		 <IfModule mod_weblogic.c>
@@ -282,6 +361,9 @@ activate()
 
 
 ## Tuning of Performances
+-------------------------------
+### Performance Metrics
+
 1. JVM – Percent of time in Garbage Collection  
 CG is a stop world 
 
@@ -297,7 +379,7 @@ Connection delay time: indicate database responsiveness
 Ref  
 https://www.dynatrace.com/blog/top-10-weblogic-performance-metrics-proactively-monitor-server-farm/
 
-## Tuning JDBC Pool
+### Tuning JDBC Pool
 
 - Maximum Capacity
 - Minimum Capacity : to be at least half (50%) of MAX so that the connection pool cannot shrink below this value.
@@ -332,14 +414,17 @@ https://www.dynatrace.com/blog/top-10-weblogic-performance-metrics-proactively-m
 
 1. Copy of Console Jar
 
-		WL_HOME\server\lib\console-ext\diagnostics-console-extension.jar into DOMAIN-DIR/console-ext  
-2. Restart the Administration Server  
-3. **Activate diagnostics console extension**    
-On console: Preferences>Extensions>diagnostics-console-extension
+		$ cp $WL_HOME/server/lib/console-ext/diagnostics-console-extension.jar  $DOMAIN_HOME/console-ext 
 
-Dashboard  
-http://localhost:7001/console/dashboard  
+2. Restart the Administration Server  
+3. Activate Diagnostics Console Extension   
+		
+		On console: Preferences>Extensions>diagnostics-console-extension
+
+Dashboard  <a>http://localhost:7001/console/dashboard</a>
+
 Graphing Data With the Dashboard. you can access it from Home page.
+
   ![alt txt](/docs/images/Weblogic-Dashboard.png)
 
 
