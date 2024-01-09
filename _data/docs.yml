@@ -14,6 +14,10 @@ middleware:
       slug: weblogic
       icon: fa-weblogic.png
 
+    - title: Websphere 
+      slug: websphere
+      icon: fa-websphere.png
+
     - title: Apache
       slug: apache
       icon: fa-apache.jpg
