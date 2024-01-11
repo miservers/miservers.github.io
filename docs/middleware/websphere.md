@@ -18,6 +18,10 @@ Run Installation Manager in graphical mode:
 
   ![alt](/docs/images/ibm-installation-manager.png)
 
+### IBM Packaging Utility
+
+
+
 ### Installation a trial version of Webspehere
 - [x] [websphere trial options and downloads](https://www.ibm.com/blog/websphere-trial-options-and-downloads/)
 
