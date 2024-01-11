@@ -50,7 +50,6 @@ Using Installtion Manager:
 
 
 Blogs Middleware:
-- 
- 
+- Excellent Articles:  https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles 
  - https://javaee.goffinet.org/was-03-installation/
 
