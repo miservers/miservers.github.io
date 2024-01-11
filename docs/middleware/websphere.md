@@ -20,6 +20,7 @@ Run Installation Manager in graphical mode:
 
 ### IBM Packaging Utility
 
+![alt](/docs/images/ibm-packaging-utility-1.png)
 
 
 ### Installation a trial version of Webspehere
