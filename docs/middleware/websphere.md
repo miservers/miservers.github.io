@@ -25,6 +25,9 @@ Run Installation Manager in graphical mode:
 
   ![alt](/docs/images/ibm-installation-manager.png)
 
+### Silent Installation
+To use silent mode, you must create a **response file** through Installation mManager or  by hand.
+
 ### IBM Packaging Utility
 IBM package utility is a tool to copy packages into repositories for consumption by Installation Manager. It can also copy packages from ibm repositories to local disk so Installation Manager can install them using local disk, ftp, http access.
 
