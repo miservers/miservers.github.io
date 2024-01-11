@@ -105,7 +105,7 @@ Three tools: systemd, upstart, SystemV
 
 ~~~shell
   journalctl --disk-usage
-  sudo journalctl --vacuum-size=20M
+  sudo journalctl --vacuum-size=200M
 ~~~
 
 

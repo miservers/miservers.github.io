@@ -5,6 +5,8 @@ parent: Middleware
 nav_order: 4
 ---
 
+Env:  **WebSphere Application Server Network Deployment v9**
+
 ### Installation Manager
 - [x] [Documentation](https://www.ibm.com/docs/en/installation-manager/1.9.2)
 
@@ -23,7 +25,18 @@ Run Installation Manager in graphical mode:
 
 Using Installtion Manager:
 
+### Profiles
+Create managment profile:
+
+	./manageprofiles.sh -create -templatePath /opt/IBM/WebSphere/AppServer/profileTemplates/management -profileName dmgr
+
+The profile will be created here:
+
+	/opt/IBM/WebSphere/AppServer/profiles/dmgr
 
 
-Blogs Middleware:
- - https://javaee.goffinet.org/was-03-installation/
+
+### Docs
+- https://www.ibm.com/docs/en/was-nd/9.0.5
+- https://javaee.goffinet.org/was-03-installation/
+- https://websphereknowledge.blogspot.com/
