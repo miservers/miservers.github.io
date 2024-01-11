@@ -19,6 +19,7 @@ Run Installation Manager in graphical mode:
   ![alt](/docs/images/ibm-installation-manager.png)
 
 ### IBM Packaging Utility
+IBM package utility is a tool to copy packages into repositories for consumption by Installation Manager. It can also copy packages from ibm repositories to local disk so Installation Manager can install them on offline.
 
 ![alt](/docs/images/ibm-packaging-utility-1.png)
 
