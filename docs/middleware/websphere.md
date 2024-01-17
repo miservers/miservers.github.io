@@ -64,7 +64,7 @@ The profile will be created here:
 
 
 ### Docs
-- Excellent Articles:  https://www.ibm.com/docs/en/installation-manager/1.9.2?
+- Excellent Articles:  https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles
 - https://www.ibm.com/docs/en/was-nd/9.0.5
 - https://javaee.goffinet.org/was-03-installation/
 - https://websphereknowledge.blogspot.com/
