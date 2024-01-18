@@ -45,6 +45,10 @@ IBM Package Utility is a tool to copy packages into repositories for consumption
 	./userinst   // as user
 	./groupinst
 
+Screens:
+
+![a](/docs/images/ibm-packaging-utility-main.png)
+![b](/docs/images/ibm-packaging-utility-copy.png)
 
 ### Provisioning Staging Machine
 For provisioning the Adminitrator Staging Machine: 
@@ -63,6 +67,9 @@ Second, install the packages using the installation Manager. Different modes can
 ### Installation of Webspehere
 
 - [x] [websphere trial options and downloads](https://www.ibm.com/blog/websphere-trial-options-and-downloads/)
+- [x] [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
+- [x] [Websphere Liberty Repositories](https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.nd.multiplatform.doc/ae/cwlp_ins_repositories.html)
+
 
 Using Installtion Manager:
 
