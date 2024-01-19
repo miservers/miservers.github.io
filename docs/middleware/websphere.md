@@ -17,6 +17,7 @@ nav_order: 3.5
 
 ## Installation Manager
 ------------------------
+v 1.9 
 
 - [x] [Documentation](https://www.ibm.com/docs/en/installation-manager/1.9.2)
 
@@ -25,6 +26,22 @@ IBM Installation Manager is an utility to install and apply Fix Packs for IBM so
 	./install     // install as root	
 	./userinst   // as user
 	./groupinst
+
+**Install IM in Silent Mode**
+
+	./installc -installationDirectory /opt/IBM/InstallationManager/eclipse -dL /var/ibm/InstallationManager -acceptLicense -sVP
+
+Default Locations:
+```conf
+Default installation directory:
+	root : /opt/IBM/InstallationManager/eclipse
+	 /<user/IBM/InstallationManager/eclipse
+Default agent data location:
+	root: /var/ibm/InstallationManager
+	user: /<user>/var/ibm/InstallationManager
+Log file:
+	/var/ibm/InstallationManager/pluginState/.metadata
+```
 
 Run Installation Manager in graphical mode:
 
@@ -52,8 +69,8 @@ Screens:
 
 ### Provisioning Staging Machine
 For provisioning the Adminitrator Staging Machine: 
-- install the Packaging Utility to create repositories used to deploy the packages. 
-- Use Http/Https: you should setup an http server.
+- install the Packaging Utility to create local **repositories** used to deploy the packages on target machines. 
+- Use Http/Https: you should setup an http server. Example here by [nginx](/docs/middleware/nginx)
 - Optionaly you can use Network Share or FTP to access the repository instead of http
 
 ### Provisioning the Target Machine
