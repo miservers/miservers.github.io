@@ -2,7 +2,7 @@
 layout: default
 title: Websphere
 parent: Middleware
-nav_order: 4
+nav_order: 3.5
 ---
 
 **Environment**: Linux,  WebSphere Application Server ND v9
@@ -35,9 +35,9 @@ To use silent mode, you must create a **response file** through Installation mMa
 
 ## Packaging Utility
 ------------------------
-IBM Package Utility is a tool to copy packages into repositories for consumption by Installation Manager. It can also copy packages from ibm repositories to local disk so Installation Manager can install them using local disk, ftp, http access.
+**IBM Package Utility** is a tool to copy packages(from ibm.com) into repositories for consumption by **Installation Manager**. It can also copy packages from ibm repositories to local disk so Installation Manager can install them using local disk, ftp, http access.
 
-![alt](/docs/images/ibm-packaging-utility-1.png)
+![alt](/docs/images/ibm-packaging-utility-2.png)
 
 **Install It**: donwload it and unzip it
 
