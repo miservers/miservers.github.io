@@ -21,31 +21,34 @@ v 1.9
 
 - [x] [Documentation](https://www.ibm.com/docs/en/installation-manager/1.9.2)
 
+### Installation
 IBM Installation Manager is an utility to install and apply Fix Packs for IBM softwares. You can install it as Root, User or Group.  **v.1.9** 
 
 	./install     // install as root	
 	./userinst   // as user
 	./groupinst
 
-**Install IM in Silent Mode**
+### Installation of IM in Silent Mode
 
 	./installc -installationDirectory /opt/IBM/InstallationManager/eclipse -dL /var/ibm/InstallationManager -acceptLicense -sVP
 
 Default Locations:
 ```conf
-Default installation directory:
+Default installation directory: -installationDirectory
 	root : /opt/IBM/InstallationManager/eclipse
 	 /<user/IBM/InstallationManager/eclipse
-Default agent data location:
+Default agent data location: -dL
 	root: /var/ibm/InstallationManager
 	user: /<user>/var/ibm/InstallationManager
 Log file:
 	/var/ibm/InstallationManager/pluginState/.metadata
 ```
 
-Run Installation Manager in graphical mode:
+### Installation of Packages: graphical mode
 
   ![alt](/docs/images/ibm-installation-manager.png)
+
+Here you find Repositories to install Websphere AppServer [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
 
 ### Silent Installation
 To use silent mode, you must create a **response file** through Installation mManager or  by hand.

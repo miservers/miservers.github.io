@@ -92,27 +92,27 @@ $ systemd-analyze time          // Time required to boot the machine
 
 2. Verify Unit File Syntax
 
-	sudo systemd-analyze verify tomcat.service
+		$ sudo systemd-analyze verify tomcat.service
 
 3. Reload Systemd Daemon to tacke into account the new service
 
-	sudo systemctl daemon-reload
+		$ sudo systemctl daemon-reload
 
 4. Enable the Service
 
-	sudo systemctl enable tomcat
+		$ sudo systemctl enable tomcat
 
 5. Start the Service
 
-	sudo systemctl start tomcat
+		$ sudo systemctl start tomcat
 
 5.1 Check The Logs
 
-	journalctl -xe
+		$ journalctl -xe
 
 6. the Status of the Service 
 
-	sudo systemctl status tomcat
+		$ sudo systemctl status tomcat
 
 Other Commands:
 

@@ -26,8 +26,10 @@ $ apt install nginx
 ```sh
 $ systemctl start nginx
 ```
+### Check the Config Syntax
+	$ nginx -t
 
-### Use NGINX as a Static File Server
+### Nginx as a Static File Server
 nginx can be used to host static files. Therefore we can access them via http. 
 
 This is a sample configration that does not take Security into consideration:
