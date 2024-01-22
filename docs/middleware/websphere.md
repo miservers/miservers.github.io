@@ -101,7 +101,7 @@ First, install the Installation Manager on the target machine
 
 Second, install the packages using the installation Manager. Different modes can be used: graphic, console, command, silent.
 
-## Webspehere
+## WebSphere App Server
 --------------------------------------
 ### WAS Concepts
 ![was-concepts](/docs/images/websphere_app_server_concepts.png)
@@ -110,7 +110,7 @@ Second, install the packages using the installation Manager. Different modes can
 
 - **Cell**: is a group of managed **nodes** that are federated to the same **deployement manager**.
 
-### Installation of Webspehere
+### Installation
 
 - [x] [websphere trial options and downloads](https://www.ibm.com/blog/websphere-trial-options-and-downloads/)
 - [x] [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
