@@ -44,14 +44,34 @@ Log file:
 	/var/ibm/InstallationManager/pluginState/.metadata
 ```
 
-### Installation of Packages: graphical mode
+### Working in wizard mode
 
   ![alt](/docs/images/ibm-installation-manager.png)
 
-Here you find Repositories to install Websphere AppServer [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
+Add **Repositories** in _File>Preferences>Repositories_. Here you find Repositories to install Websphere AppServer [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
 
-### Silent Installation
-To use silent mode, you must create a **response file** through Installation mManager or  by hand.
+### Working form command line: imcl
+the repository was created on the staging machine via the Packaging Utility tool.
+
+- Listing available packages
+```sh
+$ cd /opt/IBM/InstallationManager/eclipse/tools/
+$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+```
+
+	This repositry was dowloaded by [Packaging Utility](#packaging-utility) and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
+
+- Install Packages
+```sh
+$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 -repositories http://ibm-file-server.safar.ma/repository.config -installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
+```
+
+	{: .warning :}
+	You must Install the WAS and the JDK simultaneously, both by one command imcl
+
+
+### Working in Silent mode
+To use silent mode, you must create a **response file** through Installation Manager or  by hand.
 
 ## Packaging Utility
 ------------------------
@@ -73,7 +93,7 @@ Screens:
 ### Provisioning Staging Machine
 For provisioning the Adminitrator Staging Machine: 
 - install the Packaging Utility to create local **repositories** used to deploy the packages on target machines. 
-- Use Http/Https: you should setup an http server. Example here by [nginx](/docs/middleware/nginx)
+- Use Http/Https: you should setup an http server. Example here by [nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server)
 - Optionaly you can use Network Share or FTP to access the repository instead of http
 
 ### Provisioning the Target Machine
@@ -83,6 +103,12 @@ Second, install the packages using the installation Manager. Different modes can
 
 ## Webspehere
 --------------------------------------
+### WAS Concepts
+![was-concepts](/docs/images/websphere_app_server_concepts.png)
+
+- **Profile**: is basicaly a template of an app server. There are two main types of profiles; **default** profile for servers running applications, and **dmgr** profile for the Deployment Manager.
+
+- **Cell**: is a group of managed **nodes** that are federated to the same **deployement manager**.
 
 ### Installation of Webspehere
 
@@ -90,8 +116,26 @@ Second, install the packages using the installation Manager. Different modes can
 - [x] [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
 - [x] [Websphere Liberty Repositories](https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.nd.multiplatform.doc/ae/cwlp_ins_repositories.html)
 
+Using **imcl** command of **Installation Manager** that must be previously installed. The packages can be accessed from remote ibm repositories or localy throughout Packaging Utility. In the example below the repository was created on the staging machine via the [Packaging Utility](#packaging-utility) tool.
 
-Using Installtion Manager:
+- Listing available packages
+```sh
+$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+```
+
+	This repositry was dowloaded by Packaging Utility and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
+
+- Install Packages
+```sh
+$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+	-repositories http://ibm-file-server.safar.ma/repository.config \
+	-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
+```
+
+	{: .warning :}
+	You must Install the WAS and the JDK simultaneously, both by one command imcl
+
+
 
 ### Profiles
 Create managment profile:
