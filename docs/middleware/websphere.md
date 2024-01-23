@@ -53,22 +53,29 @@ Add **Repositories** in _File>Preferences>Repositories_. Here you find Repositor
 ### Working form command line: imcl
 the repository was created on the staging machine via the Packaging Utility tool.
 
-- Listing available packages
-```sh
-$ cd /opt/IBM/InstallationManager/eclipse/tools/
-$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
-```
+- **Listing available packages**
+	```sh
+	$ cd /opt/IBM/InstallationManager/eclipse/tools/
+	$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+	```
 
 	This repositry was dowloaded by [Packaging Utility](#packaging-utility) and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
 
-- Install Packages
-```sh
-$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 -repositories http://ibm-file-server.safar.ma/repository.config -installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
-```
+- **Install Packages**
+	```sh
+	$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+		-repositories http://ibm-file-server.safar.ma/repository.config \
+		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
+	```
 
 	{: .warning :}
 	You must Install the WAS and the JDK simultaneously, both by one command imcl
 
+- **Uninstall Packages**
+	```sh
+	$ ./imcl uninstall com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+		-installationDirectory /opt/IBM/WebSphere/AppServer
+	```
 
 ### Working in Silent mode
 To use silent mode, you must create a **response file** through Installation Manager or  by hand.
@@ -116,36 +123,66 @@ Second, install the packages using the installation Manager. Different modes can
 - [x] [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
 - [x] [Websphere Liberty Repositories](https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.nd.multiplatform.doc/ae/cwlp_ins_repositories.html)
 
-Using **imcl** command of **Installation Manager** that must be previously installed. The packages can be accessed from remote ibm repositories or localy throughout Packaging Utility. In the example below the repository was created on the staging machine via the [Packaging Utility](#packaging-utility) tool.
+Using **imcl** command of **Installation Manager** that must be previously installed. The packages can be accessed from remote ibm repositories or localy throughout Packaging Utility. In the example below the **repository** was created on the staging machine via the [Packaging Utility](#packaging-utility) tool. 
 
-- Listing available packages
-```sh
-$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
-```
+- **Listing available packages**
+	```sh
+	$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+	```
 
 	This repositry was dowloaded by Packaging Utility and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
 
-- Install Packages
-```sh
-$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
-	-repositories http://ibm-file-server.safar.ma/repository.config \
-	-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
-```
+- **Install Packages: WAS and JDK**
+	```sh
+	$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+		-repositories http://ibm-file-server.safar.ma/repository.config \
+		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
+	```
 
 	{: .warning :}
 	You must Install the WAS and the JDK simultaneously, both by one command imcl
 
 
+- **Check Version**
+	```sh
+	$ /opt/IBM/WebSphere/AppServer/bin/versionInfo.sh
+	```
 
 ### Profiles
-Create managment profile:
+- **Create Managment Profile**
+	```sh
+	$ ./manageprofiles.sh -create -templatePath /opt/IBM/WebSphere/AppServer/profileTemplates/management -profileName dmgr
+	```
 
-	./manageprofiles.sh -create -templatePath /opt/IBM/WebSphere/AppServer/profileTemplates/management -profileName dmgr
 
-The profile will be created here:
+	The profile will be created here: */opt/IBM/WebSphere/AppServer/profiles/dmgr*
 
-	/opt/IBM/WebSphere/AppServer/profiles/dmgr
+- **Start/Stop DMGR**
+	```sh
+	$ cd /opt/IBM/WebSphere/AppServer/profiles/dmgr/bin
 
+	$ ./startManager.sh
+	
+	$ ./stopManager.sh -user wasadm -password wasadm
+	```
+
+### Administration Console
+- **Console URL**: <a>http://host:9060/ibm/console</a> or <a>https://centos1:9043/ibm/console</a>
+
+- **Find the Administration Port number**   
+  Find theses lines in : */opt/IBM/WebSphere/AppServer/profiles/dmgr/logs/AboutThisProfile.txt*
+  ```conf
+  Administrative console port: 9060
+  Administrative console secure port: 9043
+  ```
+
+- **Enable Admin Console Security**: HTTPS, and User/Password
+
+  From Console : <a>security > Global security > Clic: Security configuration Wizard </a>
+
+  ![console](/docs/images/was_console_security.png)
+
+  The User can be chosen from LDAP or Local OS users.  
 
 
 ### Docs
