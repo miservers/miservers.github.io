@@ -117,7 +117,7 @@ Second, install the packages using the installation Manager. Different modes can
 
 - **Cell**: is a group of managed **nodes** that are federated to the same **deployement manager**.
 
-### Installation
+### WAS Installation
 
 - [x] [websphere trial options and downloads](https://www.ibm.com/blog/websphere-trial-options-and-downloads/)
 - [x] [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
@@ -148,6 +148,9 @@ Using **imcl** command of **Installation Manager** that must be previously insta
 	$ /opt/IBM/WebSphere/AppServer/bin/versionInfo.sh
 	```
 
+- **Environment Variables**
+	WAS_INSTALL_ROOT=/opt/IBM/WebSphere/AppServer
+
 ### Profiles
 - **Create Managment Profile**
 	```sh
@@ -160,20 +163,38 @@ Using **imcl** command of **Installation Manager** that must be previously insta
 - **Start/Stop DMGR**
 	```sh
 	$ cd /opt/IBM/WebSphere/AppServer/profiles/dmgr/bin
-
 	$ ./startManager.sh
-	
-	$ ./stopManager.sh -user wasadm -password wasadm
 	```
+- **Stop Manager**
+	```sh	
+	$ ./stopManager.sh -user wasadm -password changeit
+	```
+	
+	{: .warning :}
+	For security, it is highly unrecommanded to use password in clear. To disable Prompt for user/password you can modify **/opt/IBM/WebSphere/AppServer/profiles/dmgr/properties/soap.client.props**:  
+	com.ibm.SOAP.loginUserid=wasadm  
+	com.ibm.SOAP.loginPassword=changeit
+
+- **Create an App Server Profile**
+
+	${WAS_INSTALL_ROOT}/bin/manageprofiles.sh -create -profileName AppSrv02
+
+	More Options [Here](https://www.freekb.net/Article?id=1296)
+
+### Ports/Firewall
+If there is a firewall between the DMGR and any Node Agent, you must open the   *SOAP_CONNECTOR_ADDRESS* ports (default 8879) and *CELL_DISCOVERY_ADDRESS* ports(default 7277).
+
+Theses Ports can be found here : *WAS_HOME/profiles/dmgr/config/cells/cell-name/nodes/node-name/serverindex.xml*
 
 ### Administration Console
-- **Console URL**: <a>http://host:9060/ibm/console</a> or <a>https://centos1:9043/ibm/console</a>
+- **Console URL**: <a>http://host:9060/ibm/console</a> or <a>https://host:9043/ibm/console</a>
 
 - **Find the Administration Port number**   
   Find theses lines in : */opt/IBM/WebSphere/AppServer/profiles/dmgr/logs/AboutThisProfile.txt*
   ```conf
   Administrative console port: 9060
   Administrative console secure port: 9043
+  Management SOAP connector port: 8879
   ```
 
 - **Enable Admin Console Security**: HTTPS, and User/Password
@@ -184,9 +205,39 @@ Using **imcl** command of **Installation Manager** that must be previously insta
 
   The User can be chosen from LDAP or Local OS users.  
 
+### IVT - Installation Verification Tool
+IVT is used to verify that you have successfully installed a product.
+```sh
+~ ${WAS_INSTALL_ROOT}/bin/ivt.sh server_name profile_name
+```
+
+### Federate a Node: addNode
+addNode is used to federate a node to the DMGR. addNode script is invoked from the node that you want to federate. Management SOAP  port (default 8879) is used to connect to the DMGR.  
+**TODO**
+https://www.freekb.net/Article?id=1544
+
+Below, dmgr is running on centos1. the node to be federated is centos2.
+
+On Centos2: 
+	- Installation Manager must be installed.
+	- WAS must be installed.
+	- Create the user **wasadm** the same as that of centos1 
+	- Create a Profile
+
+- Federate the node. run the addNode on centos2
+	```sh
+	${WAS_INSTALL_ROOT}/profiles/AppSrv02/bin/addNode.sh centos1 8879 -includeapps
+	```
+
+### Nodes
+- **Start a Node Agent**
+	```sh
+	${WAS_INSTALL_ROOT}/profiles/AppSrv02/bin/startNode.sh
+	```
 
 ### Docs
 - Excellent Articles:  https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles
 - https://www.ibm.com/docs/en/was-nd/9.0.5
 - https://javaee.goffinet.org/was-03-installation/
 - https://websphereknowledge.blogspot.com/
+- Excellent Blog: https://www.freekb.net/Articles?tag=IBM%20WebSphere
