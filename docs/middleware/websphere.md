@@ -8,6 +8,7 @@ nav_order: 3.5
 **Environment**: Linux,  WebSphere Application Server ND v9
 
 ## Terminology
+----------------------------------
 - **package**: Entity that Installation Manager installs.
 
 - **Repository**:  
@@ -16,7 +17,7 @@ nav_order: 3.5
 
 
 ## Installation Manager
-------------------------
+----------------------------------
 v 1.9 
 
 - [x] [Documentation](https://www.ibm.com/docs/en/installation-manager/1.9.2)
@@ -29,8 +30,18 @@ IBM Installation Manager is an utility to install and apply Fix Packs for IBM so
 	./groupinst
 
 ### Installation of IM in Silent Mode
+Fist unzip IM software.
+- **Install as root**
+	```sh
+	$ ./installc -installationDirectory /opt/IBM/InstallationManager/eclipse \
+	   -dL /var/ibm/InstallationManager -acceptLicense -sVP -showProgress
+	```
+- **Install as user**
+	```sh
+	$ ./userinstc -installationDirectory /opt/IBM/InstallationManager/eclipse \
+	   -dL /var/ibm/InstallationManager -acceptLicense -sVP -showProgress
+	```
 
-	./installc -installationDirectory /opt/IBM/InstallationManager/eclipse -dL /var/ibm/InstallationManager -acceptLicense -sVP
 
 Default Locations:
 ```conf
@@ -74,7 +85,7 @@ the repository was created on the staging machine via the Packaging Utility tool
 - **Uninstall Packages**
 	```sh
 	$ ./imcl uninstall com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
-		-installationDirectory /opt/IBM/WebSphere/AppServer
+		-installationDirectory /opt/IBM/WebSphere/AppServer -showProgress
 	```
 
 ### Working in Silent mode
@@ -148,7 +159,8 @@ Using **imcl** command of **Installation Manager** that must be previously insta
 	$ /opt/IBM/WebSphere/AppServer/bin/versionInfo.sh
 	```
 
-- **Environment Variables**
+- **Environment Variables**: to be added to your .bash_profile
+
 	WAS_INSTALL_ROOT=/opt/IBM/WebSphere/AppServer
 
 ### Profiles
@@ -167,18 +179,18 @@ Using **imcl** command of **Installation Manager** that must be previously insta
 	```
 - **Stop Manager**
 	```sh	
-	$ ./stopManager.sh -user wasadm -password changeit
+	$ ./stopManager.sh -user admin -password changeit
 	```
 	
 	{: .warning :}
 	For security, it is highly unrecommanded to use password in clear. To disable Prompt for user/password you can modify **/opt/IBM/WebSphere/AppServer/profiles/dmgr/properties/soap.client.props**:  
-	com.ibm.SOAP.loginUserid=wasadm  
+	com.ibm.SOAP.loginUserid=admin  
 	com.ibm.SOAP.loginPassword=changeit
 
-- **Create an App Server Profile**
-
+- **Create an Managed Server Profile**
+	```sh
 	${WAS_INSTALL_ROOT}/bin/manageprofiles.sh -create -profileName AppSrv02
-
+	```
 	More Options [Here](https://www.freekb.net/Article?id=1296)
 
 ### Ports/Firewall
@@ -203,7 +215,12 @@ Theses Ports can be found here : *WAS_HOME/profiles/dmgr/config/cells/cell-name/
 
   ![console](/docs/images/was_console_security.png)
 
-  The User can be chosen from LDAP or Local OS users.  
+  Select **Federated repositories** as user repository, and create a user **admin**.
+
+  You can chose  User repository from :
+  - Federated repositories: users/passwords stored in local file.
+  - LDAP 
+  - Local OS users: if the WAS is run as root  
 
 ### IVT - Installation Verification Tool
 IVT is used to verify that you have successfully installed a product.
@@ -218,15 +235,16 @@ https://www.freekb.net/Article?id=1544
 
 Below, dmgr is running on centos1. the node to be federated is centos2.
 
-On Centos2: 
-	- Installation Manager must be installed.
-	- WAS must be installed.
-	- Create the user **wasadm** the same as that of centos1 
-	- Create a Profile
-
-- Federate the node. run the addNode on centos2
+Do on Centos2
+:
+  - Installation Manager must be installed under wasadmin user.
+  - WAS must be installed.
+	
+  - Create a managed server profile using *manageprofiles* script.
+  - Create a dummy node using *addNode* script. If the the node is previously created, add option *-noagent* to addNode. That also federate the node to the dmgr.
+	
 	```sh
-	${WAS_INSTALL_ROOT}/profiles/AppSrv02/bin/addNode.sh centos1 8879 -includeapps
+	${WAS_INSTALL_ROOT}/profiles/AppSrv02/bin/addNode.sh dmgr_host dmgr_soap_port_8879 -includeapps
 	```
 
 ### Nodes
@@ -234,10 +252,38 @@ On Centos2:
 	```sh
 	${WAS_INSTALL_ROOT}/profiles/AppSrv02/bin/startNode.sh
 	```
+### Synchronisation
+N.B : install Websphere as root make a problem of synchrinisation when Globlal security is enabled.
+- From Web Console
+- **Manually synchronize the node**  
+  Stop Node, and run syncNode script.
+  ```sh
+  $WAS_INSTALL_ROOT/profiles/AppSrv02/bin/syncNode.sh <DMgr_hostName> <SOAP_PORT_of_DMGR> -username <username> -password <password>
+  ```
 
-### Docs
-- Excellent Articles:  https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles
-- https://www.ibm.com/docs/en/was-nd/9.0.5
-- https://javaee.goffinet.org/was-03-installation/
-- https://websphereknowledge.blogspot.com/
-- Excellent Blog: https://www.freekb.net/Articles?tag=IBM%20WebSphere
+## Applications
+--------------------------------
+- **Default Application Sample**: /opt/IBM/WebSphere/AppServer/installableApps/DefaultApplication.ear
+	- Snoop servlet : http://centos2:9081/snoop
+	- http://centos2:9081/HitCount.jsp
+
+
+## WSADMIN Scripting
+--------------------------------
+- **Disable Administrative Security**: username/password will no longer  be demanded to login.
+	```sh
+	$WAS_INSTALL_ROOT/bin/wsadmin.sh -conntype NONE -lang jython
+	wsadmin>securityoff()
+	wsadmin>exit
+	```
+
+## IHS
+--------------------------------
+TODO https://webspherejungle.blogspot.com/2018/03/configure-plugin-with-ibm-http-server.html
+
+## Docs
+- [Excellent Articles on the Installation Manager](https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles)
+- [WAS ND 9.0 Docs](https://www.ibm.com/docs/en/was-nd/9.0.5)
+- [Blog javaee.goffinet.org](https://javaee.goffinet.org/was-06-taches-administratives/)
+- [Blog websphereknowledge](https://websphereknowledge.blogspot.com/)
+- [Excellent Blog: freekb](https://www.freekb.net/Articles?tag=IBM%20WebSphere)
