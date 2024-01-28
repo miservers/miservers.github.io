@@ -10,10 +10,11 @@ nav_order: 3.5
 ## Terminology
 ----------------------------------
 - **package**: Entity that Installation Manager installs.
-
-- **Repository**:  
-  - ESD-Electronic Software Delivery: packages downlowed from Passport Advantage or Fix Central.It can only be accessed by local file or ftp.
-  - HTTP 
+- **Repository**: directory containing IBM packages and defined by its **repository.config**.  
+  - ESD-Electronic Software Delivery: packages downlowed from Passport Advantage or Fix Central.It can only be accessed by local file or ftp. 
+  - HTTP: remote from ibm.com. Or downloaded by IBM Packaging Utility and served by an http server. 
+- **APAR**, Authorized Program Analysis Report: describe a problem found in an IBM product.
+- **Fix Pack**: is a cumulative collection of APAR fixes.
 
 
 ## Installation Manager
@@ -76,7 +77,7 @@ the repository was created on the staging machine via the Packaging Utility tool
 	```sh
 	$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
 		-repositories http://ibm-file-server.safar.ma/repository.config \
-		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
+		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense -showProgress
 	```
 
 	{: .warning :}
@@ -108,6 +109,9 @@ Screens:
 ![a](/docs/images/ibm-packaging-utility-main.png)
 ![b](/docs/images/ibm-packaging-utility-copy.png)
 
+### IBM Repositories
+- [Trial WAS Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
+
 ### Provisioning Staging Machine
 For provisioning the Adminitrator Staging Machine: 
 - install the Packaging Utility to create local **repositories** used to deploy the packages on target machines. 
@@ -131,10 +135,8 @@ Second, install the packages using the installation Manager. Different modes can
 ### WAS Installation
 
 - [x] [websphere trial options and downloads](https://www.ibm.com/blog/websphere-trial-options-and-downloads/)
-- [x] [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
-- [x] [Websphere Liberty Repositories](https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.nd.multiplatform.doc/ae/cwlp_ins_repositories.html)
 
-Using **imcl** command of **Installation Manager** that must be previously installed. The packages can be accessed from remote ibm repositories or localy throughout Packaging Utility. In the example below the **repository** was created on the staging machine via the [Packaging Utility](#packaging-utility) tool. 
+Using **imcl** . The **repository** used here was created on the staging machine via the [Packaging Utility](#packaging-utility) tool. 
 
 - **Listing available packages**
 	```sh
@@ -144,10 +146,13 @@ Using **imcl** command of **Installation Manager** that must be previously insta
 	This repositry was dowloaded by Packaging Utility and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
 
 - **Install Packages: WAS and JDK**
+    Create a user e.g **wasadmin**
 	```sh
+	$ su - wasadmin
+	$ cd /opt/IBM/InstallationManager/eclipse/tools/
 	$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
 		-repositories http://ibm-file-server.safar.ma/repository.config \
-		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense 
+		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense -showProgress
 	```
 
 	{: .warning :}
@@ -209,7 +214,7 @@ Theses Ports can be found here : *WAS_HOME/profiles/dmgr/config/cells/cell-name/
   Management SOAP connector port: 8879
   ```
 
-- **Enable Admin Console Security**: HTTPS, and User/Password
+- **Enable Admin Console Security**: Enable HTTPS and User/Password authentication
 
   From Console : <a>security > Global security > Clic: Security configuration Wizard </a>
 
@@ -279,7 +284,21 @@ N.B : install Websphere as root make a problem of synchrinisation when Globlal s
 
 ## IHS
 --------------------------------
+IBM HTTP Server is an apache httpd server modified by IBM.
+
 TODO https://webspherejungle.blogspot.com/2018/03/configure-plugin-with-ibm-http-server.html
+
+- **Repository** :
+	- https://www.ibm.com/software/repositorymanager/com.ibm.websphere.IHS.v90
+	- https://www.ibm.com/software/repositorymanager/com.ibm.websphere.PLG.v90
+
+- **Installatio of IHS**: 
+	```sh
+	$ cd /opt/IBM/InstallationManager/eclipse/tools/
+	$ ./imcl install com.ibm.websphere.IHS.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+		-repositories http://ibm-file-server.safar.ma/repository.config \
+		-installationDirectory /opt/IBM/IHS -acceptLicense   -showProgress
+	```
 
 ## Docs
 - [Excellent Articles on the Installation Manager](https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles)
@@ -287,3 +306,6 @@ TODO https://webspherejungle.blogspot.com/2018/03/configure-plugin-with-ibm-http
 - [Blog javaee.goffinet.org](https://javaee.goffinet.org/was-06-taches-administratives/)
 - [Blog websphereknowledge](https://websphereknowledge.blogspot.com/)
 - [Excellent Blog: freekb](https://www.freekb.net/Articles?tag=IBM%20WebSphere)
+- [x] [websphere trial options and downloads](https://www.ibm.com/blog/websphere-trial-options-and-downloads/)
+- [x] [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
+- [x] [Websphere Liberty Repositories](https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.nd.multiplatform.doc/ae/cwlp_ins_repositories.html)
