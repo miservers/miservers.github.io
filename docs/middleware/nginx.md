@@ -30,7 +30,7 @@ $ systemctl start nginx
 	$ nginx -t
 
 ### Nginx as a Static File Server
-nginx can be used to host static files. Therefore we can access them via http. 
+nginx can be used to host static files. Therefore you can browse directory through http. 
 
 This is a sample configration that does not take Security into consideration:
 
