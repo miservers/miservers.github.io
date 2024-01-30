@@ -155,9 +155,8 @@ Using **imcl** . The **repository** used here was created on the staging machine
 		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense -showProgress
 	```
 
-	{: .warning :}
-	You must Install the WAS and the JDK simultaneously, both by one command imcl
-
+	{: .note }
+	Because IBM Java SDK  is not embedded with the product, you must specify both the WAS ID and the IBM Java SDK ID.
 
 - **Check Version**
 	```sh
@@ -198,6 +197,10 @@ Using **imcl** . The **repository** used here was created on the staging machine
 	```
 	More Options [Here](https://www.freekb.net/Article?id=1296)
 
+- **Start/Stop a Managed Server**
+	```sh 
+	$WAS_INSTALL_ROOT/profiles/AppSrv02/bin/startServer.sh server01
+	```
 ### Ports/Firewall
 If there is a firewall between the DMGR and any Node Agent, you must open the   *SOAP_CONNECTOR_ADDRESS* ports (default 8879) and *CELL_DISCOVERY_ADDRESS* ports(default 7277).
 
@@ -265,6 +268,9 @@ N.B : install Websphere as root make a problem of synchrinisation when Globlal s
   ```sh
   $WAS_INSTALL_ROOT/profiles/AppSrv02/bin/syncNode.sh <DMgr_hostName> <SOAP_PORT_of_DMGR> -username <username> -password <password>
   ```
+### Virtual Hosts
+You should readjust ports of the Alias of **default_host** virtual host. These are ports of both IHS and WAS.
+![vhost](/docs/images/websphere-virtualhost.png)
 
 ## Applications
 --------------------------------
@@ -282,23 +288,100 @@ N.B : install Websphere as root make a problem of synchrinisation when Globlal s
 	wsadmin>exit
 	```
 
-## IHS
+## IHS - IBM HTTP Server
 --------------------------------
 IBM HTTP Server is an apache httpd server modified by IBM.
 
+![ihs](/docs/images/websphere-ihs-plugins.png)
+
 TODO https://webspherejungle.blogspot.com/2018/03/configure-plugin-with-ibm-http-server.html
+https://www.ibm.com/docs/en/ibm-http-server/9.0.5?topic=manager-installing-http-server-by-using-response-files
 
 - **Repository** :
 	- https://www.ibm.com/software/repositorymanager/com.ibm.websphere.IHS.v90
 	- https://www.ibm.com/software/repositorymanager/com.ibm.websphere.PLG.v90
 
-- **Installatio of IHS**: 
-	```sh
-	$ cd /opt/IBM/InstallationManager/eclipse/tools/
-	$ ./imcl install com.ibm.websphere.IHS.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+### Installation of IHS
+v 9.0
+
+Installation of the IHS as user wasadmin.
+
+```sh
+$ cd /opt/IBM/InstallationManager/eclipse/tools/
+$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config
+```
+
+```sh
+$ ./imcl install com.ibm.websphere.IHS.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+	-repositories http://ibm-file-server.safar.ma/repository.config \
+	-installationDirectory /opt/IBM/HTTPServer -sharedResourcesDirectory /opt/IBM/IMShared \
+	-acceptLicense  -properties "user.ihs.httpPort=80,user.ihs.allowNonRootSilentInstall=true"  -showProgress
+```
+
+{: .note }
+Because IBM Java SDK  is no longer embedded with the product, you must specify both the IHS ID and the IBM Java SDK ID.
+
+### Start/Stop IHS
+two methods:
+1. via WAS console: you can administer the IHS through WAS Console using *node agent* or using *IBM HTTP Administration Server* on an umanaged node. 
+2. via apachectl: as root if the http port is under 1024. 
+   ```sh
+   #  /opt/IBM/HTTPServer/bin/apachectl start
+   ```   
+
+### IBM HTTP Administration Server
+WAS Console can administer the IHS using node agent on managed node. On an unmanaged node, WAS console uses the IHS Administration Server as an interface to administer the IHS.
+
+{: .warning}  
+Do not enable the IHS administration server in security-sensitive environments.
+
+### Integrate IHS with WAS Console
+
+https://geekflare.com/integrate-http-server-with-websphere-8-5/
+
+- **Install Web Server Plugings for the WAS**
+    ```sh
+	$ ./imcl install com.ibm.websphere.PLG.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036\
 		-repositories http://ibm-file-server.safar.ma/repository.config \
-		-installationDirectory /opt/IBM/IHS -acceptLicense   -showProgress
+		-installationDirectory /opt/IBM/WebSphere/Plugins -acceptLicense   -showProgress
 	```
+- On Websphere Console, Add New **Web Server**
+  ![ihs](/docs/images/websphere-new-ihs-1.png)
+  ![ihs](/docs/images/websphere-new-ihs-2.png)
+
+- Generate then Propagate Plug-in
+  ![ihs](/docs/images/websphere-new-ihs-propagate.png)
+  
+  The plug-in configuration file **plugin-cfg.xml** is copied  to /opt/IBM/WebSphere/Plugins/config/IHS-01/plugin-cfg.xml on the Web server computer.
+
+- Add Plugin Config and Module WAS to IHS (httpd.conf)    
+  two lines to add to httpd.conf:
+  1. Load Module mod_was_ap22_http.so
+  2. Add Plugin Config: plugin-cfg.xml
+	```conf
+	LoadModule was_ap24_module /opt/IBM/WebSphere/Plugins/bin/64bits/mod_was_ap24_http.so
+	WebSpherePluginConfig /opt/IBM/WebSphere/Plugins/config/IHS-02/plugin-cfg.xml
+	```
+  3. Copy Kyes
+    ```sh
+	cp /opt/IBM/WebSphere/Plugins/etc/plugin-key* /opt/IBM/WebSphere/Plugins/config/IHS-02/          
+    ```
+  4. Create Plugins directories
+     
+	 mkdir /opt/IBM/WebSphere/Plugins/logs/IHS-02
+
+- Install Default Application :  /opt/IBM/WebSphere/AppServer/installableApps/DefaultApplication.ear 
+  Restart the IHS
+  - Map modules to servers : IHS and WAS
+  - Generate and Propagate Plugin
+
+  {: .note }
+  - In order to have a context root accessible from the IHS, you must select the web server as target during deployment
+  - whenever you install a new application, you must generate and propagete the plugin
+
+- Plugin Logs
+  
+  /opt/IBM/WebSphere/Plugins/logs/IHS-02/http_plugin.log
 
 ## Docs
 - [Excellent Articles on the Installation Manager](https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles)
