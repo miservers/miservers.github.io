@@ -1,3 +1,20 @@
+---
+layout: default
+title: Docker
+parent: Linux
+nav_order: 11
+---
+
+### Docker Architecture
+![docker](/docs/images/docker-architecture.png)
+
+- **Docker Objects**: images, containers, networks and volumes are called Objects.
+- **Docker Images**: are  templates used to run a containers. They can be pulled from Docker Hub. You can create your own image using **dockerfile**.
+- **Docker Container**: is a instance of a docker image.
+- **Docker Daemon**: **dockerd** is based on a client/server. It listens for API (create, pull, start, run, etc) and manages Docker Objects.
+- [Docker Hub](https://hub.docker.com): is a public registry for a wide variety of Docker images.
+- **Docker Registry**: is a place where docker images are stored. It can be public or private.
+
 
 ### Start Docker Daemon
     sudo systemctl start docker
