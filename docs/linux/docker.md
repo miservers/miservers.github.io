@@ -14,8 +14,10 @@ nav_order: 11
 - **Docker Daemon**: **dockerd** is based on a client/server. It listens for API (create, pull, start, run, etc) and manages Docker Objects.
 - [Docker Hub](https://hub.docker.com): is a public registry for a wide variety of Docker images.
 - **Docker Registry**: is a place where docker images are stored. It can be public or private.
-
-
+- **Voulmes**: Persisting Data. 
+  docker run -d --name mynginx  -v myvolume:/app nginx:latest
+- **Networks**: through wich isolated containers can communicate. Types of docker networks: Bridge, Host, Overlay, None, macvlan.
+  
 ### Start Docker Daemon
     sudo systemctl start docker
 
