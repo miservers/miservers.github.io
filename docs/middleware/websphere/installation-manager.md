@@ -80,7 +80,13 @@ the repository was created on the staging machine via the Packaging Utility tool
 	{: .warning :}
 	You must Install the WAS and the JDK simultaneously, both by one command imcl
 
-- **Uninstall Packages**
+- **List Installed Packages**
+	```sh
+	$ ./imcl listInstalledPackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+	```
+
+
+- **Uninstall Packages**   
 	```sh
 	$ ./imcl uninstall com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
 		-installationDirectory /opt/IBM/WebSphere/AppServer -showProgress
