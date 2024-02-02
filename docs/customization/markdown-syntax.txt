@@ -104,7 +104,13 @@ https://gist.github.com/rxaviers/7360908
 		🆔 :id:
      
       
+** Escape double {{ in code 
   
-  
+  {% raw %}
+	~~~~sh
+	$ docker inspect -f "{{ .NetworkSettings.IPAddress }}" my-almnalinux
+	~~~~
+  {% endraw %}
+
   
 

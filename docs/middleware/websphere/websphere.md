@@ -37,29 +37,29 @@ nav_order: 1
 Using **imcl** . The **repository** used here was created on the staging machine via the [Packaging Utility](#packaging-utility) tool. 
 
 - **Listing available packages**
-	```sh
+	~~~sh
 	$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
-	```
+	~~~
 
 	This repositry was dowloaded by Packaging Utility and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
 
 - **Install Packages: WAS and JDK**
     Create a user e.g **wasadmin**
-	```sh
+	~~~sh
 	$ su - wasadmin
 	$ cd /opt/IBM/InstallationManager/eclipse/tools/
 	$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
 		-repositories http://ibm-file-server.safar.ma/repository.config \
 		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense -showProgress
-	```
+	~~~
 
 	{: .note }
 	Because IBM Java SDK  is not embedded with the product, you must specify both the WAS ID and the IBM Java SDK ID.
 
 - **Check Version**
-	```sh
+	~~~sh
 	$ /opt/IBM/WebSphere/AppServer/bin/versionInfo.sh
-	```
+	~~~
 
 - **Environment Variables**: to be added to your .bash_profile
 
@@ -67,22 +67,22 @@ Using **imcl** . The **repository** used here was created on the staging machine
 
 ### Profiles
 - **Create Managment Profile**
-	```sh
+	~~~sh
 	$ ./manageprofiles.sh -create -templatePath /opt/IBM/WebSphere/AppServer/profileTemplates/management -profileName dmgr
-	```
+	~~~
 
 
 	The profile will be created here: */opt/IBM/WebSphere/AppServer/profiles/dmgr*
 
 - **Start/Stop DMGR**
-	```sh
+	~~~sh
 	$ cd /opt/IBM/WebSphere/AppServer/profiles/dmgr/bin
 	$ ./startManager.sh
-	```
+	~~~
 - **Stop Manager**
-	```sh	
+	~~~sh	
 	$ ./stopManager.sh -user admin -password changeit
-	```
+	~~~
 	
 	{: .warning :}
 	For security, it is highly unrecommanded to use password in clear. To disable Prompt for user/password you can modify **/opt/IBM/WebSphere/AppServer/profiles/dmgr/properties/soap.client.props**:  
@@ -90,15 +90,15 @@ Using **imcl** . The **repository** used here was created on the staging machine
 	com.ibm.SOAP.loginPassword=changeit
 
 - **Create an Managed Server Profile**
-	```sh
+	~~~sh
 	${WAS_INSTALL_ROOT}/bin/manageprofiles.sh -create -profileName AppSrv02
-	```
+	~~~
 	More Options [Here](https://www.freekb.net/Article?id=1296)
 
 - **Start/Stop a Managed Server**
-	```sh 
+	~~~sh 
 	$WAS_INSTALL_ROOT/profiles/AppSrv02/bin/startServer.sh server01
-	```
+	~~~
 ### Ports/Firewall
 If there is a firewall between the DMGR and any Node Agent, you must open the   *SOAP_CONNECTOR_ADDRESS* ports (default 8879) and *CELL_DISCOVERY_ADDRESS* ports(default 7277).
 
@@ -109,11 +109,11 @@ Theses Ports can be found here : *WAS_HOME/profiles/dmgr/config/cells/cell-name/
 
 - **Find the Administration Port number**   
   Find theses lines in : */opt/IBM/WebSphere/AppServer/profiles/dmgr/logs/AboutThisProfile.txt*
-  ```conf
+  ~~~conf
   Administrative console port: 9060
   Administrative console secure port: 9043
   Management SOAP connector port: 8879
-  ```
+  ~~~
 
 - **Enable Admin Console Security**: Enable HTTPS and User/Password authentication
 
@@ -130,9 +130,9 @@ Theses Ports can be found here : *WAS_HOME/profiles/dmgr/config/cells/cell-name/
 
 ### IVT - Installation Verification Tool
 IVT is used to verify that you have successfully installed a product.
-```sh
+~~~sh
 ~ ${WAS_INSTALL_ROOT}/bin/ivt.sh server_name profile_name
-```
+~~~
 
 ### Federate a Node: addNode
 addNode is used to federate a node to the DMGR. addNode script is invoked from the node that you want to federate. Management SOAP  port (default 8879) is used to connect to the DMGR.  
@@ -149,23 +149,23 @@ Do on Centos2
   - Create a managed server profile using *manageprofiles* script.
   - Create a dummy node using *addNode* script. If the the node is previously created, add option *-noagent* to addNode. That also federate the node to the dmgr.
 	
-	```sh
+	~~~sh
 	${WAS_INSTALL_ROOT}/profiles/AppSrv02/bin/addNode.sh dmgr_host dmgr_soap_port_8879 -includeapps
-	```
+	~~~
 
 ### Nodes
 - **Start a Node Agent**
-	```sh
+	~~~sh
 	${WAS_INSTALL_ROOT}/profiles/AppSrv02/bin/startNode.sh
-	```
+	~~~
 ### Synchronisation
 N.B : install Websphere as root make a problem of synchrinisation when Globlal security is enabled.
 - From Web Console
 - **Manually synchronize the node**  
   Stop Node, and run syncNode script.
-  ```sh
+  ~~~sh
   $WAS_INSTALL_ROOT/profiles/AppSrv02/bin/syncNode.sh <DMgr_hostName> <SOAP_PORT_of_DMGR> -username <username> -password <password>
-  ```
+  ~~~
 ### Virtual Hosts
 You should readjust ports of the Alias of **default_host** virtual host. These are ports of both IHS and WAS.
 ![vhost](/docs/images/websphere-virtualhost.png)
@@ -180,11 +180,11 @@ You should readjust ports of the Alias of **default_host** virtual host. These a
 ## WSADMIN Scripting
 ----------------------------------------------------------------------------------
 - **Disable Administrative Security**: username/password will no longer  be demanded to login.
-	```sh
+	~~~sh
 	$WAS_INSTALL_ROOT/bin/wsadmin.sh -conntype NONE -lang jython
 	wsadmin>securityoff()
 	wsadmin>exit
-	```
+	~~~
 
 
 ## Docs
