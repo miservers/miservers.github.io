@@ -21,16 +21,16 @@ nav_order: 1
 
 
 
-## WebSphere App Server
+## WAS Concepts
 ----------------------------------------------------------------------------------
-### WAS Concepts
 ![was-concepts](/docs/images/websphere_app_server_concepts.png)
 
 - **Profile**: is basicaly a template of an app server. There are two main types of profiles; **default** profile for servers running applications, and **dmgr** profile for the Deployment Manager.
 
 - **Cell**: is a group of managed **nodes** that are federated to the same **deployement manager**.
 
-### WAS Installation
+## WAS Installation
+----------------------------------------------------------------------------------
 
 - [x] [websphere trial options and downloads](https://www.ibm.com/blog/websphere-trial-options-and-downloads/)
 
@@ -65,6 +65,8 @@ Using **imcl** . The **repository** used here was created on the staging machine
 
 	WAS_INSTALL_ROOT=/opt/IBM/WebSphere/AppServer
 
+## WAS Administration
+----------------------------------------------------------------------------------
 ### Profiles
 - **Create Managment Profile**
 	~~~sh
@@ -170,8 +172,15 @@ N.B : install Websphere as root make a problem of synchrinisation when Globlal s
 You should readjust ports of the Alias of **default_host** virtual host. These are ports of both IHS and WAS.
 ![vhost](/docs/images/websphere-virtualhost.png)
 
+### Thread Dump
+~~~ps
+kill -3 SERVER_PID
+~~~
+Dump is generated here: /opt/IBM/WebSphere/AppServer/profiles/AppSrv01
+
+
 ## Applications
---------------------------------
+----------------------------------------------------------------------------------
 - **Default Application Sample**: /opt/IBM/WebSphere/AppServer/installableApps/DefaultApplication.ear
 	- Snoop servlet : http://centos2:9081/snoop
 	- http://centos2:9081/HitCount.jsp
@@ -186,8 +195,19 @@ You should readjust ports of the Alias of **default_host** virtual host. These a
 	wsadmin>exit
 	~~~
 
+## FixPacks
+----------------------------------------------------------------------------------
+- Version of the Fixpacks
+	~~~sh
+	./versionInfo.sh -fixpacks
+	~~~
+
+- Download The fixpack from [Fix Central](https://www.ibm.com/support/fixcentral)
+- Apply the Fix using <a>imcl</a> command 
+
 
 ## Docs
+----------------------------------------------------------------------------------
 - [Excellent Articles on the Installation Manager](https://www.ibm.com/docs/en/installation-manager/1.9.2?topic=manager-enterprise-installation-articles)
 - [WAS ND 9.0 Docs](https://www.ibm.com/docs/en/was-nd/9.0.5)
 - [Blog javaee.goffinet.org](https://javaee.goffinet.org/was-06-taches-administratives/)
