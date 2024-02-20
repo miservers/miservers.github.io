@@ -80,5 +80,9 @@ linux:
     - title: Docker
       slug: docker
       icon: fa-docker.png
+
+    - title: Kubernetes
+      slug: kubernetes
+      icon: fa-kubernetes.png
       
     
