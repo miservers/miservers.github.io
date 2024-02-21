@@ -81,6 +81,10 @@ Run 100000 requests, 100 ones at time:
 
     openssl rand -base64 32
 	
+**SSH Tunnel**: Port forwarding to access a remote HTTP port using a ssh tunnel
+~~~sh
+ssh -L 8080:127.0.0.1:8080 sammy@your_server_ip
+~~~
 	
 ## Crontab
 Create/Edit a job evry 5 minutes:  

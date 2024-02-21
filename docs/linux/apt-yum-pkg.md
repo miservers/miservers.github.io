@@ -13,7 +13,9 @@ debian package managment. apt-get is dpkg top couch
 ```sh
 	apt update  # update the available package list.
 	apt --only-upgrade install <pkg> # update a single pkg
-	sudo apt search <pkg> 
+	apt list --installed             # list installed packages
+	apt list --installed | grep pkg  # search installed package
+	apt search <pkg> 
 	apt-cache search pkg-name # search package to install
 	apt install pkg
 	apt remove package # remove pkg
