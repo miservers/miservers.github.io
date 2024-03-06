@@ -7,26 +7,68 @@ nav_order: 9
 ## Kubernetes
 --------------------------------
 ### Architecture
-![art](/docs/images/kubernetes-cluster-architecture.svg)
+![art](/docs/images/kubernetes-cluster-architecture.webp)
 
 ### kubectl
-kubectl is the primary tool for managing kubernetes clusters throughout the command line.
+kubectl is the official command tool for managing kubernetes clusters.
 
 **List pods running on your cluster**
 ~~~sh 
-$ kubectl get pods -A  
+$ kubectl get pods 
 ~~~
 
 ~~~log
-	NAMESPACE              NAME                                         READY   STATUS 
-	default                web-57f46db77f-dgh2w                         1/1     Running     2 (4h21m 
-	kube-system            etcd-minikube                                1/1     Running     3 (4h21m 
-	kube-system            kube-apiserver-minikube                      1/1     Running     3 (4h21m 
-	kube-system            kube-scheduler-minikube                      1/1     Running     3 (4h21m 
-	kube-system            storage-provisioner                          1/1     Running     6 (4h21m 
-	kubernetes-dashboard   kubernetes-dashboard-8694d4445c-px9t2        1/1     Running     4 (4h21m 
+	NAME                   READY   STATUS    RESTARTS        AGE
+	demo                   1/1     Running   0               113s
+	web-57f46db77f-9jj6g   1/1     Running   1 (2m32s ago)   24h
 ~~~
 
+**List of Nodes**
+~~~sh
+$ kubectl get nodes
+~~~
+
+**Display Pod Console/Logs**
+~~~sh
+$ kubectl logs demo
+~~~
+
+~~~log
+	PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+	64 bytes from 8.8.8.8: icmp_seq=1 ttl=112 time=186 ms
+	64 bytes from 8.8.8.8: icmp_seq=2 ttl=112 time=48.5 ms
+	64 bytes from 8.8.8.8: icmp_seq=3 ttl=112 time=67.0 ms
+~~~
+
+
+### Create a Pod from YAML
+- Create a *pod.yaml* file  
+
+  ~~~yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+	name: demo
+  spec:
+	containers:
+	- name: testpod
+	  image: almalinux:latest
+	  command: ["ping", "8.8.8.8"]
+  ~~~
+
+- Deploy the Pod
+  ~~~sh
+  kubectl apply -f pod.yaml
+  ~~~
+- List Pods and Check Logs
+  ~~~bash
+  kubectl get pods
+  kubectl logs demo
+  ~~~
+- Finaly tear your demo 
+  ~~~sh
+  kubectl delete -f pod.yaml
+  ~~~
 
 ### Ingress
 Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. An Ingress may be configured to give Services externally-reachable URLs, load balance traffic, terminate SSL/TLS, and offer name-based virtual hosting.
@@ -84,5 +126,19 @@ $ minikube service web --url
 ~~~
   <a>http://192.168.49.2:32255</a>
 
+### Set Memory and CPU
+~~~sh
+$ minikube delete
+$ minikube config set memory 2048
+$ minikube config set cpus 2
+$ minikube start --force
+~~~
 
+### Config Files
+_~/.minikube/config/config.json_
+~~~json
+    "cpus": "2",
+    "driver": "docker",
+    "memory": "2048"
+~~~
 
