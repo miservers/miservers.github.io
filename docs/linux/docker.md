@@ -99,6 +99,10 @@ It prints info about the container:
 $ docker inspect container_name_or_id
 ~~~
 
+**List of mapped Ports**
+~~~sh 
+docker port containerId_or_name
+~~~
 
 ## Netwoks
 ----------------------------------------------------
