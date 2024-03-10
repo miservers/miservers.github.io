@@ -270,6 +270,42 @@ $ docker pull httpd:2.4
   $ dnf install  passwd openssh-clients iproute wget procps sudo
   ~~~
 
+### with docker compose
+~~~yaml
+version: '3'
+services:
+  alma4:
+    image: almalinux:latest
+    container_name: alma4
+    hostname: alma4
+    ports:
+      - '2022:22'
+    volumes:
+      - /media/jadmin/Data21/containers/alma1/opt:/opt 
+      - /opt/IBM/PackagingUtility:/opt/IBM/PackagingUtility
+    networks:
+      vlan1:
+        ipv4_address: 10.5.0.6
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dnf -y install openssh-server 
+        echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        ssh-keygen -A
+        echo "root:changeit" | chpasswd
+        /usr/sbin/sshd -D 
+    expose:
+      - 22
+networks:
+  vlan1:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
+~~~
+
 
 ## Tomcat Container
 ----------------------------------------------------
@@ -292,6 +328,48 @@ Access to Tomcat Container Directory
 
     Docker container exec -it my-tomcat-10 bash
     root@081fe841268a:/usr/local/tomcat# ls
+
+
+## Docker Compose
+----------------------------------------------------
+Docker Compose relies on YAML configuration files, commonly named *compose.yaml* placed in working directory.
+
+Steps to create an HTTPD and MySQL Containers:
+1. Create *compose.yaml* file
+   ~~~yaml
+	version: '3'
+	services:
+	  db:
+	     image: mysql
+	     container_name: mysql_db
+	     restart: always
+	     environment:
+	        - MYSQL_ROOT_PASSWORD="secret"
+	  apache:
+	    image: httpd:latest
+	    container_name: my-apache
+	    ports:
+	      - '8080:80'
+	    volumes:
+	      - ./website:/usr/local/apache2/htdocs
+	    depends_on:
+	      - db
+	    restart: always
+   ~~~
+   
+   For Testing create a html file *./websit/index.hml* 
+
+2. Build Images and Start Containers
+	~~~sh
+	docker compose up -d
+	~~~
+
+	Access the website: <a>http://127.0.0.1:8080</a> 
+3. Stop Containers
+	~~~sh
+	docker compose down
+	~~~
+
 
 ## Miscs
 ----------------------------------------------------
