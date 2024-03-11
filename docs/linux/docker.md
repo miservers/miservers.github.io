@@ -270,22 +270,23 @@ $ docker pull httpd:2.4
   $ dnf install  passwd openssh-clients iproute wget procps sudo
   ~~~
 
-### with docker compose
+###  Dockered Almalinux Using Docker Compose
+Create the file *docker-compose.yml*
 ~~~yaml
 version: '3'
 services:
-  alma4:
+  vm-alma1:
     image: almalinux:latest
-    container_name: alma4
-    hostname: alma4
+    container_name: alma1
+    hostname: alma1
     ports:
-      - '2022:22'
+      - '1022:22'
     volumes:
       - /media/jadmin/Data21/containers/alma1/opt:/opt 
       - /opt/IBM/PackagingUtility:/opt/IBM/PackagingUtility
     networks:
       vlan1:
-        ipv4_address: 10.5.0.6
+        ipv4_address: 10.2.0.2
     command:
       - /bin/sh
       - -c
@@ -302,10 +303,14 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: 10.5.0.0/16
-         gateway: 10.5.0.1
+       - subnet: 10.2.0.0/16
+         gateway: 10.2.0.1
 ~~~
 
+then run the command:
+~~~sh
+docker compose up -d
+~~~
 
 ## Tomcat Container
 ----------------------------------------------------
