@@ -270,7 +270,7 @@ $ docker pull httpd:2.4
   $ dnf install  passwd openssh-clients iproute wget procps sudo
   ~~~
 
-###  Dockered Almalinux Using Docker Compose
+###  Using Docker Compose
 Create the file *docker-compose.yml*
 ~~~yaml
 version: '3'
