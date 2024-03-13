@@ -2,8 +2,8 @@ middleware:
   title: Middleware
   url: docs/middleware
   items:
-    - title: Wildfly JBoss EAP
-      slug: jboss-eap-7
+    - title: JBoss
+      slug: jboss
       icon: fa-wildfly.png
    
     - title: Tomcat 
