@@ -145,9 +145,7 @@ Create Instances:
 ![](/docs/images/wildfly-29-cluster3.png)
 
 
-4. **Deploy an Cluster Demo**
-
-	[github.com/liweinan/cluster-demo](https://github.com/liweinan/cluster-demo)
+4. **Deploy an Cluster Demo** : <a>https://github.com/liweinan/cluster-demo</a>
 
 **web.xml**
 	
