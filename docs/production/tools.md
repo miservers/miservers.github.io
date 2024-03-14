@@ -1,12 +1,22 @@
 ---
 layout: default
-title: ActiveMQ
+title: Tools
 parent: Production
-nav_order: 6
+nav_order: 2
 ---
 
-### Architecture Tools
-**draw.io**: Excellent tool for Ubuntu
+### Network Architecture Tools
+
+- **draw.io**
+  - The Best?  
+  - Ubuntu
+
+- **LibreOffice Draw**
+   * Install [VRT Network Equipment extension](https://extensions.libreoffice.org/extensions/vrt-network-equipment)
+   * Add link points:  **Edition->Points de collage**
+   * Page A3 paysage.
+   * Clic droit pour se liberer 
+
 
 ### SSH Clients
 * Putty
