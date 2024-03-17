@@ -1,9 +1,11 @@
 ---
 layout: default
-title: Firewalls
-parent: Security
-nav_order: 3
+title: Firewalld
+parent:  Firewalls
+grand_parent: Security
+nav_order: 2
 ---
+
 
 ## Firewalld 
 ----------------------------------
@@ -78,43 +80,3 @@ See More about a service. eg ssh : **/usr/lib/firewalld/services/ssh.xml**
   		<short>SSH</short>
 	  	<port protocol="tcp" port="22"/>
 	</service>
-
-## ufw
-----------------------------------
-ufw is a frontend tool uppon iptables. It aims to simplify the  complicated  iptables rules. 
-
-ufw is the default firewall for ubuntu 20.04
-
-Is Firewall Actif:
-> $ ufw status
-
-Enable/Start the Firewall:
-> $ ufw enable
-
-Allow Incoming on 80 port: 
-> $ ufw allow 80/tcp
-
-List of Defined Rules:
-> $ ufw status verbose
-
-Delete a Rule:
-> $ ufw status numbered
-
-> $ ufw delete 1
-
-Activate Journalisation:
-> $ ufw logging on
-
-
-## Iptables
-----------------------------------
-Current Rules:
-> $ iptables -L
-
-Add a Rule
-> $ iptables -A INPUT -p tcp --dport ssh -j ACCEPT
-
-Delete a Rule:
-> $ iptables -L --line-numbers
-
-> $ iptables -D INPUT 1

@@ -12,27 +12,21 @@ nav_order: 6
 **Monitoring**
 ------------------------------
 ### Metrics
+Enable Meterics using CLI:
+~~~
 /extension=org.wildfly.extension.metrics:add
-
- /profile=full/subsystem=metrics:add
-
+/profile=full/subsystem=metrics:add
 /profile=full/subsystem=metrics:read-resource
-{
-    "outcome" => "success",
-    "result" => {
-        "exposed-subsystems" => undefined,
-        "prefix" => undefined,
-        "security-enabled" => true
-    }
+~~~
 
-http://192.168.56.103:9990/metrics
+<a>http://192.168.56.103:9990/metrics</a>
 
 
 ### Health
- /extension=org.wildfly.extension.health:add
- 
+~~~
+/extension=org.wildfly.extension.health:add 
 /profile=full/subsystem=health:add
-
+~~~
 **Performance Tuning**
 -------------------------------
 ### 7.1 JVM Settings 

@@ -84,6 +84,8 @@ $ docker stop $(docker ps -a -q) // Stop all containers
 $ docker exec {options}          // Execute a command inside running  container
 
 $ docker rm myhttpd2             //Remove a container
+
+$ docker logs --follow alma3     // Logs of a container
 ~~~
 
 - **Create Command** : Create a container from a docker image,  without start it.
@@ -307,10 +309,16 @@ networks:
          gateway: 10.2.0.1
 ~~~
 
-then run the command:
+Create and start containers:
 ~~~sh
 docker compose up -d
 ~~~
+
+Start/Stop Services
+~~~sh
+docker compose start|stop
+~~~
+
 
 ## Tomcat Container
 ----------------------------------------------------
