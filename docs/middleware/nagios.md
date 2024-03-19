@@ -1,5 +1,36 @@
+---
+layout: default
+title: Nagios
+parent: Middleware
+nav_order: 10
+has_toc: true
+---
+
+
+## Getting Started 
+### Nagios Architecture
+![alt](/docs/images/nagios-agents-transport.png)
+
+![alt](/docs/images/nagios-architecture.png)
+
+Nagios remotes alert messages to administrators defined in its configuration files, through sms, emails,... It also continuously updates its web console.
+
+Nagios sends a signal through a process scheduler to run the plugins on the local/remote servers.
+
+### Plugins
+A plugin is a script used to test a service. Plugins are installed on the remote servers you want to monitor:
+  - Return state code : 0=OK, 1=WARNING, 2=CRITICAL et 3=UNKNOW
+  - Return a information message
+  - Run: ./check_xxx!param1!param2!...!paramx
+
+### NRPE
+NRPE-Nagios Remote Plugin Executor, allows to execute plugins on remote servers.
+
+![alt](/docs/images/nagios-nrpe.png)
+
+
 ## Config files and Arbo
-Ubuntu 18.04  
+
 **Nagios server**  
  - Config file: /usr/local/nagios/etc/nagios.cfg  
 
@@ -7,14 +38,18 @@ Ubuntu 18.04
    - Config file: /etc/nagios/nrpe.cfg  
    - Listening port: 5666  
 
-## Configure Nagios (Ubuntu 18.04)
-See :
-  https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/toc.html
-  https://tecadmin.net/monitor-remote-linux-host-using-nagios
   
-### How to monitor a Linux host
-#### Monitored Host(Ubuntu 18.04)
-- Personalize nrep config **/etc/nagios/nrpe.cfg**
+## Monitoring a Linux Remote Host
+Use case: 
+- front-1(10.2.0.5): Nagios Server. RHEL/Almalinux 9
+- alma1(10.2.0.2): Host we want to monitor. RHEL/Almalinux 9.
+
+#### Monitored Host
+
+Install **nagios plugins** and **nrpe** daemon.
+
+
+Personalize nrep config **/etc/nagios/nrpe.cfg**
   - Add nagios server to allowed hosts  
     > allowed_hosts=127.0.0.1, 192.168.43.80  
   - Config commands  
@@ -25,7 +60,8 @@ See :
     command[check_zombie_procs]=/usr/lib/nagios/plugins/check_procs -w 5 -c 10 -s Z           
     command[check_total_procs]=/usr/lib/nagios/plugins/check_procs -w 150 -c 200
     ```
-- Restart nrpe server
+
+Restart nrpe server
   > sudo /etc/init.d/nagios-nrpe-server restart
   
 #### Nagios Server
