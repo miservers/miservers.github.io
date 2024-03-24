@@ -1,6 +1,5 @@
 
-
-
+Ansible Playbook to install Tomcat
 ~~~yaml
 ---
 - name: Download Tomcat8 from tomcat.apache.org
