@@ -46,6 +46,10 @@ devops:
       slug: jenkins
       icon: fa-jenkins.png
 
+    - title: Ansible
+      slug: ansible
+      icon: fa-ansible.png
+
     - title: JMeter
       slug: jmeter
       icon: fa-jmeter.png
