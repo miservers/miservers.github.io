@@ -9,6 +9,12 @@ alma2
 alma3
 ~~~
 
+### vagrant 
+vagrant is a tool for building and managing VMs. It works on top of a virtualisation provider(vmware, oracle vbox, kvm).
+
+Configuation is defined in **Vagrantfile**:
+
+
 ### variables
 ~~~
 vars:
