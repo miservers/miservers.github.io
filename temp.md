@@ -1,3 +1,7 @@
+Execute a Playbook
+~~~sh
+ansible-playbook install-tomcat.yaml
+~~~
 
 Ansible Playbook to install Tomcat
 ~~~yaml
