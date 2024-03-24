@@ -1,15 +1,21 @@
-Modules
+### Concepts
+Playbook: say ansible configuration files. It contains a list of tasks that will be executed on set of specified hosts.
+### Hosts
+  
+
+### Modules
+shell: module to run shell commands.
 group: module to  create a unix group
 user: creates unix users
 file: module to create files/directories.
+copy: copies files.
 
-
-Execute a Playbook
+### Execute a Playbook
 ~~~sh
 ansible-playbook install-tomcat.yaml
 ~~~
 
-Ansible Playbook to install Tomcat
+### Ansible Playbook to install Tomcat
 ~~~yaml
 ---
 - name: Download Tomcat8 from tomcat.apache.org
