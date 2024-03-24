@@ -1,7 +1,21 @@
 ### Concepts
 Playbook: say ansible configuration files. It contains a list of tasks that will be executed on set of specified hosts.
 ### Hosts
-  
+/etc/ansible/hosts
+~~~
+[appservers]
+alma1
+alma2
+alma3
+~~~
+
+### variables
+~~~
+vars:
+  http_port: 8080
+  install_dir: /opt/tomcat10
+~~~
+variables can be refered by "{{var name}}"
 
 ### Modules
 shell: module to run shell commands.
