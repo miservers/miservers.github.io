@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Jmeter
-parent: Middleware
-nav_order: 8
+parent: DevOps
+nav_order: 3
 ---
 
 ## Installation

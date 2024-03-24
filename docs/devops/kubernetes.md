@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Kubernetes
-parent: Linux
-nav_order: 9
+parent: DevOps
+nav_order: 6
 ---
 ## Kubernetes
 --------------------------------

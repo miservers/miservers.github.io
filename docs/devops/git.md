@@ -1,3 +1,11 @@
+---
+layout: default
+title: Git
+parent: DevOps
+nav_order: 2
+---
+
+
 ## GIT
 clone the repository
 

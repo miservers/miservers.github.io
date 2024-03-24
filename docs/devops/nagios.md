@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Nagios
-parent: Middleware
-nav_order: 10
+parent: DevOps
+nav_order: 4
 has_toc: true
 ---
 

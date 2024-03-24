@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Docker
-parent: Linux
-nav_order: 8
+parent: DevOps
+nav_order: 5
 ---
 
 ## Quick Start
@@ -345,10 +345,10 @@ Access to Tomcat Container Directory
 
 ## Docker Compose
 ----------------------------------------------------
-Docker Compose relies on YAML configuration files, commonly named *compose.yaml* placed in working directory.
+Docker Compose relies on YAML configuration files, commonly named *docker-compose.yml* placed in working directory.
 
-Steps to create an HTTPD and MySQL Containers:
-1. Create *compose.yaml* file
+### Create an HTTPD and MySQL Containers
+1. Create *docker-compose.yml* file
    ~~~yaml
 	version: '3'
 	services:
@@ -383,6 +383,8 @@ Steps to create an HTTPD and MySQL Containers:
 	docker compose down
 	~~~
 
+### Transform Docker commands to compose
+<a>https://www.composerize.com</a>
 
 ## Miscs
 ----------------------------------------------------

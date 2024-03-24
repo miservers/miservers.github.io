@@ -34,13 +34,29 @@ middleware:
       slug: cft
       icon: fa-cft.png
 
+    - title: Load Balancing
+      slug: load-balancing
+      icon: fa-load-balancing.png
+
+devops:
+  title: DevOps
+  url: docs/devops
+  items:
+    - title: Jenkins
+      slug: jenkins
+      icon: fa-jenkins.png
+
     - title: JMeter
       slug: jmeter
       icon: fa-jmeter.png
 
-    - title: Load Balancing
-      slug: load-balancing
-      icon: fa-load-balancing.png
+    - title: Docker
+      slug: docker
+      icon: fa-docker.png
+
+    - title: Kubernetes
+      slug: kubernetes
+      icon: fa-kubernetes.png
 
 
 data-base:
@@ -76,13 +92,5 @@ linux:
     - title: KVM
       slug: kvm
       icon: fa-kvm.png
-    
-    - title: Docker
-      slug: docker
-      icon: fa-docker.png
-
-    - title: Kubernetes
-      slug: kubernetes
-      icon: fa-kubernetes.png
-      
+          
     
