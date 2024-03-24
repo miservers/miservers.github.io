@@ -1,3 +1,9 @@
+Modules
+group: module to  create a unix group
+user: creates unix users
+file: module to create files/directories.
+
+
 Execute a Playbook
 ~~~sh
 ansible-playbook install-tomcat.yaml
