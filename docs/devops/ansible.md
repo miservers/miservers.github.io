@@ -7,23 +7,37 @@ nav_order: 2
 
 
 ### Concepts
-Playbook: say ansible configuration files. It contains a list of tasks that will be executed on set of specified hosts.
-### Hosts
-/etc/ansible/hosts
+Playbook: means ansible configuration files. It contains a list of tasks that will be executed on set of specified hosts.
+
+### Inventory (Hosts)
+Ansible use inventory file to keep track of the hosts belonging to your infrastructure. Default inventory location is **/etc/ansible/hosts**, but you can any other file and use **-i** option. 
+
+**~/ansible/prod-inventory**
 ~~~
 [appservers]
 alma1
 alma2
-alma3
+10.2.0.4
 ~~~
 
-### vagrant 
+To list an inventory hosts:
+~~~sh
+ansible-inventory -i prod-inventory --list
+~~~
+
+Ping All inventory hosts:
+~~~sh
+ansible all -i prod-inventory -m ping
+~~~
+
+
+### Vagrant 
 vagrant is a tool for building and managing VMs. It works on top of a virtualisation provider(vmware, oracle vbox, kvm).
 
-Configuation is defined in **Vagrantfile**:
+Configuations are defined in **Vagrantfile**:
 
 
-### variables
+### Variables
 ~~~
 vars:
   http_port: 8080
@@ -40,11 +54,12 @@ copy: copies files.
 
 ### Execute a Playbook
 ~~~sh
-ansible-playbook install-tomcat.yaml
+ansible-playbook -i prod-inventory tomcat-playbook.yml 
 ~~~
 
 ### Ansible Playbook to install Tomcat
-~~~yaml
+tomcat-playbook.yml
+~~~yml
 ---
 - name: Download Tomcat8 from tomcat.apache.org
   hosts: testserver

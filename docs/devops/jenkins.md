@@ -8,7 +8,7 @@ nav_order: 1
 ### Concepts
 C**I/CD**: Continuous Integration/Delivery
 
-**Pipeline**:
+**Pipeline**: 
 
 **JenkinsFile**: 
 
@@ -22,6 +22,9 @@ C**I/CD**: Continuous Integration/Delivery
 systemctl start jenkins
 ~~~
 
+### Pipeline
+Example 
+![alt](/docs/images/jenkins-pipeline-flow.png)
 
 ### Config Files
 On Linux(Ubuntu 22.04):
@@ -57,3 +60,8 @@ pipeline {
     }
 }
 ~~~ 
+
+### Jenkins & Ansible
+1. Install Ansible Plugin in Jenkins
+2. Configure Ansible in Jenkins
+![alt](/docs/images/jenkins-ansible-tools.png)
