@@ -46,11 +46,17 @@ vars:
 variables can be refered by "{{var name}}"
 
 ### Modules
-shell: module to run shell commands.
-group: module to  create a unix group
-user: creates unix users
-file: module to create files/directories.
-copy: copies files.
+- **shell**: run shell commands.
+- **group**: create a unix group.
+- **user**: creates unix users.
+- **file**: create files/directories.
+- **copy**: copies files.
+- **unarchive**: unpack an archive. It can copy the archive from the control machine or download it. 
+- **blockinfile**: Insert/update/remove a text block in a file
+
+### Privilege escalation: become
+Execute tasks with root privileges.
+
 
 ### Execute a Playbook
 ~~~sh
