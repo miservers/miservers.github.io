@@ -33,12 +33,12 @@ ansible all -i prod-inventory -m ping
 ### Execute ad-hoc commands
 Syntex: 
 ~~~sh
-ansible [pattern] -m [MODULE] -a {COMMAND_OPTIONS}
+ansible [pattern] -m [MODULE] -a {COMMAND OPTIONS}
 ~~~
 
+Examples:
 ~~~sh
 ansible all -m shell -a 'free -m'
-ansible localhost -m shell -a 
 ~~~
 
 ### Vagrant 
@@ -85,6 +85,21 @@ ansible-playbook -i prod-inventory tomcat-playbook.yml
         state: link
 ~~~
 
+### Create a User
+~~~yml
+- name: Create webadmin user
+      user:
+        name: webadmin
+        password: $5$YQXOijrsiwvkIEMJ$SmB42.jlkrOyg0G/QArrHxV6rqzL3p2
+        group: web
+        state: present
+~~~
+
+Password id Genretated with:
+~~~sh
+mkpasswd --method=sha-256 changeit
+~~~
+
 ### Insert at the end of File
 ~~~yml
   tasks:
@@ -97,6 +112,39 @@ ansible-playbook -i prod-inventory tomcat-playbook.yml
           export PATH=$JAVA_HOME/bin:$PATH
 ~~~
 
+### Templates
+Template are proccessed by [Jinja2 template language](http://jinja.pocoo.org/docs/)
+
+Example of template personalising tomcat http port:
+1. Define vars:
+~~~yaml
+vars:
+    tomcat_http_port: 8180
+    catalina_home: /opt/tomcat10
+~~~
+
+2. Copy server.xml into  templates/server.xml.j2 and edit it:
+~~~xml
+<Connector port="{{ tomcat_http_port }}" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+~~~
+
+3. Create task
+~~~yaml
+- name: Apply server.xml Template
+     template:
+       src: templates/server.xml.j2
+       dest: "{{catalina_home}}/conf/server.xml"
+~~~
+
+4. Apply the playbook
+~~~sh
+ansible-playbook -i ../prod-inventory playbook.yml
+~~~
+
 
 ### Documentation
 - [freekb](https://www.freekb.net/Articles?tag=Ansible)
+- [playbooks best practices](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html)
+- [Templates For Tomcat](https://github.com/mitre/ansible-cis-tomcat-hardening)
+

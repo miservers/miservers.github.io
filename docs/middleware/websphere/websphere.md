@@ -195,6 +195,23 @@ Dump is generated here: /opt/IBM/WebSphere/AppServer/profiles/AppSrv01
 	wsadmin>exit
 	~~~
 
+## Scripting Jython
+----------------------------------------------------------------------------------
+{: .warning }
+**Jacl** has been deprecated!
+### Scripts
+Call a Script:
+~~~sh
+<profile_home>/bin/wsadmin.sh -f script.py
+~~~
+
+### Example of Scripts
+- [Test Data Sources](/docs/middleware/websphere/scripts/testDS.py)
+- [Deploy an Application](/docs/middleware/websphere/scripts/deployApp.py)
+
+### Jython syntax
+
+
 ## FixPacks
 ----------------------------------------------------------------------------------
 - Version of the Fixpacks
