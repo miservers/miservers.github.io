@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Set Up
+title: Tomcat Security
 parent:  Tomcat
 grand_parent: Middleware
 nav_order: 4

@@ -1,0 +1,107 @@
+version: '3'
+services:
+  alma1:
+    image: almalinux:latest
+    container_name: alma1
+    hostname: alma1
+    ports:
+      - '1022:22'
+    volumes:
+      - /media/jadmin/Data21/containers/alma1/opt:/opt 
+      - /opt/IBM/PackagingUtility:/opt/IBM/PackagingUtility
+    networks:
+      vlan1:
+        ipv4_address: 10.2.0.2
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dnf -y install openssh-server  openssh-clients 
+        echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        ssh-keygen -A
+        echo "root:changeit" | chpasswd
+        /usr/sbin/sshd -D
+    expose:
+      - 22
+
+  alma2:
+    image: almalinux:latest
+    container_name: alma2
+    hostname: alma2
+    ports:
+      - '2022:22'
+    volumes:
+      - /media/jadmin/Data21/containers/alma2/opt:/opt
+      - /opt/IBM/PackagingUtility:/opt/IBM/PackagingUtility
+    networks:
+      vlan1:
+        ipv4_address: 10.2.0.3
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dnf -y install openssh-server sudo vim openssh-clients passwd iproute
+        echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        ssh-keygen -A
+        echo "root:changeit" | chpasswd
+        groupadd web
+        useradd webadmin -g web
+        echo "webadmin:changeit" | chpasswd
+        /usr/sbin/sshd -D
+    expose:
+      - 22
+
+  alma3:
+    image: almalinux:latest
+    container_name: alma3
+    hostname: alma3
+    ports:
+      - '3022:22'
+    volumes:
+      - /media/jadmin/Data21/containers/alma3/opt:/opt
+      - /opt/IBM/PackagingUtility:/opt/IBM/PackagingUtility
+    networks:
+      vlan1:
+        ipv4_address: 10.2.0.4
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dnf -y install openssh-server sudo vim openssh-clients passwd iproute 
+        echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        ssh-keygen -A
+        echo "root:changeit" | chpasswd
+        groupadd web
+        useradd webadmin -g web
+        echo "webadmin:changeit" | chpasswd
+        /usr/sbin/sshd -D
+    expose:
+      - 22
+
+  vm-front1:
+    image: almalinux:latest
+    container_name: front-1
+    hostname: front-1
+    ports:
+      - '4022:22'
+    networks:
+      vlan1:
+        ipv4_address: 10.2.0.5
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dnf -y install openssh-server
+        echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        ssh-keygen -A
+        echo "root:changeit" | chpasswd
+        /usr/sbin/sshd -D
+    expose:
+      - 22
+networks:
+  vlan1:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.2.0.0/16
+         gateway: 10.2.0.1

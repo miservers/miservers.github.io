@@ -1,0 +1,72 @@
+---
+- name: General Configuration of Servers
+  hosts: appservers
+  vars:
+    jdk_binary: /home/jadmin/software/jdk-22_linux-x64_bin.tar.gz  
+  tasks:
+    - name: Install Packages
+      become: yes
+      dnf:
+        name: 
+          - telnet 
+          - wget
+          - sudo
+          - iproute
+          - passwd
+          - vim
+          - procps-ng
+        update_cache: yes
+        state: present
+    
+    - name: Create group web
+      group:
+        name: web
+        state: present
+   
+    - name: Create webadmin user
+      user:
+        name: webadmin
+        password: $5$YQXOijrsiwvkIEMJ$SmB42.jlkrOyg0GHnIt2LWukVu5/QArrHxV6rqzL3p2        
+        group: web
+        state: present
+
+    - name: Give sudo access to webadmin user
+      become: yes
+      blockinfile:
+        path: /etc/sudoers
+        insertafter: 'root	ALL=(ALL:ALL) ALL'
+        block: |
+          # Gives sudo access to a user
+          webadmin        ALL=(ALL)       NOPASSWD: ALL
+
+    - name: Install the JDK
+      unarchive:
+       src: '{{ jdk_binary }}'
+       dest: /opt
+       copy: true
+       mode: 0755
+       #keep_newer: true
+    
+    - name: Create a symlink to the JDK 
+      file:
+        src: /opt/jdk-22
+        dest: /opt/jdk
+        state: link
+
+    - name: Setup the the PATH
+      blockinfile:
+        path: /home/webadmin/.bash_profile
+        insertafter: 'EOF'
+        block: |
+          export JAVA_HOME=/opt/jdk
+          export PATH=$JAVA_HOME/bin:$PATH
+    
+    - name: Creates alias
+      blockinfile:
+        path: /home/webadmin/.bash_profile
+        insertafter: 'EOF'
+        block: |
+          alias ll='ls -lrt'
+          alias l=ll
+          alias c=clear  
+
