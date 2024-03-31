@@ -1,4 +1,14 @@
-## HowTo
+---
+layout: default
+title: JVM
+parent: Middleware
+nav_order: 10
+---
+
+## JVM
+#### MetaSpace
+![metaspace](/docs/images/jvm.png)
+
 #### Disassembl the .class  
     javap -p -v Hello.class
 
@@ -29,6 +39,8 @@
 see : http://blog.sokolenko.me/2014/11/javavm-options-production.html
 
 #### Java >= 8 settings in production
+
+~~~sh
     -server
     -Xms<heap size>[g|m|k] -Xmx<heap size>[g|m|k]
     -XX:MaxMetaspaceSize=<metaspace size>[g|m|k]
@@ -45,6 +57,7 @@ see : http://blog.sokolenko.me/2014/11/javavm-options-production.html
     -Dcom.sun.management.jmxremote.port=<port> 
     -Dcom.sun.management.jmxremote.authenticate=false 
     -Dcom.sun.management.jmxremote.ssl=false
+~~~
 
 #### Large Heap Memory  
 Java 64 has no limit of heap memory (>100Go). But GC pauses increase a lot(stop-the-world). Pauses of several tens of seconds 
@@ -66,35 +79,34 @@ Disable loading JVMs Graphic Library: Option  "-Djava.awt.headless=true"
 
 ## Thread Dump : High CPU
 
-Tools: 
-	
-	jstack (jstack  -J-d64  -m 24326 >> appli1.tdump)
-	
-	JVisualVM
-
-1. Genrerer des threads dumps : kill -3 pid, ou
-
-1.1 jstack  -J-d64  -m 24326 >> appli1.tdump
+1. Genrerer des threads dumps : 
+   ~~~sh
+   kill -3 pid
+   ~~~
+   ou
+   ~~~sh
+   jstack  -J-d64  -m 24326 >> appli1.tdump
+   ~~~
 
 2. Lancer la commande **top**, puis entrer **H** pour show threads on.
 
 3. Identifier le thread qui a le plus de CPU et TIME+
 
-```
+~~~sh
   PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+     COMMAND
 10477 tomcat    20   0 13.2g 6.2g  15m R 300  19.9    501:08.65 java
 10456 tomcat    20   0 13.2g 6.2g  15m R 47.6 19.9    523:25.89 java
 10447 tomcat    20   0 13.2g 6.2g  15m R 47.2 19.9    513:57.74 java
 24363 tomcat    20   0 13.2g 6.2g  15m R 46.3 19.9    520:55.67 java
-```
+~~~
 
 4. le thread le plus consommatrice est **10477**, transformé en hex, **0x28ed**. Le thread coupable est trouvé dans threadDump **nid=0x28ed**
 
-```
+~~~sh
 "asyncThread-16" daemon prio=10 tid=0x00007f81f0035800 nid=0x28ed runnable [0x00007f81d209e000]
    java.lang.Thread.State: RUNNABLE
 	at java.util.HashMap.put(Unknown Source)
-```
+~~~
 
 [Analysis cpu high](https://blogs.oracle.com/jiechen/analysis-against-jvm-thread-dump-cpu-high-usage-issue)
 

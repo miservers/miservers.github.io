@@ -1,2 +1,8 @@
 ---
 # tasks file for java
+- name: Install Package
+  become: yes
+  dnf:
+    name: 
+      - "{{ java_version }}"
+    state: present

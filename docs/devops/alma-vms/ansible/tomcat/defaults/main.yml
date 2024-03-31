@@ -1,4 +1,25 @@
 ---
 # defaults file for tomcat
 
+tomcat_binary: /home/jadmin/software/apache-tomcat-10.1.20.tar.gz
+    
+java_home: /usr/lib/jvm/jre-17-openjdk
+
+tomcat_version: 10
+catalina_home: /opt/tomcat10
+
+java_opts:
+catalina_opts:
+
+tomcat_http_port: 8180
+tomcat_https_port: 8443
+tomcat_ajp_port: 8109
+tomcat_shut_port: 8005
+
+tomcat_user: tomcat
+tomcat_group: tomcat
+
+
+
+
 

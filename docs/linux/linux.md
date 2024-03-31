@@ -42,6 +42,7 @@ Commands:
 | $?                                                 | Status de la derniere commande            |
 | which cmd_alias                                    | command behind alias                      |
 |cmd  2>/dev/null                                    | suppress error message in bash            |
+|sudo lsof -iTCP -sTCP:LISTEN                        | wich processing is using a port?          |
 
 
 **Max open file descriptors** 

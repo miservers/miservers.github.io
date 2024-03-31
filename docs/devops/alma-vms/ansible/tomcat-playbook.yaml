@@ -1,4 +1,4 @@
-- name: Install Tomcat
+- name: Install Tomcat/Java
   hosts: appservers
   gather_facts: yes
   #become: no
@@ -6,4 +6,7 @@
   tasks:
     - name: installing tomcat using role
       import_role:
-        name: tomcat10
+        name: java
+    - name: installing java using role
+      import_role:
+        name: tomcat
