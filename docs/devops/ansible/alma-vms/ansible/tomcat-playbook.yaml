@@ -1,0 +1,12 @@
+- name: Install Tomcat/Java
+  hosts: appservers
+  gather_facts: yes
+  #become: no
+
+  tasks:
+    - name: configuring httpd using role
+      import_role:
+        name: roles/apache
+    - name: installing tomcat using role
+      import_role:
+        name: roles/tomcat
