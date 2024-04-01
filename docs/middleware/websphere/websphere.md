@@ -212,6 +212,12 @@ Call a Script:
 ### Jython syntax
 
 
+## Performance Monitoring Infrastructure (PMI)
+----------------------------------------------------------------------------------
+To enable Performance Monitoring Statistic:
+
+- Under **Application servers** > <server_name> > **Performance Monitoring Infrastructure** (PMI), set  **Currently monitored statistic**.
+
 ## FixPacks
 ----------------------------------------------------------------------------------
 - Version of the Fixpacks
