@@ -45,6 +45,7 @@ Start The VM:
 vagrant up
 ~~~
 
+
 ### Connecting to the VM via SSH
 Localy ssh access using vagrant:
 ~~~sh
@@ -90,7 +91,7 @@ Restart SSHD service
 [vagrant@centos2 ~]$ sudo systemctl restart sshd
 ~~~
 
-Change the vagrant user password:
+Change the **vagrant** user password:
 ~~~sh
 [vagrant@centos2 ~]$ sudo passwd  vagrant
 ~~~
