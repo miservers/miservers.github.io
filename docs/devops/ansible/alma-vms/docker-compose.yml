@@ -98,6 +98,61 @@ services:
         /usr/sbin/sshd -D
     expose:
       - 22
+
+  rehl1:
+    image: redhat/ubi8
+    container_name: rehl1
+    hostname: rehl1
+    ports:
+      - '7022:22'
+    volumes:
+      - /media/jadmin/Data21/containers/rehl1/opt:/opt
+    networks:
+      vlan1:
+        ipv4_address: 10.2.0.7
+    command:
+      - /bin/sh
+      - -c
+      - |
+        dnf -y install openssh-server sudo vim openssh-clients passwd iproute
+        echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        ssh-keygen -A
+        echo "root:changeit" | chpasswd
+        groupadd web
+        useradd webadmin -g web
+        echo "webadmin:changeit" | chpasswd
+        /usr/sbin/sshd -D
+    expose:
+      - 22
+
+  centos1:
+    build: .
+    container_name: centos1
+    hostname: centos1
+    ports:
+      - '8022:22'
+    volumes:
+      - /media/jadmin/Data21/containers/centos1/opt:/opt
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    networks:
+      vlan1:
+        ipv4_address: 10.2.0.8
+    command:
+      - /bin/sh
+      - -c
+      - |
+        yum -y install openssh-server sudo vim openssh-clients passwd iproute
+        echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        ssh-keygen -A
+        echo "root:changeit" | chpasswd
+        groupadd web
+        useradd webadmin -g web
+        echo "webadmin:changeit" | chpasswd
+        /usr/sbin/sshd -D
+    expose:
+      - 22
+
 networks:
   vlan1:
     driver: bridge

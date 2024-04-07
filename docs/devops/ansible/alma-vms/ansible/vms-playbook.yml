@@ -8,7 +8,6 @@
       become: yes
       dnf:
         name: 
-          - telnet 
           - wget
           - sudo
           - iproute
