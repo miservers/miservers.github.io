@@ -6,6 +6,7 @@ nav_order: 5
 ---
 
 ### Concepts
+**Vagrant** enables users to create and configure lightweight, reproducible, and portable development environments(VMs).
 
 ### Installation
 Install VirtualBox
@@ -20,6 +21,10 @@ curl -O https://releases.hashicorp.com/vagrant/2.4.1/vagrant_2.4.1-1_amd64.deb
 sudo dpkg -i vagrant_2.4.1-1_amd64.deb 
 ~~~
 
+### VirtualBox Configurations
+- Set the **Default Machine Folder**: Directory where the VMs will be created
+  - <a>VirtualBox > Preferences > General </a>
+
 
 ### Creating a Box (VM)
 For centos7 Box:
@@ -33,7 +38,7 @@ Initialize the centos Box
 vagrant init centos/7
 ~~~
 
-This Create the **Vagrantfile**
+This Create the **Vagrantfile**. So Adapt it!!. See Example Below
 
 Start The VM:
 ~~~sh
@@ -91,6 +96,10 @@ Change the vagrant user password:
 ~~~
 
 ### Vagrantfile
+Explanations:
+- **Vagrant.configure(“2”)**: Vagrant will use version 2 of the configuration object. 
+
+
 Example:
 ~~~ruby
 # -*- mode: ruby -*-
