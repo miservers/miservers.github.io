@@ -2,7 +2,7 @@
 layout: default
 title: Ansible Galaxy - Collections
 parent:  Ansible
-grand_parent: Devops
+grand_parent: DevOps
 nav_order: 3
 ---
 <h1>UNDER CONSTRUCTION !</h1>

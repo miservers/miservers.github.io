@@ -96,6 +96,20 @@ Change the **vagrant** user password:
 [vagrant@centos2 ~]$ sudo passwd  vagrant
 ~~~
 
+### Disk Size
+Install plugin:
+~~~sh
+vagrant plugin install vagrant-disksize
+~~~
+
+Edit Vagrant file:
+~~~ruby
+Vagrant.configure("2") do |config|
+  ... 
+  config.vm.disk :disk, size: "150GB", primary: true
+
+~~~
+
 ### Vagrantfile
 Explanations:
 - **Vagrant.configure(“2”)**: Vagrant will use version 2 of the configuration object. 

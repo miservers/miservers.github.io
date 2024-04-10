@@ -2,7 +2,7 @@
 layout: default
 title: Ansible Tower
 parent:  Ansible
-grand_parent: Devops
+grand_parent: DevOps
 nav_order: 5
 ---
 

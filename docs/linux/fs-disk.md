@@ -1,13 +1,44 @@
 ---
 layout: default
-title: File Systems
+title: File Systems - Disks
 parent: Linux
 nav_order: 3
 ---
 
+### Create a New Partition
+- Liste all partitions present on your system
+~~~sh
+# fdisk -l
+~~~
 
-## Disk & FS
-------------------------------------------
+- Create a Partition
+~~~sh
+# fdisk [disk path]
+~~~
+
+- Format the patition
+~~~sh
+# mkfs.ext4 [partition path]
+~~~
+
+### Mount a Partition
+- Mount the partition
+~~~sh
+# mount -t ext4 /dev/sda2 /opt/appdynamics
+~~~
+
+- make it permanent: add to **/etc/fstab**
+~~~
+/dev/sda2       /opt/appdynamics ext4    defaults        0       0
+~~~
+
+- Check if it was mounted
+~~~sh
+# df -h
+~~~
+
+
+### Disk & FS
 List all block devices:
  
     # lsblk
