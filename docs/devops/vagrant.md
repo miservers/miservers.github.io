@@ -7,6 +7,10 @@ nav_order: 5
 
 ### Concepts
 **Vagrant** enables users to create and configure lightweight, reproducible, and portable development environments(VMs).
+  
+  - **Vagrant Box** : Virtual Machine Image.
+
+![a](/docs/images/vagrant-concepts.png)
 
 ### Installation
 Install VirtualBox
