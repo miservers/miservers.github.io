@@ -86,8 +86,19 @@ Run 100000 requests, 100 ones at time:
 ~~~sh
 ssh -L 8080:127.0.0.1:8080 sammy@your_server_ip
 ~~~
-	
+
+## Redhat RHEL 9
+--------------------------
+### Red Hat Labs Registration Assistant
+Online assistant to register a redhat subscription: https://access.redhat.com/labs/registrationassistant/
+
+### Register and automatically Subscribe
+~~~sh
+subscription-manager register --username <username> --password <password> --auto-attach
+~~~
+
 ## Crontab
+--------------------------
 Create/Edit a job evry 5 minutes:  
 
 	$ crontab -e

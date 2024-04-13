@@ -22,6 +22,8 @@ nav_order: 5
 
 - **Jobs**: A job is basically an instance of Tower launching an Ansible playbook against an inventory of hosts.
 
+### Workshop Examples
+See This [Tuto](https://redhatgov.io/workshops/ansible_automation)
 
 ### Inventories
 ![to](/docs/images/ansible-tower-inventory-1.png)
@@ -50,16 +52,19 @@ nav_order: 5
 <a>http://www.ansible.com/tower-trial</a>
 
 ### Installation
-~~~sh
-curl --insecure -o "/opt/ansible-tower-setup-latest.tar.gz" "https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz"
-~~~
+Steps (tested on a Rhel7):
+- Download tower and untar it
+  ~~~sh
+  curl --insecure -o "/opt/ansible-tower-setup-latest.tar.gz" "https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz"
+  ~~~
 
-Edit the inventory file, and define passwords.
+- Edit the **inventory** file, and define passwords.
 
-~~~sh
-cd /opt/ansible-tower-setup-3.8.6-2/
-./setup.sh
-~~~
+- Run the Installation on the Tower
+  ~~~sh
+  cd /opt/ansible-tower-setup-3.8.6-2/
+   . ./setup.sh
+  ~~~
 
 {: .important }
 > Error: This machine does not have sufficient RAM to run Ansible Tower/Automation Hub.
@@ -79,7 +84,8 @@ Start/Stop
 ~~~sh
 ansible-tower-service restart
 ~~~
-Console: https://<TOWER_SERVER_NAME>/
+
+Console: https://TOWER_SERVER_NAME/
 - admin/changeit
 
 Config: 
