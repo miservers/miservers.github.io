@@ -213,6 +213,22 @@ Example: playbook.yaml
         state: restarted
 ~~~
 
+**Loop Until**
+~~~yaml
+---
+- name: localhost play
+  hosts: localhost
+  tasks:
+  - name: Test Until
+    shell: ps -ef | grep -v grep | grep 'Hello'
+    register: result
+    retries: 5
+    delay: 1
+    until: result.stdout is search 'Hello'
+~~~
+
+
+
 ### Systemd: restart a service
 Start Apache using systemd module. 
 ~~~yaml
@@ -267,10 +283,12 @@ To avoid being prompted for password, you can use Vault password file:
   ~~~
 
   - Use the it
-  
+
   ~~~sh
   ansible-playbook -i inventory playbook.yml --vault-password-file path/to/.vault_password.txt
   ~~~
+
+To avoid vault password option in command line, you can use `export ANSIBLE_VAULT_PASSWORD_FILE=path/to/.vault_password.txt`, or add the vault password to `ansible.cfg` 
 
 ### Documentation
 - [freekb](https://www.freekb.net/Articles?tag=Ansible)
