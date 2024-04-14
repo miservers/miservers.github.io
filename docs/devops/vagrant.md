@@ -6,9 +6,9 @@ nav_order: 5
 ---
 
 ### Concepts
-**Vagrant** enables users to create and configure lightweight, reproducible, and portable development environments(VMs).
-  
-  - **Vagrant Box** : Virtual Machine Image.
+Vagrant is a tool for building and managing VMs. It works on top of a virtualisation provider(vmware, oracle vbox, kvm). Configuations are defined in **Vagrantfile**:
+
+  - **Box** : boxes are virtual machine images.
 
 ![a](/docs/images/vagrant-concepts.png)
 

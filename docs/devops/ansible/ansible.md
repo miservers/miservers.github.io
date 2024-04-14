@@ -13,7 +13,7 @@ Playbook: means ansible configuration files. It contains a list of tasks that wi
 ### Inventory (Hosts)
 Ansible use inventory file to keep track of the hosts belonging to your infrastructure. Default inventory location is **/etc/ansible/hosts**, but you can any other file and use **-i** option. 
 
-**~/ansible/prod-inventory**
+Exemple of an **inventory** file:
 ~~~
 [appservers]
 alma1
@@ -23,12 +23,12 @@ alma2
 
 To list an inventory hosts:
 ~~~sh
-ansible-inventory -i prod-inventory --list
+ansible-inventory -i inventory --list
 ~~~
 
 Ping All inventory hosts:
 ~~~sh
-ansible all -i prod-inventory -m ping
+ansible all -i inventory -m ping
 ~~~
 
 ### Execute ad-hoc commands
@@ -39,13 +39,21 @@ ansible [pattern] -m [MODULE] -a {COMMAND OPTIONS}
 
 Examples:
 ~~~sh
-ansible all -m shell -a 'free -m'
+ ansible  appservers -i inventory -m ping
 ~~~
 
-### Vagrant 
-vagrant is a tool for building and managing VMs. It works on top of a virtualisation provider(vmware, oracle vbox, kvm).
+### Connection Methods
+By default Ansible assumes you are using SSH keys to connect to remote machines. That is recommended but you can use user/password method.
 
-Configuations are defined in **Vagrantfile**:
+- SSH Keys Method: 
+  ~~~sh
+   ssh-copy-id username@remote_server
+  ~~~
+
+- User/Password Method: 
+  ~~~sh
+   ansible appservers -i inventory -m ping -u REMOTE_USER --ask-pass
+  ~~~
 
 
 ### Variables
@@ -64,6 +72,9 @@ variables can be refered by "{{var name}}"
 - **copy**: copies files.
 - **unarchive**: unpack an archive. It can copy the archive from the control machine or download it. 
 - **blockinfile**: Insert/update/remove a text block in a file
+- **setup**: to get remote host configuration(ansible_facts)
+- **systemd_service**: Alias **systemd**, Controls systemd units (services, timers, and so on) on remote hosts.
+
 
 ### Privilege escalation: become
 Execute tasks with root privileges.
@@ -147,6 +158,119 @@ vars:
 ansible-playbook -i ../prod-inventory playbook.yml
 ~~~
 
+### Ansible Facts
+Facts are remote hosts configuration, including OS, IP, FS, etc. You can access this data throughout **ansible_facts** variable, or via **setup** module.
+
+- Using **ansible_facts** variable: add this task to your playbook
+
+  ~~~yaml
+  - name: Print all available facts
+    ansible.builtin.debug:
+      var: ansible_facts
+  ~~~
+
+- Using **setup** module:
+
+  ~~~sh
+  ansible web -i inventory -m setup
+  ~~~
+
+For example, to reference remote host OS type and release :
+
+{% raw %}  
+  ~~~jinja2
+  {{ ansible_facts['ansible_distribution'] }}
+  {{ ansible_facts['ansible_distribution_major_version'] }}
+~~~
+{% endraw %}  
+
+### Loops, Handlers
+- **Loop**:  `with_items`.
+- **Handler**: using `notify` keyword, operations you want to run when a change is made on a machine. 
+
+Example: playbook.yaml
+~~~yaml
+---
+- hosts: web
+  become: yes
+  vars:
+    httpd_packages:
+      - httpd
+      - mod_ssl
+
+  tasks:
+    - name: install httpd packages
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ httpd_packages }}"
+      notify: Restart apache
+
+  handlers:
+    - name: Restart apache
+      ansible.builtin.systemd:
+        name: httpd
+        state: restarted
+~~~
+
+### Systemd: restart a service
+Start Apache using systemd module. 
+~~~yaml
+---
+- hosts: web
+  tasks:
+  - name: reload systemd daemons
+    systemd:
+      daemon_reload: yes
+
+  - name: gather service facts
+    ansible.builtin.service_facts:
+
+  - name: start apache
+    become: yes
+    become_user: root
+    systemd:
+      name: httpd
+      state: 'started'
+      enabled: yes
+    when: ansible_facts.services['httpd.service'] is defined and ansible_facts.services['httpd.service'].state != 'running'
+~~~
+
+### Vault
+Ansible Vault is used to encrypt playbooks using password. 
+
+Encrypt a Playbook:
+~~~sh
+ansible-vault encrypt  playbook.yml
+~~~
+
+To view the decrypted content:
+~~~sh
+ansible-vault view playbook.yml
+~~~
+
+When you want to execute the playbook, you will prompted to enter the password
+~~~sh
+ansible-playbook -i inventory playbook.yml --ask-vault-pass
+
+Vault password: 
+~~~
+
+To avoid being prompted for password, you can use Vault password file:
+  
+  - Create pasword file
+
+  ~~~sh
+  echo "changeit" > .vault_password.txt
+
+  chmod 0600 .vault_password.txt
+  ~~~
+
+  - Use the it
+  
+  ~~~sh
+  ansible-playbook -i inventory playbook.yml --vault-password-file path/to/.vault_password.txt
+  ~~~
 
 ### Documentation
 - [freekb](https://www.freekb.net/Articles?tag=Ansible)
