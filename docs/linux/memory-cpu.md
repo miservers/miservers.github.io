@@ -5,6 +5,9 @@ parent: Linux
 nav_order: 2
 ---
 
+### vmstat 
+Reference: <a>https://access.redhat.com/solutions/1160343</a>
+
 
 ### Extend Swap
 [Reference] 

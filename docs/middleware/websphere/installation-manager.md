@@ -95,6 +95,16 @@ the repository was created on the staging machine via the Packaging Utility tool
 ### Working in Silent mode
 To use silent mode, you must create a **response file** through Installation Manager or  by hand.
 
+### Uninstall IM itself
+To unistall Installation manager Or Packaging Utility:
+~~~sh
+./imcl listInstalledPackages
+
+./imcl uninstall com.ibm.cic.packagingUtility_1.9.2006.20230925_1406
+
+./imcl uninstall com.ibm.cic.agent_1.9.2006.20230925_1323
+~~~
+
 
 ### Docs
 

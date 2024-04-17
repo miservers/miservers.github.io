@@ -64,6 +64,8 @@ vars:
 ~~~
 variables can be refered by "{{var name}}"
 
+[How to pass extra variables to an Ansible playbook](https://www.redhat.com/sysadmin/extra-variables-ansible-playbook)
+
 ### Modules
 - **shell**: run shell commands.
 - **group**: create a unix group.

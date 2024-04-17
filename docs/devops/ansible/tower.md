@@ -14,7 +14,7 @@ nav_order: 5
 ### Concepts
 - **Project**: collections of ansible playbooks. they can reside localy on the tower server, or on vesion control supported by tower(eg. git).
 
-- **Inventory**: collection of hosts against wich jobs may be launched. it's the same as traditional ansible inventory.
+- **Inventory**: An Inventory is a collection of hosts against which jobs may be launched, the same as an Ansible inventory file. 
 
 - **Credentials**: used by tower to authenticate when launching jobs against machines, to import projects from version control servers,
 
@@ -26,6 +26,8 @@ nav_order: 5
 See This [Tuto](https://redhatgov.io/workshops/ansible_automation)
 
 ### Inventories
+1. Create a Group : web. In your playbook you put `hosts: web`
+2. Create Hosts.
 ![to](/docs/images/ansible-tower-inventory-1.png)
 ![to](/docs/images/ansible-tower-inventory-2.png)
 
@@ -33,7 +35,14 @@ See This [Tuto](https://redhatgov.io/workshops/ansible_automation)
 ### Credentials
 - CREDENTIAL TYPE: Click on the magnifying glass, pick Machine. 
 - PRIVILEGE ESCALATION METHOD: sudo
+
+Differents methods can be used:
+- user/password:
+- SSH Private Key. Use the **~/.ssh/id_rsa** of the tower machine. However, tower machine must be able to connect to remote machine without password, see **ssh-copy-id**.
+
 ![to](/docs/images/ansible-tower-credentials.png)
+OR
+![to](/docs/images/ansible-tower-credentials-sshkey.png)
 
 ### Create a Project
 - SCM URL: https://github.com/ansible/workshop-examples.git
@@ -42,7 +51,8 @@ See This [Tuto](https://redhatgov.io/workshops/ansible_automation)
 ### Create a Job Template and Run a Job
 - CREATE JOB TEMPLATE
   - Name: Install Apache
-  - INVENTORY: preprod
+  - INVENTORY: vms-dev
+  - CREDENTIALS: dev-creds
   - PROJECT: Ansible Workshop Examples
   - PLAYBOOK: apache_install.yml
 ![to](/docs/images/ansible-tower-template.png)

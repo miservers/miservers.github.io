@@ -153,6 +153,25 @@ services:
     expose:
       - 22
 
+  gitlab:
+    image: gitlab/gitlab-ee
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.lenovo'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        external_url 'https://gitlab.lenovo'
+    ports:
+      - '9080:80'
+      - '9443:443'
+      - '9022:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'
+
 networks:
   vlan1:
     driver: bridge
