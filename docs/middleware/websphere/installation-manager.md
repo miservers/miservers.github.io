@@ -8,7 +8,7 @@ nav_order: 2
 
 v 1.9 
 
-### Terminology
+## Terminology
 
 - **package**: Entity that Installation Manager installs.
 - **Repository**: directory containing IBM packages and defined by its **repository.config**.  
@@ -20,14 +20,14 @@ v 1.9
 
 
 
-### Installation of IM: Gui
+## Installation of IM: Gui
 IBM Installation Manager is an utility to install and apply Fix Packs for IBM softwares. You can install it as Root, User or Group.  **v.1.9** 
 
 	./install     // install as root	
 	./userinst   // as user
 	./groupinst
 
-### Installation of IM: Silent 
+## Installation of IM: Silent 
 Fist unzip IM software.
 - **Install as root**
 	```sh
@@ -37,7 +37,7 @@ Fist unzip IM software.
 - **Install as user**
 	```sh
 	$ ./userinstc -installationDirectory /opt/IBM/InstallationManager/eclipse \
-	   -dL /var/ibm/InstallationManager -acceptLicense -sVP -showProgress
+	   -dL ~/var/ibm/InstallationManager -acceptLicense -sVP -showProgress
 	```
 
 
@@ -53,49 +53,63 @@ Log file:
 	/var/ibm/InstallationManager/pluginState/.metadata
 ```
 
-### Working in wizard mode
+## Response File
+### Create a Response File
+~~~sh
+cd /opt/IBM/InstallationManager/eclipse
+./IBMIM -record was_nd_rsp.xml  -skipInstall /tmp/ibm_recordData
+~~~
+
+Follow the Installation Manager wizard to simulate the packages installation. 
+
+Thanks to `-skipInstall`, no packages will be installed. 
+
+
+## Working in wizard mode
 
   ![alt](/docs/images/ibm-installation-manager.png)
 
 Add **Repositories** in _File>Preferences>Repositories_. Here you find Repositories to install Websphere AppServer [Websphere App Server Repositories](https://www.ibm.com/docs/en/was/9.0.5?topic=installation-online-product-repositories-websphere-application-server-offerings)
 
-### Working form command line: imcl
+## Working form command line: imcl
 the repository was created on the staging machine via the Packaging Utility tool.
 
-- **Listing available packages**
-	```sh
-	$ cd /opt/IBM/InstallationManager/eclipse/tools/
-	$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
-	```
+### List Of Available Packages
+```sh
+$ cd /opt/IBM/InstallationManager/eclipse/tools/
+$ ./imcl listAvailablePackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+```
 
-	This repositry was dowloaded by [Packaging Utility](#packaging-utility) and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
-
-- **Install Packages**
-	```sh
-	$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
-		-repositories http://ibm-file-server.safar.ma/repository.config \
-		-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense -showProgress
-	```
-
-	{: .warning :}
-	You must Install the WAS and the JDK simultaneously, both by one command imcl
-
-- **List Installed Packages**
-	```sh
-	$ ./imcl listInstalledPackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
-	```
+This repositry was dowloaded by [Packaging Utility](#packaging-utility) and  is accessible by http through [Nginx](/docs/middleware/nginx/#nginx-as-a-static-file-server).
 
 
-- **Uninstall Packages**   
-	```sh
-	$ ./imcl uninstall com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
-		-installationDirectory /opt/IBM/WebSphere/AppServer -showProgress
-	```
+### Install Packages
+```sh
+$ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+	-repositories http://ibm-file-server.safar.ma/repository.config \
+	-installationDirectory /opt/IBM/WebSphere/AppServer -acceptLicense -showProgress
+```
 
-### Working in Silent mode
+{: .warning :}
+You must Install the WAS and the JDK simultaneously, both by one command imcl
+
+### List Of Installed Packages
+
+```sh
+$ ./imcl listInstalledPackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+```
+
+
+### Uninstall Packages   
+```sh
+$ ./imcl uninstall com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jdk.v8_8.0.8015.20231031_0036 \
+	-installationDirectory /opt/IBM/WebSphere/AppServer -showProgress
+```
+
+## Working in Silent mode
 To use silent mode, you must create a **response file** through Installation Manager or  by hand.
 
-### Uninstall IM itself
+## Uninstall IM itself
 To unistall Installation manager Or Packaging Utility:
 ~~~sh
 ./imcl listInstalledPackages
@@ -106,6 +120,6 @@ To unistall Installation manager Or Packaging Utility:
 ~~~
 
 
-### Docs
+## Docs
 
 - [x] [Documentation](https://www.ibm.com/docs/en/installation-manager/1.9.2)

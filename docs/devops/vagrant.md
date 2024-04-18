@@ -12,6 +12,14 @@ Vagrant is a tool for building and managing VMs. It works on top of a virtualisa
 
 ![a](/docs/images/vagrant-concepts.png)
 
+### Vagrant Commands
+
+| Command                            | Description                            |
+|:-----------------------------------|:---------------------------------------|
+| `$ vagrant box list`               | List of installed boxes                |
+| `$ vagrant box remove box_name`    | Remove a Box image                     |
+
+
 ### Installation
 Install VirtualBox
 ~~~sh

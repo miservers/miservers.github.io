@@ -12,11 +12,20 @@ nav_order: 3
 
 ![alt](/docs/images/ibm-packaging-utility-2.png)
 
-**Install It**: donwload it and unzip it
+**Install: Gui mode**: donwload it and unzip it
 
 	./install     // install it as root	
-	./userinst   // as user
+	./userinst    // as user
 	./groupinst
+
+**Install: Console mode**
+~~~sh
+./installc	-acceptLicense    //root install
+
+./userinstc -acceptLicense
+~~~
+
+By default It will be installed in `/opt/IBM/PackagingUtility`
 
 Screens:
 
