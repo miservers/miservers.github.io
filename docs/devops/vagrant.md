@@ -16,8 +16,12 @@ Vagrant is a tool for building and managing VMs. It works on top of a virtualisa
 
 | Command                            | Description                            |
 |:-----------------------------------|:---------------------------------------|
-| `$ vagrant box list`               | List of installed boxes                |
-| `$ vagrant box remove box_name`    | Remove a Box image                     |
+| `vagrant box add generic/rhel7`    | Install a box(optional)                |
+| `vagrant box list`                 | List of installed boxes                |
+| `vagrant box remove box_name`      | Remove a Box image                     |
+| `vagrant ssh`                      | Access a box via ssh                   |
+
+
 
 
 ### Installation
@@ -58,32 +62,7 @@ vagrant up
 ~~~
 
 
-### Connecting to the VM via SSH
-Localy ssh access using vagrant:
-~~~sh
-$ vagrant ssh
-~~~
-
-~~~
-$ vagrant ssh-config
-~~~
-
-And add the output to **~/.ssh/config**, after adapting it
-~~~
-Host centos2
-  HostName 127.0.0.1
-  User vagrant
-  Port 2222
-  UserKnownHostsFile /dev/null
-  ....
-~~~
-
-Now you can localy ssh the VM, without Vagrant:
-~~~
-$ ssh centos2
-~~~
-
-### Remote SSH Access
+### Remote SSH Access to a VM
 Generate the SSH Keys:
 ~~~sh
 $ vagrant ssh
