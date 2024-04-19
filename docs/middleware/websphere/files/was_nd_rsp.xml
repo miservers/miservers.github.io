@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<agent-input>
+  <variables>
+    <variable name='sharedLocation' value='/opt/IBM/IMShared'/>
+  </variables>
+  <server>
+    <repository location='http://ibm-file-server.safar.ma/repository_was/'/>
+  </server>
+  <profile id='IBM WebSphere Application Server V9.0' installLocation='/opt/IBM/WebSphere/AppServer'>
+    <data key='cic.selector.arch' value='x86_64'/>
+    <data key='cic.selector.nl' value='en,fr'/>
+  </profile>
+  <install>
+    <!-- IBM WebSphere Application Server Network Deployment  9.0.5.16 -->
+    <offering profile='IBM WebSphere Application Server V9.0' 
+	          id='com.ibm.websphere.ND.v90' version='9.0.5016.20230609_0954' 
+			  features='core.feature,ejbdeploy,thinclient,embeddablecontainer,samples'/>
+    <!-- IBM SDK, Java Technology Edition, Version 8 8.0.8.21 -->
+    <offering profile='IBM WebSphere Application Server V9.0' 
+	          id='com.ibm.java.jdk.v8' version='8.0.8021.20240318_0922' 
+			  features='com.ibm.sdk.8'/>
+  </install>
+  <preference name='com.ibm.cic.common.core.preferences.eclipseCache' value='${sharedLocation}'/>
+</agent-input>

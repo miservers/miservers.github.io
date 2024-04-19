@@ -53,17 +53,6 @@ Log file:
 	/var/ibm/InstallationManager/pluginState/.metadata
 ```
 
-## Response File
-### Create a Response File
-~~~sh
-cd /opt/IBM/InstallationManager/eclipse
-./IBMIM -record was_nd_rsp.xml  -skipInstall /tmp/ibm_recordData
-~~~
-
-Follow the Installation Manager wizard to simulate the packages installation. 
-
-Thanks to `-skipInstall`, no packages will be installed. 
-
 
 ## Working in wizard mode
 
@@ -108,6 +97,25 @@ $ ./imcl uninstall com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.
 
 ## Working in Silent mode
 To use silent mode, you must create a **response file** through Installation Manager or  by hand.
+
+### Record a Response File
+Use a Test machine/Desktop to record an xml response file, 
+~~~sh
+cd /opt/IBM/InstallationManager/eclipse
+./IBMIM -record was_nd_rsp.xml  -skipInstall /tmp/ibm_recordData
+~~~
+
+Follow the Installation Manager Wizard to simulate the packages installation. 
+
+Thanks to `-skipInstall`, no packages will be installed. 
+
+Here an example of response file: [a](./files/was_nd_rsp.xml)
+
+### Install the WAS Silently
+By using the above recorded response file:
+~~~sh
+./imcl input /path/to/was_nd_rsp.xml -acceptLicense -sVP -log /path/to/was_install.log }}
+~~~
 
 ## Uninstall IM itself
 To unistall Installation manager Or Packaging Utility:
