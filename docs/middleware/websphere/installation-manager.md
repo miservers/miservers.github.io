@@ -83,9 +83,10 @@ $ ./imcl install com.ibm.websphere.ND.v90_9.0.5016.20230609_0954 com.ibm.java.jd
 You must Install the WAS and the JDK simultaneously, both by one command imcl
 
 ### List Of Installed Packages
+Installed Packages are list here: **/var/ibm/InstallationManager/installed.xml**
 
 ```sh
-$ ./imcl listInstalledPackages -repositories http://ibm-file-server.safar.ma/repository.config -features -long
+$ ./imcl listInstalledPackages  -features -long
 ```
 
 
