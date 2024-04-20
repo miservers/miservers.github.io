@@ -112,31 +112,41 @@ Example:
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "centos/7"
-  config.vm.hostname = "centos2"
+    
+  config.vm.define "rhel1" do |rhel1|
+    rhel1.vm.box = "generic/rhel7"
+    #rhel1.vm.box_url="./rhel1.box"
+    rhel1.vm.hostname = "rhel1"
 
+    rhel1.vm.box_check_update = false
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.56.10"
+    rhel1.vm.network "private_network", ip: "192.168.56.21"
+    rhel1.vm.network "public_network", bridge: "wlp3s0"
 
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-   config.vm.network "public_network"
+    rhel1.vm.disk :disk, size: "150GB", primary: true
 
-   config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-     vb.memory = "1024"
+    rhel1.vm.provider "virtualbox" do |vb|
+      vb.memory = "3072"
      vb.cpus = 2
-   end
-  #
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+    end
+  end
+
+  config.vm.define "rhel2" do |rhel2|
+    rhel2.vm.box = "generic/rhel7"
+    #rhel1.vm.box_url="./rhel1.box"
+    rhel2.vm.hostname = "rhel2"
+
+    rhel2.vm.box_check_update = false
+
+    rhel2.vm.network "private_network", ip: "192.168.56.22"
+    rhel2.vm.network "public_network", bridge: "wlp3s0"
+
+    rhel2.vm.disk :disk, size: "150GB", primary: true
+
+    rhel2.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+     vb.cpus = 2
+    end
+  end
 end
 ~~~
