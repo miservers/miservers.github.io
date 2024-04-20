@@ -2,17 +2,28 @@
   hosts: localhost
   vars:
     - file_name: myfile
+    - foo: 'fou'
   
   tasks:
 
     - name: Register a variable
-      ansible.builtin.shell: cat /etc/os-release
+      shell: cat /etc/os-release
       register: os_release_contents
 
-    - name: Test 1 WHEN
+    - name: Test on registered variable
       debug:
         msg: os-release contains the word Ubuntu
       when: os_release_contents.stdout.find('Ubuntu') != -1
+
+    - name: List contents of directory
+      command: ls mydir
+      register: contents
+      ignore_errors: true
+
+    - name: Check contents for emptiness
+      debug:
+        msg: "Directory is empty or not exist"
+      when: contents.stdout == ""
 
     - name: Check if the file exists
       command: ls /tmp/{{ file_name }} 
@@ -32,3 +43,21 @@
       debug:
         msg: /tmp/{{ file_name }} already exists
       when: myfile_exists is succeeded
+
+    #- debug:
+    #    var: ansible_facts  
+
+    - name: Message if Debian installed
+      debug:
+        msg: "Your OS version is {{ ansible_facts.distribution }}  {{ansible_facts.distribution_version }}"
+      when: ansible_facts['distribution'] == "Ubuntu" and 
+            ansible_facts['distribution_major_version'] == "22"
+
+    - name: Run the command if "foo" is defined
+      debug:
+        msg: "I've got '{{ foo }}' and am not afraid to use it!"
+      when: foo is defined
+
+    - name: Fail if "bar" is undefined
+      fail: msg="Bailing out. This play requires 'bar'"
+      when: bar is undefined
