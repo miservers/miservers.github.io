@@ -126,6 +126,54 @@ mkpasswd --method=sha-256 changeit
           export PATH=$JAVA_HOME/bin:$PATH
 ~~~
 
+### Debug
+Display a message with **when** condition
+~~~yaml
+- name: show a message when the file exist
+      debug:
+        msg: /tmp/{{ file_name }} already exists
+      when: myfile_exists is succeeded
+~~~
+
+Display a Variable Value after a **register** for example:
+~~~yaml
+- debug:
+        var: myfile_exists
+~~~
+
+### Tests
+
+Jinja2 tests allow us to evaluate conditionals using the **is** keyword.
+
+### Ninja 2
+https://python-web.teclado.com/section09/lectures/08_jinja2_tests/
+
+#### Delimiters
+{% ... %} for Statements
+
+{{ ... }} for Expressions to print to the template output
+
+{# ... #} for Comments not included in the template output
+
+#### Tests
+Syntax:  var **is** Test
+
+{% set n = 10 %}
+
+{% if n is divisibleby(2) and n is divisibleby(3) %}
+  <p>It's even!</p>
+{% endif %}
+
+#### Variables
+The following lines do the same thing:
+
+{{ foo.bar }}
+{{ foo['bar'] }}
+
+#### Filters
+{{ name|striptags|title }} 
+
+
 ### Templates
 Template are proccessed by [Jinja2 template language](http://jinja.pocoo.org/docs/)
 

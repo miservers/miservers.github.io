@@ -1,0 +1,34 @@
+- name: Test Condition
+  hosts: localhost
+  vars:
+    - file_name: myfile
+  
+  tasks:
+
+    - name: Register a variable
+      ansible.builtin.shell: cat /etc/os-release
+      register: os_release_contents
+
+    - name: Test 1 WHEN
+      debug:
+        msg: os-release contains the word Ubuntu
+      when: os_release_contents.stdout.find('Ubuntu') != -1
+
+    - name: Check if the file exists
+      command: ls /tmp/{{ file_name }} 
+      register: myfile_exists
+      ignore_errors: yes
+    
+    - debug:
+        var: myfile_exists
+
+    - name: Create the file
+      file:
+        path: /tmp/{{ file_name }}
+        state: touch
+      when: myfile_exists is failed
+      
+    - name: show a message when the file exist
+      debug:
+        msg: /tmp/{{ file_name }} already exists
+      when: myfile_exists is succeeded
