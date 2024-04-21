@@ -105,7 +105,6 @@ Vagrant.configure("2") do |config|
 Explanations:
 - **Vagrant.configure(“2”)**: Vagrant will use version 2 of the configuration object. 
 
-
 Example:
 ~~~ruby
 # -*- mode: ruby -*-
@@ -115,7 +114,6 @@ Vagrant.configure("2") do |config|
     
   config.vm.define "rhel1" do |rhel1|
     rhel1.vm.box = "generic/rhel7"
-    #rhel1.vm.box_url="./rhel1.box"
     rhel1.vm.hostname = "rhel1"
 
     rhel1.vm.box_check_update = false
@@ -133,7 +131,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "rhel2" do |rhel2|
     rhel2.vm.box = "generic/rhel7"
-    #rhel1.vm.box_url="./rhel1.box"
     rhel2.vm.hostname = "rhel2"
 
     rhel2.vm.box_check_update = false
