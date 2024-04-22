@@ -67,14 +67,7 @@ Using **imcl** . The **repository** used here was created on the staging machine
 
 ## WAS Administration
 ----------------------------------------------------------------------------------
-### Profiles
-- **Create Managment Profile**
-	~~~sh
-	$ ./manageprofiles.sh -create -templatePath /opt/IBM/WebSphere/AppServer/profileTemplates/management -profileName dmgr
-	~~~
-
-
-	The profile will be created here: */opt/IBM/WebSphere/AppServer/profiles/dmgr*
+### Start/Stop
 
 - **Start/Stop DMGR**
 	~~~sh
@@ -90,12 +83,6 @@ Using **imcl** . The **repository** used here was created on the staging machine
 	For security, it is highly unrecommanded to use password in clear. To disable Prompt for user/password you can modify **/opt/IBM/WebSphere/AppServer/profiles/dmgr/properties/soap.client.props**:  
 	com.ibm.SOAP.loginUserid=admin  
 	com.ibm.SOAP.loginPassword=changeit
-
-- **Create an Managed Server Profile**
-	~~~sh
-	${WAS_INSTALL_ROOT}/bin/manageprofiles.sh -create -profileName AppSrv02
-	~~~
-	More Options [Here](https://www.freekb.net/Article?id=1296)
 
 - **Start/Stop a Managed Server**
 	~~~sh 

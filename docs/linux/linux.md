@@ -19,6 +19,7 @@ Commands:
 | dd if=/dev/zero of=disk.img bs=512 count=2000      | create a virtual disk of 1MB              |
 | xxd -s 1024 -l 512 disk.img                        | read 512 bytes starting at 1024 byte      |
 | sed -i 's/foo/bar/g' devices.h                     | replace in same file (-i option)          |
+| find . -name "*.xml" -exec grep -H toto {} \;      | Find-grep(option **H** to display fname)  |
 | find . -name "*.h" \| xargs sed -i 's/foo/bar/g';  |                                           |
 | find . -name "*.h" -exec sed -i 's/foo/bar/g' {} \;|                                           |
 | find . -type f -size +10000k -mtime +60            | files>10Mo, modif date>60 days            |

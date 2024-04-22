@@ -3,7 +3,7 @@ layout: default
 title: IBM Installation Manager
 parent: WebSphere
 grand_parent: Middleware
-nav_order: 2
+nav_order: 6
 ---
 
 v 1.9 

@@ -3,7 +3,7 @@ layout: default
 title: IBM Packaging Utility
 parent: WebSphere
 grand_parent: Middleware
-nav_order: 3
+nav_order: 7
 ---
 
 ### SetUp
