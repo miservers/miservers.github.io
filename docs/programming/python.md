@@ -50,3 +50,15 @@ person = greeting.Person("Gonzalo")
 
 person.salute()
 ~~~
+
+### Formater une chaine de caratere
+Like C:
+~~~py
+>>> name = "Hochi"
+>>> var = 1000
+>>> msg1="Hello %s" %name
+>>> msg2="Hello %s %d times" %(name, var)
+>>>print msg1
+'Hello Hochi'
+Hello Hochi 1000 times
+~~~

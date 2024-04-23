@@ -1,6 +1,6 @@
 ---
 layout: default
-title: WAS Profiles
+title: Profiles
 parent: WebSphere
 grand_parent: Middleware
 nav_order: 2
