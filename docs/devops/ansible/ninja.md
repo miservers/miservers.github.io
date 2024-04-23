@@ -1,3 +1,12 @@
+---
+layout: default
+title: YNinja 2
+parent:  Ansible
+grand_parent: DevOps
+nav_order: 16
+---
+
+
 ### Ninja 2
 
 https://python-web.teclado.com/section09/lectures/08_jinja2_tests/
