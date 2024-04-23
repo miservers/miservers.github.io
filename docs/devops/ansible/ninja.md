@@ -11,7 +11,7 @@ nav_order: 16
 
 https://python-web.teclado.com/section09/lectures/08_jinja2_tests/
 
-#### Delimiters
+### Delimiters
 {% raw %}
 
 {% ... %} for Statements
@@ -22,7 +22,7 @@ https://python-web.teclado.com/section09/lectures/08_jinja2_tests/
 
 {% endraw %}
 
-#### Tests
+### Tests
 Syntax:  var **is** Test
 
 {% raw %}
@@ -35,7 +35,7 @@ Syntax:  var **is** Test
 ~~~
 {% endraw %}
 
-#### Variables
+### Variables
 The following lines do the same thing:
 
 {% raw %}
@@ -43,7 +43,7 @@ The following lines do the same thing:
 {{ foo['bar'] }}
 {% endraw %}
 
-#### Filters
+### Filters
 
 {% raw %}
 {{ name|striptags|title }} 
