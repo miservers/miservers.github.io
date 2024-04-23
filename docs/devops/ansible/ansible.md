@@ -51,6 +51,7 @@ By default Ansible assumes you are using SSH keys to connect to remote machines.
   ~~~
 
 - User/Password Method: 
+
   ~~~sh
    ansible appservers -i inventory -m ping -u REMOTE_USER --ask-pass
   ~~~
@@ -62,7 +63,10 @@ vars:
   http_port: 8080
   install_dir: /opt/tomcat
 ~~~
+
+{% raw %}
 variables can be refered by "{{var name}}"
+{% endraw %}
 
 [How to pass extra variables to an Ansible playbook](https://www.redhat.com/sysadmin/extra-variables-ansible-playbook)
 
