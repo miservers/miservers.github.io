@@ -39,12 +39,16 @@ Syntax:  var **is** Test
 The following lines do the same thing:
 
 {% raw %}
+~~~html
 {{ foo.bar }}
 {{ foo['bar'] }}
+~~~
 {% endraw %}
 
 ### Filters
 
 {% raw %}
-{{ name|striptags|title }} 
+~~~html
+{{ name|striptags|title }}
+~~~ 
 {% endraw %}
