@@ -1,6 +1,6 @@
 ---
 layout: default
-title: YNinja 2
+title: Ninja 2
 parent:  Ansible
 grand_parent: DevOps
 nav_order: 16
