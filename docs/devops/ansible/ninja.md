@@ -1,4 +1,5 @@
 ### Ninja 2
+
 https://python-web.teclado.com/section09/lectures/08_jinja2_tests/
 
 #### Delimiters
@@ -14,6 +15,8 @@ https://python-web.teclado.com/section09/lectures/08_jinja2_tests/
 
 #### Tests
 Syntax:  var **is** Test
+
+{% raw %}
 ~~~html
 {% set n = 10 %}
 
@@ -21,6 +24,7 @@ Syntax:  var **is** Test
   <p>It's even!</p>
 {% endif %}
 ~~~
+{% endraw %}
 
 #### Variables
 The following lines do the same thing:
