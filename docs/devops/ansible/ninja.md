@@ -38,4 +38,4 @@ The following lines do the same thing:
 
 {% raw %}
 {{ name|striptags|title }} 
-{% raw %}
+{% endraw %}
