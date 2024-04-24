@@ -28,7 +28,6 @@ com.ibm.ws.scripting.defaultLang=jython
 ./wsadmin.sh 
         [ -c <command> ] 
         [ -p <properties_file_name>] 
-        [ -f <script_file_name>] 
         [ -lang  language]  
         [ -profileName profile]  
         [ -conntype  
@@ -37,6 +36,7 @@ com.ibm.ws.scripting.defaultLang=jython
                         [-port port_number]
                         [-user userid]
                         [-password password] | 
+        [ -f <script_file_name>] 
         [ script parameters ]
 		...
 ~~~
@@ -44,7 +44,8 @@ com.ibm.ws.scripting.defaultLang=jython
 Example :
 ~~~sh
 $WAS_INSTALL_ROOT/profiles/Dmgr01/bin/wsadmin.sh -lang jython -conntype SOAP -host rhel2 \
-                                         -username wasadmin -password changeit -f was_create_server.py 
+                                                 -username wasadmin -password changeit \
+		            							 -f was_create_server.py server_name node_name
 ~~~
 
 ### wsadmin Objects
@@ -56,28 +57,24 @@ There are 5 Objects:
 5. AdminTask:  used to run an administrative command
 
 ### Create a Server
-was_create_server.py 
+was_create_server.jy 
 ~~~py
+import sys
+
+server_name = sys.argv[0]
+node_name = sys.argv[1]
+
 # Get Node ID, on which you are adding the new server
-node_name = 'rhel3CellNode01'
 node = AdminConfig.getid('/Node:%s/' %node_name)
 
 print node
 
 # Create the server
-server_name='server2'
 attrs = [ ['name', server_name] ]
 AdminConfig.create('Server', node, attrs)
 
 # Save the Configuration
 AdminConfig.save()
-~~~
-
-then run:
-~~~sh
-$WAS_INSTALL_ROOT/profiles/Dmgr01/bin/wsadmin.sh -lang jython -conntype SOAP -host rhel2 \
-                                        -username wasadmin -password changeit \
-										-f was_create_server.py server_name node_name
 ~~~
 
 ### Create a Data Source
