@@ -75,7 +75,7 @@ variables can be refered by "{{var name}}"
 - **group**: create a unix group.
 - **user**: creates unix users.
 - **file**: create files/directories.
-- **copy**: copies files.
+- **copy**: copy local files to remote machines.
 - **unarchive**: unpack an archive. It can copy the archive from the control machine or download it. 
 - **blockinfile**: Insert/update/remove a text block in a file
 - **setup**: to get remote host configuration(ansible_facts)
