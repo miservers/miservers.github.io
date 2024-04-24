@@ -7,21 +7,24 @@ nav_order: 2
 ---
 
 ### Roles
-Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. 
+Roles provide a well-defined framework and structure for setting your tasks, variables, handlers, metadata, templates, and other files. 
 
 Steps to create a role tomcat:
 
-1. Initiliaze  the Role Structutre
+### Role Structutre
 
+**Initiliaze  the role structure**
 ~~~sh
 # ansible-galaxy role init tomcat
 ~~~
+
+**Role Structure**
 ~~~sh
 # tree tomcat
 tomcat
 ├── defaults          
 │   └── main.yml    # default lower priority variables for this role      
-├── files           # files to copy, scripts to run
+├── files           # Contains static and custom files that the role uses to perform various tasks.
 ├── handlers          
 │   └── main.yml     
 ├── meta
@@ -35,7 +38,9 @@ tomcat
 └── vars
     └── main.yml       # variables associated with this role
 ~~~
-3. Create a playbook using this role : tomcat-playbook.yaml
+
+### Use a Role
+Create a playbook using this role : tomcat-playbook.yaml
 
 ~~~yaml
 - name: Install Tomcat
@@ -49,8 +54,31 @@ tomcat
         name: tomcat
 ~~~
 
-2. Execute the playbook
+
+
+Other Syntax to Call a Role:
+
+~~~yaml
+---
+- name:                    Install Tomcat
+  hosts:                   appservers
+  become:                  true
+  roles:
+    - roles/tomcat
+~~~
+
+
+**Execute the playbook**
+
 ~~~sh
 # ansible-playbook -i prod-inventory tomcat-playbook.yaml
 ~~~
 
+### Role Files
+~~~yaml
+- name: Copy index.html to the Nginx directory
+  copy:
+    src: files/index.html
+    dest: "{{ nginx_custom_directory }}/index.html"
+  notify: Restart the Nginx service
+ ~~~

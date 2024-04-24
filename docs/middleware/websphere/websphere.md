@@ -143,7 +143,7 @@ Dump is generated here: /opt/IBM/WebSphere/AppServer/profiles/AppSrv01
 	- http://centos2:9081/HitCount.jsp
 
 
-## WSADMIN Scripting
+## Disable Administrative Security
 ----------------------------------------------------------------------------------
 - **Disable Administrative Security**: username/password will no longer  be demanded to login.
 	~~~sh
