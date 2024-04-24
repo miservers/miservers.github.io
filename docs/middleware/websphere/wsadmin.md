@@ -76,7 +76,8 @@ AdminConfig.save()
 then run:
 ~~~sh
 $WAS_INSTALL_ROOT/profiles/Dmgr01/bin/wsadmin.sh -lang jython -conntype SOAP -host rhel2 \
-                                        -username wasadmin -password changeit -f was_create_server.py
+                                        -username wasadmin -password changeit \
+										-f was_create_server.py server_name node_name
 ~~~
 
 ### Create a Data Source
