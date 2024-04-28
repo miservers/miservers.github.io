@@ -5,7 +5,8 @@ parent: Linux
 nav_order: 1
 ---
 
-## Admin Commands
+## Commands Table
+--------------------------------------------------
 
 Shortcuts:
 ```
@@ -45,24 +46,29 @@ Commands:
 |cmd  2>/dev/null                                    | suppress error message in bash            |
 |sudo lsof -iTCP -sTCP:LISTEN                        | wich processing is using a port?          |
 
-
-**Max open file descriptors** 
-
-    # lsof -u <username> | wc -l
+## Linux Admin
+--------------------------------------------------
+### Max number of open file descriptors 
+~~~sh
+# lsof -u <username> | wc -l
     
-	# su - <username>
-    # ulimit -Hn
-    
-    # cat /etc/security/limits.conf
+# su - <username>
+# ulimit -Hn    
+~~~
+
+~~~sh
+# vi /etc/security/limits.conf	
 	tomcat            soft    nofile          65535
 	tomcat            hard    nofile          65535
 	tomcat            soft    nproc           65535
 	tomcat            hard    nproc           65535
+~~~
 
-    # cat /etc/security/limits.d/90-nproc.conf
+~~~sh
+# vi /etc/security/limits.d/90-nproc.conf
 	*          soft    nproc     10000
 	root       soft    nproc     unlimited
-
+~~~
 **Stress tests(ab)**  
 Run 100000 requests, 100 ones at time:    
 
