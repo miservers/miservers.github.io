@@ -20,9 +20,9 @@ Env: RHEL 7
 - Account All Infos here: https://accounts.appdynamics.com/overview
 - Access to the Controller: https://data2024xxxxxxx.saas.appdynamics.com/controller/
 
-### Java Agent
+## Java Agent
 
-#### Monitor String Boot Application
+### String Boot Application
 
 - Download and Unzip the Java Appserver Agent
 
@@ -54,7 +54,23 @@ Env: RHEL 7
 Agent conf directory set to [/opt/appdynamics/appserver-agent/ver24.3.0.35708/conf]
 
 
+###  Websphere App Server
+- add to **server.policy** under /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/properties
+  
+  ~~~ 
+  grant codeBase "file:/opt/appdynamics/appserver-agent/ver24.3.0.35708/-" { permission java.security.AllPermission; };
+  ~~~
 
+- On Console <a>servers > server1 > Performance Monitoring Infrastructure (PMI)</a>
+  - **Enable Performance Monitoring Infrastructure**
+  - set **Currently monitored statistic** set other than None
+
+- Go to <a> servers > server1 > Process definition > Java Virtual Machine</a>
+- Enter in **Generic JVM arguments**
+   
+   ~~~
+   -javaagent:/opt/appdynamics/appserver-agent/javaagent.jar
+   ~~~
 
 ## Install Enterprise Console (Platform Admin)
 --------------------------------------------------------
