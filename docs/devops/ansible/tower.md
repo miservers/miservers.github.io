@@ -57,6 +57,11 @@ OR
   - PLAYBOOK: apache_install.yml
 ![to](/docs/images/ansible-tower-template.png)
 
+### Workflow Template
+![to](/docs/images/ansible-tower-workflow-template.png)
+
+### Variables
+![to](/docs/images/ansible-tower-variables.png)
 
 ### Trial Download
 <a>http://www.ansible.com/tower-trial</a>
