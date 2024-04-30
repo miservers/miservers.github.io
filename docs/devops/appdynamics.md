@@ -15,23 +15,42 @@ Env: RHEL 7
 
 ## Appdynamics Trial
 --------------------------------------------------------
+There are two modes of appdynamics offering: SaaS and Local installation.
+
+SaaS:
 - Create a account on https://www.appdynamics.com/free-trial
 - This offer an SAAS Controller
 - Account All Infos here: https://accounts.appdynamics.com/overview
 - Access to the Controller: https://data2024xxxxxxx.saas.appdynamics.com/controller/
 
+For local installation:
+- You must install Entreprise Console, then then the controller
+
 ## Java Agent
+-------------------------------------------------
+- Download and Unzip the Java Appserver Agent
+
+
+- Edit **controller-info.xml**: under agent_dir/conf/ or agent_dir/ver24.3.0.35708/conf/ 
+  - controller-host / controller-port – IP/Port of the AppDynamics Controller. Default port is 8090.
+  - application-name – Business Application name. This is the highest level of organization of monitoring Metrics,
+  - tier-name – Specific subsystem of the Application (for example, front-end)
+  - node-name – the host that is running the JVM
+  - account-name, account-access-key
+
+!! Note!! 
+> APPSERVER_AGENT_HOME/conf/controller-info.xml or APPSERVER_AGENT_HOME/ver24.3.0.35708/conf/controller-info.xml. It depends on with version used. 
+
+> All these info ca be found on the <a>https://accounts.appdynamics.com/overview</a> or On the Appdynamics Entreprise console:  
+
+**Logs**:
+  
+  - agent_dir/ver24.3.0.35708/logs/node_name/agent.xxxx.log
 
 ### String Boot Application
 
-- Download and Unzip the Java Appserver Agent
 
 - Edit **controller-info.xml** : 
- 
-  - APPSERVER_AGENT_HOME/conf/controller-info.xml or APPSERVER_AGENT_HOME/ver24.3.0.35708/conf/controller-info.xml. It depends on with version used. 
-
-  - All these info ca be found on the <a>https://accounts.appdynamics.com/overview</a> or On the Appdynamics Entreprise console:  
-  
 
     ~~~xml
     <controller-host>data2024xxxxxx.saas.appdynamics.com</controller-host>
@@ -43,19 +62,6 @@ Env: RHEL 7
     <account-name>data2024xxxxxxx</account-name>
     <account-access-key>xxxxxxxxxx</account-access-key>
     ~~~
-
-
-  - controller-host – Hostname/IP of the AppDynamics Controller
-
-  - controller-port – Port number where AppDynamics Controller is listening on. Default is 8090
-
-  - application-name – Business Application name. This is the highest level of organization of monitoring Metrics
-
-  - tier-name – Specific subsystem of the Application (for example, front-end)
-
-  - node-name – the host that is running the JVM
-
-  - account-name, account-access-key
   
 - Start Application
 
@@ -84,6 +90,16 @@ Agent conf directory set to [/opt/appdynamics/appserver-agent/ver24.3.0.35708/co
    ~~~
    -javaagent:/opt/appdynamics/appserver-agent/javaagent.jar
    ~~~
+
+
+### Monitor Critical Metrics
+- **Throughput**: debit. nb the calls to the application in a given time.
+- **Response Time**: of the application
+- **Database Response Time**
+- **Slowest Databse calls**
+- **Java Heap utilisation**
+- **GC** 
+
 
 ## Install Enterprise Console (Platform Admin)
 --------------------------------------------------------
@@ -279,6 +295,7 @@ Solution set variable APPD_CURRENT_PLATFORM or  --platform-name param:
 
 
 ## Docs
+- Excellent blog: http://karunsubramanian.com/category/appdynamics/
 - https://github.com/sherifadel90/AppDynamicsPlatformInstallation
 - https://docs.appdynamics.com/appd/onprem/23.x/latest/en/events-service-deployment/install-the-events-service-on-linux
 - https://community.appdynamics.com/t5/Business-iQ-Analytics/Starting-Events-Service-cluster/m-p/44127
