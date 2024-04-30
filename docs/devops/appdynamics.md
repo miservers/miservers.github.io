@@ -44,6 +44,19 @@ Env: RHEL 7
     <account-access-key>xxxxxxxxxx</account-access-key>
     ~~~
 
+
+  - controller-host – Hostname/IP of the AppDynamics Controller
+
+  - controller-port – Port number where AppDynamics Controller is listening on. Default is 8090
+
+  - application-name – Business Application name. This is the highest level of organization of monitoring Metrics
+
+  - tier-name – Specific subsystem of the Application (for example, front-end)
+
+  - node-name – the host that is running the JVM
+
+  - account-name, account-access-key
+  
 - Start Application
 
   ~~~sh
