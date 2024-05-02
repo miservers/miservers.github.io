@@ -5,18 +5,29 @@ parent: DevOps
 nav_order: 3
 ---
 
-## Installation
+## Plugins
 ------------------------------------------
-#### JMeter Plugins
-First of all, download plugins-manager.jar and put it into lib/ext.  Install theses interesting plugins:
+### Plugins Manager
+First Download **plugins-manager.jar** and put it into **lib/ext**.  Then Install theses interesting plugins:
 
-- **Customer Thread Groups** : Stepping Thread Group and Concurrency Thread Group. 
+![a](/docs/images/jmeter-plugins-manager.png)
+
+### Customer Thread Groups - Plugin
+This group offer thread group types: 
+ - Stepping Thread Group 
+ - Concurrency Thread Group.
+ - Ultimate Thread Group
+
+And Listeners:
+  - Active Threads Over Time
+  - Response Time Over Time.
+  - Others 
 ![alt txt](/docs/images/jmeter-plugin-Customer-Thread-Groups.png){:width="100%" height="auto"}
 
-- **3 Basic Graphs**
-- **5 Additional Graphs**
-- **Synthesis Report**
-- **jpgc Standard Set** 
+### 3 Basic Graphs - Plugin
+### 5 Additional Graphs - Plugin
+### Synthesis Report - Plugin
+### jpgc Standard Set - Plugin
   
 - **PerfMon** 
 -- Install Server Agent on remote machines

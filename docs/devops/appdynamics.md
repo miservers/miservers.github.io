@@ -62,7 +62,12 @@ For local installation:
     <account-name>data2024xxxxxxx</account-name>
     <account-access-key>xxxxxxxxxx</account-access-key>
     ~~~
+- Or with System Properties:
   
+    ~~~sh
+    java -javaagent:/opt/appdynamics/appserver-agent/ver24.3.0.35708/javaagent.jar -Dappdynamics.controller.hostName=data202404240311179.saas.appdynamics.com -Dappdynamics.controller.port=443 -Dappdynamics.agent.applicationName=MemoryLeakExample -Dappdynamics.agent.tierName=Tests  -Xmx1024m MemoryLeakExample
+    ~~~
+
 - Start Application
 
   ~~~sh
@@ -91,15 +96,41 @@ Agent conf directory set to [/opt/appdynamics/appserver-agent/ver24.3.0.35708/co
    -javaagent:/opt/appdynamics/appserver-agent/javaagent.jar
    ~~~
 
+### Configure Agent
+On Controller console: <a>Applications > app_name > Tiers&nodes > node_name > Agents </a> then click on **configure**
+![a](/docs/images/appdynamics-agent-configure.png)
 
-### Monitor Critical Metrics
-- **Throughput**: debit. nb the calls to the application in a given time.
-- **Response Time**: of the application
-- **Database Response Time**
-- **Slowest Databse calls**
-- **Java Heap utilisation**
-- **GC** 
+## Monitor Critical Metrics
+---------------------------------------------------------
+### Throughput 
+throughput named **Load** : debit. nb the calls to the application in a given time.
+### Response Time
+![a](/docs/images/appdynamics-load.png)
 
+### Java Heap utilisation
+![a](/docs/images/appdynamics-jvm-heap.png)
+![a](/docs/images/appdynamics-jvm-heap-2.png)
+![a](/docs/images/appdynamics-jvm-heap-3.png)
+
+### Slow Response Time
+![a](/docs/images/appdynamics-slow-response.png)
+
+### Database Response Time
+### Slowest Databse calls
+### GC 
+
+## Troubleshooting Java Memory
+--------------------------------------------------------
+1. Automatic Leak Detection
+2. Objet Instance Tracking
+
+### Automatic Leak Detection
+Automatic Leak Detection uses On Demand Capture Sessions to capture any actively used collections (i.e. any class that implements JDK 'Map' or 'Collection' interface) during the 'Capture' period (default is 10 minutes). 
+![a](/docs/images/appdynamics-memory-leak.png)
+
+### Objet Instance Tracking
+1. Excessive number of objects of certain class
+2. Objects with unusually large size
 
 ## Install Enterprise Console (Platform Admin)
 --------------------------------------------------------
@@ -280,7 +311,8 @@ bin/platform-admin.sh -h
 
 ## Errors
 --------------------------------------------------
-1. 
+1. No current working platform set
+
 ~~~sh
 ./platform-admin.sh list-supported-services
 
@@ -288,14 +320,16 @@ WARNING: no current working platform set. Ensuing commands may fail!
 Error code 400
 Message: Invalid platform provided.
 ~~~
+
 Solution set variable APPD_CURRENT_PLATFORM or  --platform-name param:
+
 ~~~sh
  ./platform-admin.sh --platform-name controller1 list-supported-services
 ~~~
 
 
 ## Docs
-- Excellent blog: http://karunsubramanian.com/category/appdynamics/
-- https://github.com/sherifadel90/AppDynamicsPlatformInstallation
-- https://docs.appdynamics.com/appd/onprem/23.x/latest/en/events-service-deployment/install-the-events-service-on-linux
-- https://community.appdynamics.com/t5/Business-iQ-Analytics/Starting-Events-Service-cluster/m-p/44127
+- Excellent blog: <a>http://karunsubramanian.com/category/appdynamics/</a>
+- <a>https://github.com/sherifadel90/AppDynamicsPlatformInstallation</a>
+- <a>https://docs.appdynamics.com/appd/onprem/23.x/latest/en/events-service-deployment/install-the-events-service-on-linux</a>
+- <a>https://community.appdynamics.com/t5/Business-iQ-Analytics/Starting-Events-Service-cluster/m-p/44127</a>

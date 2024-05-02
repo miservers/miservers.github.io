@@ -50,6 +50,10 @@ devops:
       slug: ansible
       icon: fa-ansible.png
 
+    - title: AppDynamics
+      slug: appdynamics
+      icon: fa-appdynamics.png
+
     - title: JMeter
       slug: jmeter
       icon: fa-jmeter.png
