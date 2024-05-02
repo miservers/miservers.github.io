@@ -13,42 +13,46 @@ nav_order: 3.5
 
 - **ProxyRequests**: enable/disable the function of reverse proxy. must be disabled par SECURITY.
 
+{: .warning }
+Do not enable proxying until you have [secured your server](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#access). Open proxy servers are dangerous both to your network and to the Internet at large.
+
 ~~~xml
 <VirtualHost *:80>
     ServerName app.example.com
     
-	ProxyPreserveHost On
-    ProxyPass / http://server:8081
-    ProxyPassReverse / http://server:8081
-	ProxyRequests Off
+    ProxyPreserveHost On
+    ProxyPass / http://server-host:8081
+    ProxyPassReverse / http://server-host:8081
+    ProxyRequests Off
 
-	ProxyPass /static/ !
+    ProxyPass /static/ !
 
     Alias /static/ "/apache/www/"
 
 </VirtualHost>
 ~~~
 
-<Location /jira>
-  ProxyPreserveHost On
-  ProxyPass http://jiraserver/jira
-  ProxyPassReverse http://jiraserver/jira
-  ProxyRequests Off
-</Location>
+`ProxyPass /static/ !` to prevent reverse proxy to forward static requests to the backend server. they will be served by Apache. 
+
+
+**Proxy Balancer: Module mod_proxy_balancer**
 
 ~~~xml
 <VirtualHost *:80>
-	<Proxy balancer://mycluster>
-	    BalancerMember http://127.0.0.1:8080
-	    BalancerMember http://127.0.0.1:8081
-	</Proxy>
+    ServerName app.example.com
+	
+    <Proxy balancer://mycluster>
+        BalancerMember http://127.0.0.1:8080
+        BalancerMember http://127.0.0.1:8081
+    </Proxy>
     ProxyPreserveHost On
     ProxyPass / balancer://mycluster/
     ProxyPassReverse / balancer://mycluster/
-	ProxyRequests Off
+    ProxyRequests Off
 </VirtualHost>
 ~~~
 
+**Forward using AJP**
 
 ~~~xml
 ProxyPass / ajp://localhost:8009/
