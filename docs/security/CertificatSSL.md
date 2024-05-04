@@ -15,6 +15,8 @@ Some SSL Certificate Vocabulary:
   - **Certificate Authority [CA]**: verisign, Thawte,...
   - **Distinguished Name [DN**] :  "/C=FR/ST=France/L=Paris/O=Safar/OU=DSI4/CN=safar.com" 
   - **File format**: Java can manipulate PEM, PKC12 and JKS formats.
+  - **PEM**: human readable certificate format. it starts with `----BEGIN CERTIFICATE----`
+  - **DER**: compact binary certficate format.
 
 ## SSL Handshake
 ---------------------------------
@@ -200,7 +202,42 @@ Decode The Private Key:
 2. http://www.wikiconsole.com/java-lang-runtimeexception-could-not-generate-dh-keypair/
 
 
-	
+## Using Shared System Certicates
+---------------------------------------
+**Redhat 7**
+
+- Check if is verified certificate
+~~~sh
+openssl s_client -connect rhel1:443 -verify 3
+~~~
+
+You will see this message if the certicate is not verified: 
+`Verify return code: 21 (unable to verify the first certificate)`
+
+- Extract the cerificate:
+  ~~~sh
+  echo | openssl s_client -connect rhel1:443  2>/dev/null | openssl x509
+  ~~~
+
+- To add a certificate in the simple PEM or DER file formats to the
+  - list of CAs trusted on the system:
+
+  - Copy it to the **/etc/pki/ca-trust/source/anchors/**
+    ~~~sh
+	cp example-ca.crt /etc/pki/ca-trust/source/anchors/
+	~~~
+
+  - Integrate certificates into the system's certificate set
+    ~~~sh
+	update-ca-trust
+    ~~~
+
+- Verify entry
+  ~~~sh
+  trust list  | grep  rhel1 -i -A 2 -B 3
+  ~~~
+
+
 ## DOCS
 ---------------------------------
 - https://vyatkins.wordpress.com/2013/11/19/java-base-ssl-connection-to-tomcat-with-server-and-client-certifications/
