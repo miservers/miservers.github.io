@@ -25,7 +25,7 @@ rabbitmqctl list_queues
 rabbitmq-plugins enable rabbitmq_management
 ~~~
 
-http://<host>:15672
+http://host:15672
 
 Default Login: guest/guest
 
@@ -34,4 +34,5 @@ Default Login: guest/guest
 
 ### AMQP
 AMQP - Advanced Manager Queue Protocol.
+![a](/docs/images/amqp-arch.png)
 
