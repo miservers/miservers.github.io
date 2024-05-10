@@ -36,3 +36,9 @@ Default Login: guest/guest
 AMQP - Advanced Manager Queue Protocol.
 ![a](/docs/images/amqp-arch.png)
 
+ AMQP 0-9-1 brokers provide four exchange types:
+  - **Direct exchange** - **Empty string**: it routes messages with a routing key equal to the routing key declared by the binding queue
+  - **Fanout** : The Fanout exchange type routes messages to all bound queues indiscriminately. If a routing key is provided, it will simply be ignored.
+  - **Topic**: it routes messages to queues whose routing key matches all, or a portion of a routing key.
+  - **Headers** : it routes messages based upon a matching of message headers
+
