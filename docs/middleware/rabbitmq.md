@@ -1,10 +1,9 @@
 ---
 layout: default
-title: Rabbitmq
+title: RabbitMQ
 parent: Middleware
-nav_order: 6.3
+nav_order: 6
 ---
-
 
 ### Config
 /etc/rabbitmq/rabbitmq.config
