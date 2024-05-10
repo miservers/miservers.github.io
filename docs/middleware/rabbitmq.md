@@ -32,6 +32,8 @@ Default Login: guest/guest
 ### Consoles Screens
 ![a](/docs/images/rabbitmq-queues.png)
 
+### Code Examples
+<a>https://github.com/rabbitmq/rabbitmq-tutorials/
 ### AMQP
 AMQP - Advanced Manager Queue Protocol.
 ![a](/docs/images/amqp-arch.png)
@@ -39,6 +41,7 @@ AMQP - Advanced Manager Queue Protocol.
  AMQP 0-9-1 brokers provide four exchange types:
   - **Direct exchange** - **Empty string**: it routes messages with a routing key equal to the routing key declared by the binding queue
     ~~~~py
+    # Python 
     # Sender
     channel.queue_declare(queue='Q1')
     channel.basic_publish(exchange='', routing_key='Q1', body='Hello World!')
