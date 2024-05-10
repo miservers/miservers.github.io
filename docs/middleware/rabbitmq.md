@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title: Rabbitmq
@@ -32,5 +31,8 @@ http://<host>:15672
 Default Login: guest/guest
 
 ### Consoles Screens
-
 ![a](/docs/images/rabbitmq-queues.png)
+
+### AMQP
+AMQP - Advanced Manager Queue Protocol.
+
