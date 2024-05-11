@@ -122,6 +122,14 @@ Exchanges:
 
 ![a](/docs/images/rabbitmq-exchanges.png)
 
+Channels: `$ python receive.py`
+
+![a](/docs/images/rabbitmq-channels.png)
+
+Connections: `$ python receive.py`
+
+![a](/docs/images/rabbitmq-connections.png)
+
 
 ### Code Examples
 <a>https://github.com/rabbitmq/rabbitmq-tutorials/
