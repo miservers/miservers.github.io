@@ -5,16 +5,14 @@ parent: Middleware
 nav_order: 6
 ---
 
-<<<<<<< HEAD
 ### Concepts
 **RabbitMQ** is open source message broker  that implements **AMQP** - Advanced Message Queuing Protocol.
 
 
-=======
->>>>>>> cc64ad18e0a218c3325392fa3edfb2014b41ba5b
 ### Config
+
 | Variable                     | Default Value                               | 
-|:-----------------------------|:--------------------------------------------|
+|:----------------------------:|:-------------------------------------------:|
 | RABBITMQ_CONFIG_FILE         |  `/etc/rabbitmq/rabbitmq.config`            |
 | RABBITMQ_LOG_BASE            |  `/var/log/rabbitmq`                        |
 | RABBITMQ_ENABLED_PLUGINS_FILE|  `/etc/rabbitmq/enabled_plugins`            |
@@ -25,7 +23,6 @@ nav_order: 6
 cat /var/log/rabbitmq/rabbit@rhel2.log 
 ~~~
 ~~~
-=INFO REPORT==== 8-May-2024::19:14:50 ===
 node           : rabbit@rhel2
 home dir       : /var/lib/rabbitmq
 config file(s) : /etc/rabbitmq/rabbitmq.config
@@ -86,9 +83,9 @@ Somme Cmmands:
 rabbitmq-plugins enable rabbitmq_management
 ~~~
 
-http://host:15672
+<a>http://host:15672
 
-Default Login: guest/guest
+- Default Login: guest/guest
 
 ### Authentication, Authorisation
 - **Add a new User**: admin1
@@ -96,28 +93,40 @@ Default Login: guest/guest
   rabbitmqctl add_user admin1 changeit
   rabbitmqctl set_user_tags admin1 administrator
   rabbitmqctl set_permissions -p / admin1 ".*" ".*" ".*"
-~~~  
+  ~~~  
 
-Default user : **guest/guest**
+- Default user : **guest/guest**
 
 ### Virtual Hosts
 connections, exchanges, queues, bindings, user permissions, policies  belong to **virtual hosts**. That is the same idea as virtual hosts in apache or  server block in nginx. 
 
-Create a VHost:
+Create a VHost: `api`
 
-rabbitmqctl add_vhost vh1
-
+`rabbitmqctl add_vhost api`
 
 List :
 ~~~sh
 curl -i -u guest:guest http://localhost:15672/api/vhosts
 ~~~
 
+Via Console
+
+![a](/docs/images/rabbitmq-vhosts.png)
+
+
 ### Consoles Screens
+Queues:
 ![a](/docs/images/rabbitmq-queues.png)
+
+Exchanges:
+
+![a](/docs/images/rabbitmq-exchanges.png)
+
 
 ### Code Examples
 <a>https://github.com/rabbitmq/rabbitmq-tutorials/
+
+
 ### AMQP
 AMQP - Advanced Manager Queue Protocol.
 ![a](/docs/images/amqp-arch.png)
@@ -146,26 +155,4 @@ AMQP - Advanced Manager Queue Protocol.
   - **Topic**: it routes messages to queues whose routing key matches all, or a portion of a routing key.
   - **Headers** : it routes messages based upon a matching of message headers
 
-<<<<<<< HEAD
-![a](/docs/images/rabbitmq-queues.png)
 
-### Send a JSON message with Curl
-~~~sh
-curl -s -u USERNAME:USERPASSWORD -H "Accept: application/json" -H "Content-Type:application/json" -X POST -d'{
-    "vhost": "/",
-    "name": "amq.direct",
-    "properties": {
-        "delivery_mode": 2,
-        "headers": {}
-    },
-    "routing_key": "QUEUE_NAME",
-    "delivery_mode": "1",
-    "payload":"ENCODED_JSON_PAYLOAD",
-    "headers": {},
-    "props": {},
-    "payload_encoding": "string"
-}' http://localhost:15672/api/exchanges/%2F/amq.direct/publish
-~~~
-
-=======
->>>>>>> cc64ad18e0a218c3325392fa3edfb2014b41ba5b
