@@ -1,15 +1,17 @@
-
 ---
 layout: default
-title: Rabbitmq
+title: RabbitMQ
 parent: Middleware
-nav_order: 6.3
+nav_order: 6
 ---
 
+<<<<<<< HEAD
 ### Concepts
 **RabbitMQ** is open source message broker  that implements **AMQP** - Advanced Message Queuing Protocol.
 
 
+=======
+>>>>>>> cc64ad18e0a218c3325392fa3edfb2014b41ba5b
 ### Config
 | Variable                     | Default Value                               | 
 |:-----------------------------|:--------------------------------------------|
@@ -84,7 +86,7 @@ Somme Cmmands:
 rabbitmq-plugins enable rabbitmq_management
 ~~~
 
-http://<host>:15672
+http://host:15672
 
 Default Login: guest/guest
 
@@ -112,7 +114,39 @@ curl -i -u guest:guest http://localhost:15672/api/vhosts
 ~~~
 
 ### Consoles Screens
+![a](/docs/images/rabbitmq-queues.png)
 
+### Code Examples
+<a>https://github.com/rabbitmq/rabbitmq-tutorials/
+### AMQP
+AMQP - Advanced Manager Queue Protocol.
+![a](/docs/images/amqp-arch.png)
+
+ AMQP 0-9-1 brokers provide four exchange types:
+  - **Direct exchange** - **Empty string**: it routes messages with a routing key equal to the routing key declared by the binding queue
+    ~~~~py
+    # Python 
+    # Sender
+    channel.queue_declare(queue='Q1')
+    channel.basic_publish(exchange='', routing_key='Q1', body='Hello World!')
+
+    # Receiver
+    channel.queue_declare(queue="Q1")
+
+    def callback(ch, method, properties, body):
+        print(f" [x] Received {body.decode()}")
+
+    channel.basic_consume(
+        queue="Q1",
+        on_message_callback=callback,
+        auto_ack=True,
+    )
+    ~~~
+  - **Fanout** : The Fanout exchange type routes messages to all bound queues indiscriminately. If a routing key is provided, it will simply be ignored.
+  - **Topic**: it routes messages to queues whose routing key matches all, or a portion of a routing key.
+  - **Headers** : it routes messages based upon a matching of message headers
+
+<<<<<<< HEAD
 ![a](/docs/images/rabbitmq-queues.png)
 
 ### Send a JSON message with Curl
@@ -133,3 +167,5 @@ curl -s -u USERNAME:USERPASSWORD -H "Accept: application/json" -H "Content-Type:
 }' http://localhost:15672/api/exchanges/%2F/amq.direct/publish
 ~~~
 
+=======
+>>>>>>> cc64ad18e0a218c3325392fa3edfb2014b41ba5b
