@@ -113,4 +113,9 @@ https://gist.github.com/rxaviers/7360908
   {% endraw %}
 
   
+** Create an animated GIF from png images
+ 
+   convert -delay 100 -coalesce -loop 0 rabbit*.png -scale 480x270 rabbitmq-console-screens.gif
+
+
 

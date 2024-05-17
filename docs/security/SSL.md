@@ -1,6 +1,6 @@
 ---
 layout: default
-title: SSL Certificate
+title: SSL
 parent: Security
 nav_order: 1
 ---
@@ -29,7 +29,7 @@ Some SSL Certificate Vocabulary:
   ![SSL_Handshake](/docs/images/SSL_Handshake.png)
 
 ## Genartaion de Certificat - complete Tuto 
----------------------------------
+-------------------------------------------------------
 
 Create CSR request config <ins>example-csr.conf</ins>
 
@@ -105,7 +105,7 @@ Decode The Private Key:
     	
 
 ## Certificat with OpenSSL
----------------------------------
+--------------------------------------------
 **Decode a cert, Check Key**
 ```sh
   openssl x509 -inform der -text -noout -in server-cert.pem
@@ -202,9 +202,11 @@ Decode The Private Key:
 2. http://www.wikiconsole.com/java-lang-runtimeexception-could-not-generate-dh-keypair/
 
 
-## Using Shared System Certicates
+## Using Shared System Certificates
 ---------------------------------------
 **Redhat 7**
+
+
 
 - Check if is verified certificate
 ~~~sh
@@ -219,7 +221,7 @@ You will see this message if the certicate is not verified:
   echo | openssl s_client -connect rhel1:443  2>/dev/null | openssl x509
   ~~~
 
-- To add a certificate in the simple PEM or DER file formats to the
+- Adding trusted Root Certificates(CA) to the server
   - list of CAs trusted on the system:
 
   - Copy it to the **/etc/pki/ca-trust/source/anchors/**
@@ -236,6 +238,41 @@ You will see this message if the certicate is not verified:
   ~~~sh
   trust list  | grep  rhel1 -i -A 2 -B 3
   ~~~
+
+## Certificate Authority - CA
+--------------------------------------------------
+### How it works?
+To request a certificate from a CA like Verisign:
+1. You send to them your CSR-Certificate Signing Request 
+2. They return to you certificate that they have signed with their private key and their root certificate.
+3. All web browser have the root certificate from the various CA.
+4. The browser use the root certificate to verify if your certificate is signed.
+
+### Create your own root CA
+- Create CA private key
+`openssl genrsa -des3 -out myCA.key 2048`
+
+- Create your CA
+`openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem`
+
+Now you become a Certificate Authority, you  can use myCA to sign client certificate.
+
+- Install the CA on RedHat: copy .pem as .crt
+  ~~~sh
+  cp myCA.pem /etc/pki/ca-trust/source/anchors/myCA.crt
+	
+  update-ca-trust
+  ~~~
+
+- Verify: rhel2 as server nam
+  ~~~sh
+  trust list  | grep  rhel2 -i -A 2 -B 3
+  ~~~
+  
+  rhel2 is the hostname used when you created the myCA.pem:
+
+  `Common Name (eg, your name or your server's hostname) []:rhel2`
+
 
 
 ## DOCS

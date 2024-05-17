@@ -22,13 +22,17 @@ middleware:
       slug: apache
       icon: fa-apache.jpg
 
-    - title: ActiveMQ
-      slug: activeMQ
-      icon: fa-activemq.png
-
     - title: IBM MQ
       slug: IBM-MQ
       icon: fa-ibm-mq.png
+
+    - title: RabbitMQ
+      slug: rabbitmq
+      icon: fa-rabbitmq.png
+
+    - title: ActiveMQ
+      slug: activeMQ
+      icon: fa-activemq.png
 
     - title: CFT
       slug: cft

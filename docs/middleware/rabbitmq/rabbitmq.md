@@ -1,18 +1,26 @@
 ---
 layout: default
 title: RabbitMQ
-parent: Middleware
-nav_order: 6
+parent:  RabbitMQ
+grand_parent: Middleware
+nav_order: 1
 ---
 
 ### Concepts
 **RabbitMQ** is open source message broker  that implements **AMQP** - Advanced Message Queuing Protocol.
 
+RabbitMQ is one of the most widely used message brokers today.
+
+![a](/docs/images/amqp-arch.png)
+
+
+![a](/docs/images/rabbitmq-console-screens.gif)
+
 
 ### Config
 
 | Variable                     | Default Value                               | 
-|:----------------------------:|:-------------------------------------------:|
+|:-----------------------------|---------------------------------------------|
 | RABBITMQ_CONFIG_FILE         |  `/etc/rabbitmq/rabbitmq.config`            |
 | RABBITMQ_LOG_BASE            |  `/var/log/rabbitmq`                        |
 | RABBITMQ_ENABLED_PLUGINS_FILE|  `/etc/rabbitmq/enabled_plugins`            |
@@ -114,25 +122,17 @@ Via Console
 ![a](/docs/images/rabbitmq-vhosts.png)
 
 
-### Consoles Screens
-Queues:
-![a](/docs/images/rabbitmq-queues.png)
-
-Exchanges:
-
-![a](/docs/images/rabbitmq-exchanges.png)
-
-Channels: `$ python receive.py`
-
-![a](/docs/images/rabbitmq-channels.png)
-
-Connections: `$ python receive.py`
-
-![a](/docs/images/rabbitmq-connections.png)
 
 
-### Code Examples
-<a>https://github.com/rabbitmq/rabbitmq-tutorials/
+### Dead Letter Exchange (DLX)
+
+Ref : https://tutexchange.com/what-is-rabbitmq-dead-letter-exchange-and-how-to-configure-it/
+
+  A Dead Letter Exchange is just a regular RabbitMQ exchange. If exchange ex1 is set as the DLX of a queue q1 a message is forwarded from q1 to ex1 if:
+
+  1. A message was rejected on q1 with requeue=false
+  2. A message TTL has expired on q1
+  3. q1's queue length limit has exceeded
 
 
 ### AMQP
