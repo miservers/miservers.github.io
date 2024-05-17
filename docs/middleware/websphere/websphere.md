@@ -152,6 +152,9 @@ Dump is generated here: /opt/IBM/WebSphere/AppServer/profiles/AppSrv01
 	wsadmin>exit
 	~~~
 
+ - [Error: ERR_SSL_VERSION_OR_CIPHER_MISMATCH](https://www.ibm.com/support/pages/access-websphere-admin-console-throws-errsslversionorciphermismatch-after-updating-latest-browsers-versions-when-websphere-configured-ssltls-protocol#:~:text=You%20are%20getting%20ERR_SSL_VERSION_OR_CIPHER_MISMATCH%20when,not%20allowing%20TLSv1%20or%20TLSv1.) 
+
+
 ## Scripting Jython
 ----------------------------------------------------------------------------------
 {: .warning }

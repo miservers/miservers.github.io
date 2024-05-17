@@ -253,7 +253,7 @@ Encrypt a Playbook:
 ansible-vault encrypt  playbook.yml
 ~~~
 
-To view the decrypted content:
+To view the encrypted content:
 ~~~sh
 ansible-vault view playbook.yml
 ~~~
