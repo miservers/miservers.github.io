@@ -140,7 +140,7 @@ See: https://docs.ansible.com/ansible-tower/latest/html/administration/troublesh
 - A **role** is essentially a collection of capabilities.
 - **User Type**: There are three user types
   - **Normal User**: read and write access limeted to inventory and projects for which he was has been granted.
-  - **System Auditor**: auditors have read access to all obejects
+  - **System Auditor**: auditors have read-only access to all obejects.
   - **System Administrator**: administrators have admi/read/write to all objects.
 
 - **Teams**: provide a means to implement role-based access control schemes and delegate responsibilities across organizations.   
