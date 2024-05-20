@@ -136,6 +136,9 @@ See: https://docs.ansible.com/ansible-tower/latest/html/administration/troublesh
 # awx-manage changepassword admin
 ~~~
 
+### Best Practices
+- **Inventories**:  Inventories should be logically divided based on the environment, like development, testing, and production. 
+
 ### Docs
 - Excellent Ansible Workshops: https://redhatgov.io/workshops/ansible_automation
 - https://goetzrieger.github.io/ansible-tower-getting-started
