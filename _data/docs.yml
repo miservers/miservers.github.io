@@ -54,6 +54,10 @@ devops:
       slug: ansible
       icon: fa-ansible.png
 
+    - title: Ansible Tower
+      slug: ansible/tower
+      icon: fa-ansible-tower.png
+
     - title: AppDynamics
       slug: appdynamics
       icon: fa-appdynamics.png

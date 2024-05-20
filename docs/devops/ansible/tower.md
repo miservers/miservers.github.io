@@ -6,7 +6,6 @@ grand_parent: DevOps
 nav_order: 5
 ---
 
-<h1>UNDER CONSTRUCTION!</h1>
 
 ### Getting Started
 **Ansible Tower** knwon as Red Hat **Ansible Automation Platform** is a console interface for Ansible.
@@ -46,7 +45,11 @@ OR
 
 ### Create a Project
 - SCM URL: https://github.com/ansible/workshop-examples.git
+![to](/docs/images/ansible-tower-create-project.png)
+
+List of Projects:
 ![to](/docs/images/ansible-tower-projects.png)
+
 
 ### Create a Job Template and Run a Job
 - CREATE JOB TEMPLATE
@@ -55,13 +58,23 @@ OR
   - CREDENTIALS: dev-creds
   - PROJECT: Ansible Workshop Examples
   - PLAYBOOK: apache_install.yml
-![to](/docs/images/ansible-tower-template.png)
+![to](/docs/images/ansible-tower-create-template.png)
+
+List of templates:
+![to](/docs/images/ansible-tower-templates.png)
 
 ### Workflow Template
 ![to](/docs/images/ansible-tower-workflow-template.png)
 
 ### Variables
 ![to](/docs/images/ansible-tower-variables.png)
+
+### Add Approval to workflow 
+Add Approval to Workflow. outgoing Link  must be "on success" run type. 
+![to](/docs/images/ansible-tower-approval.png)
+
+When you run your worflow, you will have a notification to approve or deny:
+![to](/docs/images/ansible-tower-approval-notification.png)
 
 ### Trial Download
 <a>http://www.ansible.com/tower-trial</a>
@@ -103,7 +116,7 @@ ansible-tower-service restart
 Console: https://TOWER_SERVER_NAME/
 - admin/changeit
 
-Config: 
+### Config Files 
 - /etc/tower/conf.d/
 
 ### Error logs
@@ -117,6 +130,11 @@ Error : ERR_SSL_KEY_USAGE_INCOMPATIBLE
 See: https://access.redhat.com/solutions/6955072
 
 See: https://docs.ansible.com/ansible-tower/latest/html/administration/troubleshooting.html#error-logs
+
+### Reset Admin Password
+~~~sh
+# awx-manage changepassword admin
+~~~
 
 ### Docs
 - Excellent Ansible Workshops: https://redhatgov.io/workshops/ansible_automation
