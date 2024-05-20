@@ -136,8 +136,27 @@ See: https://docs.ansible.com/ansible-tower/latest/html/administration/troublesh
 # awx-manage changepassword admin
 ~~~
 
+### Role-Based Access Controls - RBAC
+- A **role** is essentially a collection of capabilities.
+- **User Type**: There are three user types
+  - **Normal User**: read and write access limeted to inventory and projects for which he was has been granted.
+  - **System Auditor**: auditors have read access to all obejects
+  - **System Administrator**: administrators have admi/read/write to all objects.
+
+- **Teams**: provide a means to implement role-based access control schemes and delegate responsibilities across organizations.   
+
+Create a Team: **Prod_Exploit**
+
+![a](/docs/images/ansible-tower-team-users.png)
+
+Give Prod_Exploit Team access on Inventory: All Users of that team will have that access.
+
+![a](/docs/images/ansible-tower-rbac-inventory-access.png)
+
+
 ### Best Practices
-- **Inventories**:  Inventories should be logically divided based on the environment, like development, testing, and production. 
+- **Inventories**:  Inventories should be logically divided based on the environment, like development, testing, and production.
+-  
 
 ### Docs
 - Excellent Ansible Workshops: https://redhatgov.io/workshops/ansible_automation
