@@ -84,31 +84,6 @@ podman pod rm <podname>
 ~~~
 
 
-## Kubernetes  
-### Generate kube from a pod:
-`$ podman generate kube frontend >> frontend.yaml`
-
-### Create Podman Pod from YAML
-
-`podman pod rm -f frontend`
-
-Create frontend.yaml:
-~~~yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: frontend
-spec:
-  containers:
-  - name: nginx
-    image: docker.io/nginx:latest
-    ports:
-    - containerPort: 80
-      hostPort: 8080
-~~~
-
-`podman play kube frontend.yaml`
-
 ## Podman and Systemd
 ~~~sh
 man podman run
