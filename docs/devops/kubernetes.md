@@ -1,9 +1,4 @@
----
-layout: default
-title: Kubernetes
-parent: DevOps
-nav_order: 6
----
+
 ## Kubernetes
 --------------------------------
 ### Architecture
