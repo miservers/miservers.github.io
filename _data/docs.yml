@@ -70,10 +70,6 @@ devops:
       slug: docker
       icon: fa-docker.png
 
-    - title: Kubernetes
-      slug: kubernetes
-      icon: fa-kubernetes.png
-
 
 data-base:
   title: Data Base
