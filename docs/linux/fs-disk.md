@@ -112,9 +112,11 @@ Dump an Inode
     stat employee.json
 
 ### Clean Disk Space
- list of 10 biggest Directories
+List of 10 biggest Directories
 
 	du -h / | sort -hr | head -n 10
+
+Sort files by size: `ls -lSr`
 
 Clear Apt Cache
 
