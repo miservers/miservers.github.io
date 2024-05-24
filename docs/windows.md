@@ -13,3 +13,8 @@
 
 ## Shortcuts
 - Plusieurs Ecrans : Wind + P -> Etendre ou autre
+
+## Run Commands
+ - MSTSC: Remote Desktop (Terminal server)
+ - services.msc
+ - perfmon
