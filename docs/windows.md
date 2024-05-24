@@ -19,3 +19,4 @@
  - services.msc
  - perfmon
  - compmgmt.msc:  to access the Computer Management console, which is a centralized tool for managing various system components and settings.
+ - resmon:  used in the Windows operating system to monitor and analyze system resources, including CPU usage, memory usage, disk activity, and network activity. 
