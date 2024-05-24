@@ -18,3 +18,4 @@
  - MSTSC: Remote Desktop (Terminal server)
  - services.msc
  - perfmon
+ - compmgmt.msc:  to access the Computer Management console, which is a centralized tool for managing various system components and settings.
