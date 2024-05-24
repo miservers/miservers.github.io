@@ -1,5 +1,6 @@
 
-### Admin Commands
+## Admin Commands
+**CMD ->:**
 - ipconfig /all
 - ipconfig /displaydns  : display DNS client cache
 - nslookup server1.safar.com
@@ -7,7 +8,8 @@
 - netstat
 - netstat -a -n
 - netstat -r : display routing table
+- route print : show routing table
+- systeminfo
 
-
-### Plusieurs Ecrans
-Wind + P -> Etendre ou autre
+## Shortcuts
+- Plusieurs Ecrans : Wind + P -> Etendre ou autre
