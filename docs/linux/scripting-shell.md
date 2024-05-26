@@ -201,4 +201,34 @@ while [ "$1" != "" ]; do
 done
 ``` 
 
+### Operator =~
+**=~** operator permits to check a string againt a **regex**. I return **0(true)** if the string matches the regex, **1(false)** else.
+
+~~~sh
+password="aLo7np"
+
+if [[ $password =~ [0-9]+ ]]; then 
+  echo "Password contain a digit" 
+else  
+  echo "Password does not contain digits" 
+fi
+~~~
+
+### Regex
+`[...]` : any caracter inside the brackets. exp [0-9a-z]
+
+`[^...]`: all chars excepts enumareted. `[^@]` all chars except @.
+
+`(...)`: group of capture.
+
+`^`: mark the start of string
+
+`$`: mark the end of string.
+
+### awk
+awk 'BEGIN{FS=":"} {print "ligne",NR,": ";
+					print "nombre de champs:",NF,"- premier champ:",$1,"- dernier champ:",$NF}' /etc/passwd
+
+
+
 
