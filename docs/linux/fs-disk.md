@@ -113,9 +113,14 @@ Dump an Inode
 
 ### Clean Disk Space
 List of 10 biggest Directories
-
-	du -h / | sort -hr | head -n 10
-
+~~~sh
+du -h / | sort -hr | head -n 10
+~~~
+List 10 Biggest files
+~~~sh
+du -sm * | sort -nr | head -10
+~~~
+       
 Sort files by size: `ls -lSr`
 
 Clear Apt Cache
