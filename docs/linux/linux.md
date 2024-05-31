@@ -243,4 +243,10 @@ Enable Root to connect via ssh
 
     sed -i 's/prohibit-password/yes/' /etc/ssh/sshd_config
 
+**Base64**
+> Base64 encoding is a common method for representing binary data in ASCII string format.
+> `echo -n "to be hidden" | base64`
+>
+> To Reverse: ` echo dG8gYmUgaGlkZGVu | base64 -d`
+>
 
