@@ -34,6 +34,9 @@ clone the repository
  git commit -a -m "comment"
  git push origin master
 ```
+### Tags
+Create a tag:
+`git tag -a v1.4 -m 'version 1.4'`
 
 ### Cleanup git commit history
 ```
