@@ -245,6 +245,7 @@ Enable Root to connect via ssh
 
 **Base64**
 > Base64 encoding is a common method for representing binary data in ASCII string format.
+> 
 > `echo -n "to be hidden" | base64`
 >
 > To Reverse: ` echo dG8gYmUgaGlkZGVu | base64 -d`
