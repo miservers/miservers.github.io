@@ -34,15 +34,46 @@ clone the repository
  git commit -a -m "comment"
  git push origin master
 ```
+
+### Branches
+**Switch Branch**
+~~~sh
+$ git checkout <existing_branch>
+
+$ git checkout -b <new_branch>
+~~~
+
+**Current branch**
+~~~sh
+git branch`
+~~~
+
+**Commit on a branch**
+~~~sh
+git push origin <branch_name>
+~~~
+
+**Make a branch as default for commit**
+~~~sh
+git push --set-upstream origin <branch_name>
+~~~
+
+Now you can commit on your branch as
+~~~sh
+git add .
+git commit -m "aa"
+git push
+~~~
+
 ### Tags
 Create a tag:
 ~~~sh
 git tag -a v1.4 -m 'version 1.4'
 ~~~
 
-Push Tags
+Push/push Tags
 ~~~sh
- git push --tags
+ git [push | pull] --tags
 ~~~
 
 List of tags
