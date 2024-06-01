@@ -36,7 +36,19 @@ clone the repository
 ```
 ### Tags
 Create a tag:
-`git tag -a v1.4 -m 'version 1.4'`
+~~~sh
+git tag -a v1.4 -m 'version 1.4'
+~~~
+
+Push Tags
+~~~sh
+ git push --tags
+~~~
+
+List of tags
+~~~sh
+git tag
+~~~
 
 ### Cleanup git commit history
 ```
