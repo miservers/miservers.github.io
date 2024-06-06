@@ -29,18 +29,19 @@ http.port: 9200
 -Xmx2g
 ~~~
 
-### Test if elastic started
-~~~sh
-curl -X GET "IP:9200"
-~~~
+**Test if elastic started** : http://rhel1:9200/
 
 ### Logstash
+Logstash is an open-source data processing pipeline that ingests data from multiple sources, transforms it, and then sends it to one or more destinations.
+
 
 ### Kibana
 **/etc/kibana/kibana.yml**
 ~~~py
 server.port: 5601
 server.host: "IP"
+
+kibana.index: ".kibana"
 
 elasticsearch.url: "http://IP:9200"
 ~~~
@@ -49,3 +50,34 @@ elasticsearch.url: "http://IP:9200"
 <a>http://IP:5601</a>
 
 ![a](/docs/images/elk-kibana-home.png)
+
+### Filebeat
+Installed as an agent on your servers, it monitors the log files, collects log events, and forwards them either to Elasticsearch or Logstash for indexing. 
+
+**/etc/filebeat/filebeat.yml** 
+~~~yaml
+filebeat.inputs:
+
+- type: log
+
+  enabled: true
+  paths:
+    - /var/log/*.log
+  fields:
+    level: debug
+    review: 1
+  
+  filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+setup.kibana:
+  host: "rhel1:5601"
+output.elasticsearch:
+  hosts: ["rhel1:9200"]
+output.logstash:
+  hosts: ["rhel1:5044"]
+~~~
+
+**Enable Module Apache**
+~~~sh
+filebeat modules enable apache2
+~~~
