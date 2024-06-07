@@ -26,6 +26,8 @@ Commands:
 | find . -type f -size +10000k -mtime +60            | files>10Mo, modif date>60 days            |
 | grep -nr semaphore --include=*.c .                 |                                           |
 | grep error \*\*/\*.log                             | search word in current and sub dirs       | 
+| grep -c my.log                                     | count word in file                        | 
+| zgrep  my.log.gz                                   | search word in zip file                   | 
 | du -d 1 -m .                                       | maxdepth=1, practical                     |
 | du -sh *                                           | disk usage grouped by directory           |
 | du  -ak . \|sort -nr \| head -10                   | list of 10 biggest files                  |
