@@ -30,8 +30,8 @@ Commands:
 | zgrep  my.log.gz                                   | search word in zip file                   | 
 | du -d 1 -m .                                       | maxdepth=1, practical                     |
 | du -sh *                                           | disk usage grouped by directory           |
-| du  -ak . \|sort -nr \| head -10                   | list of 10 biggest files                  |
-| du -h / \| sort -hr \| head -n 10                  | list of 10 biggest Directories            |
+| du  -am . \|sort -nr \| head -10                   | list of 10 biggest files                  |
+| du -h /var/log \| sort -hr \| head -n 10           | list of 10 biggest Directories            |
 | df -m                                              | FS disk usage                             |
 | zmore                                              | more of a zipped file                     |
 | dos2unix                                           | convert file from dos to unix format      |
