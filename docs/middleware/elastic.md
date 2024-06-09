@@ -5,6 +5,8 @@ parent: Middleware
 nav_order: 13
 ---
 
+**version 7.17**
+
 ## ELK
 **ELK** : is a short of three open sources: Elasticsearch, Logstash, and Kibana. 
 ![a](/docs/images/elastic-architecture.jpg)
@@ -39,19 +41,54 @@ http.port: 9200
 ### Logstash
 Logstash is an open-source data processing pipeline that ingests data from multiple sources, transforms it, and then sends it to one or more destinations.
 
-Check syntax
+- Processing Apache logs: /etc/logstash/conf.d/apache_logs.conf
+~~~yaml
+
+input {
+  beats {
+    port => 5044
+  }
+}
+
+filter {
+  if [path] =~ "access" {
+    mutate { replace => { "type" => "apache_access" } }
+    grok {
+      match => { "message" => "%{COMBINEDAPACHELOG}" }
+    }
+  }
+  date {
+    match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["http://rhel1:9200"]
+    index => "filebeat-apache-logs" 
+    action => "create"
+  }
+}
+~~~
+
+~~~logs
+192.168.56.1 - - [07/Jun/2024:01:22:40 +0200] "POST /api/console/proxy?path=_aliases&method=GET HTTP/1.1" 200 22 "http://kibana.safar.com/app/kibana" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+~~~
+
+- Check syntax
 ~~~
 /usr/share/logstash/bin/logstash --path.settings /etc/logstash -t
 ~~~
 
-Start logstash
+
+- Start logstash
 ~~~
 # systemctl start logstash
 # sysd did not work for me, below works
 /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/apache_logs.conf
 ~~~
 
-Check logstatch config
+- Check logstatch config
 ~~~sh
 /usr/share/logstash/bin/logstash --config.test_and_exit -f <path_to_config_file>
 ~~~
@@ -103,7 +140,20 @@ output.logstash:
 
 **Enable Module Apache**
 ~~~sh
-filebeat modules enable apache2
+filebeat modules enable apache
+
+filebeat modules list
+
+~~~
+
+~~~yaml
+- module: apache
+  access:
+    enabled: true
+    var.paths: ["/var/log/httpd/*access.log*"]
+  error:
+    enabled: true
+    var.paths: ["/var/log/httpd/*error.log*"]
 ~~~
 
 If you use a custom log format, update this file: `/usr/share/filebeat/module/apache2/access/ingest/default.json`
