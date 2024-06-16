@@ -65,14 +65,15 @@ For local installation:
 - Or with System Properties:
   
     ~~~sh
-    java -javaagent:/opt/appdynamics/appserver-agent/ver24.3.0.35708/javaagent.jar -Dappdynamics.controller.hostName=data202404240311179.saas.appdynamics.com -Dappdynamics.controller.port=443 -Dappdynamics.agent.applicationName=MemoryLeakExample -Dappdynamics.agent.tierName=Tests  -Xmx1024m MemoryLeakExample
+    java -javaagent:/opt/appdynamics/appserver-agent/ver24.3.0.35708/javaagent.jar -Dappdynamics.controller.hostName=data202404240311179.saas.appdynamics.com -Dappdynamics.controller.port=443 -Dappdynamics.agent.applicationName=safar.com -Dappdynamics.agent.tierName=backen  -Xmx1024m -jar springboot-app.jar
     ~~~
 
 - Start Application
 
   ~~~sh
-  java -javaagent:/opt/appdynamics/appserver-agent/javaagent.jar -jar /opt/sample-spring-boot.jar
+  java -javaagent:/opt/appdynamics/appserver-agent/ver24.3.0.35708/javaagent.jar -jar /opt/sample-spring-boot.jar
   ~~~
+
 
 {: .note }
 Agent conf directory set to [/opt/appdynamics/appserver-agent/ver24.3.0.35708/conf]

@@ -98,9 +98,7 @@ output {
 ~~~py
 server.port: 5601
 server.host: "IP"
-
 kibana.index: ".kibana"
-
 elasticsearch.url: "http://IP:9200"
 ~~~
 
@@ -146,6 +144,7 @@ filebeat modules list
 
 ~~~
 
+/etc/filebeat/modules.d/apache.yml
 ~~~yaml
 - module: apache
   access:
