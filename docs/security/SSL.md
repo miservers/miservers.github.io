@@ -251,14 +251,54 @@ You will see this message if the certicate is not verified:
 trust list  | grep "DigiCert Global"  -i -A 2 -B 3
 trust anchor --remove --verbose pkcs11:id=%4e%22%54%20%18%95%e6%e3%6e%e6%0f%fa%fa%b9%12%ed%06%17%8f%39;type=cert
 ```
-- Locate cacert
+- Locate cacerts
 ```sh
 locate cacerts
 ```
 
 ## HOW TO EXTRACT ROOT AND INTERMEDIATE CERTIFICATES
 --------------------------------------------------
-`openssl pkcs12 -in  myCertificates.pfx -out myClientCert.crt -clcerts -nokeys`
+https://chadstechnoworks.com/technology_mainpage.html
+
+- Extract the certificate:
+
+`$ echo | openssl s_client -connect miservers.github.io:443  2>/dev/null | openssl x509 > miservers.crt`
+
+- Get the Intermediate Certificate:
+```
+$ openssl x509 -in miservers.crt -text -noout | grep -i "issuer"
+
+    Issuer: C=US, O=DigiCert Inc, CN=DigiCert Global G2 TLS RSA SHA256 2020 CA1
+        CA Issuers - URI:http://cacerts.digicert.com/DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt
+
+$ curl -O http://cacerts.digicert.com/DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt
+```
+
+- Check if it is root or intermediary
+```
+$ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text | grep -i CN=
+        Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
+        Subject: C=US, O=DigiCert Inc, CN=DigiCert Global G2 TLS RSA SHA256 2020 CA1
+```
+
+If Issuer-CN equals to Subject-CN, it is root cert, else it is an intermadiry cert. The cert above is intermidiary.
+
+- Get the Root cert
+```
+$ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text | grep -i issuer
+        Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
+                CA Issuers - URI:http://cacerts.digicert.com/DigiCertGlobalRootG2.crt
+
+$ curl -O http://cacerts.digicert.com/DigiCertGlobalRootG2.crt
+``` 
+
+- It is root cert: IssuerCN = SubjectCN
+```sh
+$ openssl x509 -in DigiCertGlobalRootG2.crt -inform DER -text | grep -i CN=
+        Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
+        Subject: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
+```
+
 
 ## Certificate Authority - CA
 --------------------------------------------------
