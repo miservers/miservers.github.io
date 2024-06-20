@@ -299,6 +299,17 @@ $ openssl x509 -in DigiCertGlobalRootG2.crt -inform DER -text | grep -i CN=
         Subject: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
 ```
 
+## JAVA CACERT
+-------------------------------------------------
+The OpenJDK 8u322 portable build introduced a change in the handling of cacerts.  
+
+It's looking for the cacerts file in /etc/pki/java/cacerts, and if the file is found it doesn't look in ${java.home}/jre/lib/security/cacerts in TrustStoreManager$TrustStoreDescriptor.  
+
+This is different than u312 where it only looks in ${java.home}/jre/lib/security/cacerts.
+
+Revert to the u312 behavior, as u322 has broken deployments, and consumers of the portable builds are not looking from RHEL integration.
+
+
 
 ## Certificate Authority - CA
 --------------------------------------------------
