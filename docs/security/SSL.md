@@ -108,9 +108,14 @@ Decode The Private Key:
 --------------------------------------------
 **Decode a cert, Check Key**
 ```sh
-  openssl x509 -inform der -text -noout -in server-cert.pem
+  openssl x509 [-inform der] -text -noout -in server-cert.pem
   openssl rsa -check -in server-priv.key
-  ```
+```
+
+**Show the Certificate Chain**
+```sh
+openssl s_client -showcerts -verify 5 -connect www.yousite.com:443 < /dev/null
+```
 
 **Generate SSL key pair and certificate**
 ```sh
@@ -210,7 +215,7 @@ Decode The Private Key:
 
 - Check if is verified certificate
 ~~~sh
-openssl s_client -connect rhel1:443 -verify 3
+openssl s_client -connect untrusted-root.badssl.com:443 -verify 5
 ~~~
 
 You will see this message if the certicate is not verified: 
@@ -218,7 +223,7 @@ You will see this message if the certicate is not verified:
 
 - Extract the cerificate:
   ~~~sh
-  echo | openssl s_client -connect rhel1:443  2>/dev/null | openssl x509
+  echo | openssl s_client -connect untrusted-root.badssl.com:443  2>/dev/null | openssl x509 > badssl.com.crt
   ~~~
 
 - Adding trusted Root Certificates(CA) to the server
@@ -238,6 +243,22 @@ You will see this message if the certicate is not verified:
   ~~~sh
   trust list  | grep  rhel1 -i -A 2 -B 3
   ~~~
+
+- Delete a Root/Intermediate cert 
+```sh
+# Remove it from anchor directory and  update-ca-trust
+# Or
+trust list  | grep "DigiCert Global"  -i -A 2 -B 3
+trust anchor --remove --verbose pkcs11:id=%4e%22%54%20%18%95%e6%e3%6e%e6%0f%fa%fa%b9%12%ed%06%17%8f%39;type=cert
+```
+- Locate cacert
+```sh
+locate cacerts
+```
+
+## HOW TO EXTRACT ROOT AND INTERMEDIATE CERTIFICATES
+--------------------------------------------------
+`openssl pkcs12 -in  myCertificates.pfx -out myClientCert.crt -clcerts -nokeys`
 
 ## Certificate Authority - CA
 --------------------------------------------------

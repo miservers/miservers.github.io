@@ -65,7 +65,7 @@ For local installation:
 - Or with System Properties:
   
     ~~~sh
-    java -javaagent:/opt/appdynamics/appserver-agent/ver24.3.0.35708/javaagent.jar -Dappdynamics.controller.hostName=data202404240311179.saas.appdynamics.com -Dappdynamics.controller.port=443 -Dappdynamics.agent.applicationName=safar.com -Dappdynamics.agent.tierName=backen  -Xmx1024m -jar springboot-app.jar
+    java -javaagent:/opt/appdynamics/appserver-agent/ver24.3.0.35708/javaagent.jar -Dappdynamics.controller.hostName=data2024xxxxx.saas.appdynamics.com -Dappdynamics.controller.port=443 -Dappdynamics.agent.applicationName=safar.com -Dappdynamics.agent.tierName=backend  -Xmx1024m -jar springboot-app.jar
     ~~~
 
 - Start Application
