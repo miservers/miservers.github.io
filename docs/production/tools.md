@@ -20,6 +20,12 @@ nav_order: 2
 
 ### SSH Clients
 * Putty
+* mRemoteNG
 * SecureCRT 
 * Termius
 * MobaXterm
+
+### Production Tools
+* Postman : Extension to send customised HTTP requests(GET, POST, Headers)
+
+
