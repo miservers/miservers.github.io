@@ -261,10 +261,12 @@ locate cacerts
 https://chadstechnoworks.com/technology_mainpage.html
 
 - Extract the certificate:
-
-`$ echo | openssl s_client -connect miservers.github.io:443  2>/dev/null | openssl x509 > miservers.crt`
+```sh
+$ echo | openssl s_client -connect miservers.github.io:443  2>/dev/null | openssl x509 > miservers.crt
+```
 
 - Get the Intermediate Certificate:
+- 
 ```
 $ openssl x509 -in miservers.crt -text -noout | grep -i "issuer"
 
@@ -275,6 +277,7 @@ $ curl -O http://cacerts.digicert.com/DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt
 ```
 
 - Check if it is root or intermediary
+  
 ```
 $ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text | grep -i CN=
         Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
@@ -284,6 +287,7 @@ $ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text |
 If Issuer-CN equals to Subject-CN, it is root cert, else it is an intermadiry cert. The cert above is intermidiary.
 
 - Get the Root cert
+  
 ```
 $ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text | grep -i issuer
         Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
@@ -293,6 +297,7 @@ $ curl -O http://cacerts.digicert.com/DigiCertGlobalRootG2.crt
 ``` 
 
 - It is root cert: IssuerCN = SubjectCN
+  
 ```sh
 $ openssl x509 -in DigiCertGlobalRootG2.crt -inform DER -text | grep -i CN=
         Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
