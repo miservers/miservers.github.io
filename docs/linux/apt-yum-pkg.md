@@ -49,18 +49,22 @@ yum history reinstall 42
 debian package managment. apt-get is dpkg top couch  
 
 ```sh
-	apt update  # update the available package list.
-	apt --only-upgrade install <pkg> # update a single pkg
-	apt list --installed             # list installed packages
-	apt list --installed | grep pkg  # search installed package
-	apt search <pkg> 
-	apt-cache search pkg-name # search package to install
-	apt install pkg
-	apt remove package # remove pkg
-	apt remove --purge package # remove pkg and its config files
-	apt autoremove # Remove automatically all unused packages
-	apt upgrade # upgrade the hole system
-	apt upgrade-dist # linux distribution upgrade
+apt update  # update the available package list
+
+apt --only-upgrade install <pkg> # update a single pkg
+
+apt list --installed             # list installed packages
+
+apt list --installed | grep pkg  # search installed package
+
+apt search <pkg> 
+apt-cache search pkg-name # search package to install
+apt install pkg
+apt remove package # remove pkg
+apt remove --purge package # remove pkg and its config files
+apt autoremove # Remove automatically all unused packages
+apt upgrade # upgrade the hole system
+apt upgrade-dist # linux distribution upgrade
 ```
 
 **To disable downloading translations**
