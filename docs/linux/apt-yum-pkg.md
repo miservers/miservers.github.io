@@ -11,7 +11,7 @@ nav_order: 2
 ```sh
 $ yum install pkg-name
 $ yum remove pkg-name
-$  yum search pkg-name
+$ yum search pkg-name
 $ yum list available
 $ yum list installed
 $ yum list installed | grep nfs
