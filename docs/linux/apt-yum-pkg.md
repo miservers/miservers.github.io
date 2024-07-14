@@ -6,6 +6,44 @@ nav_order: 2
 ---
 
 
+### Yum
+
+```sh
+	$ yum install pkg-name
+	$ yum remove pkg-name
+	$  yum search pkg-name
+	$ yum list available
+	$ yum list installed
+	$ yum list installed | grep nfs
+
+```
+
+**Yum History**
+
+```sh
+# yum history
+yum history
+
+# View details of a transactionb 43
+yum history info 42
+
+# Undo/redo a specific transaction
+yum history undo 42
+yum history redo 43
+
+# List packages changed in a specific transaction
+yum history list 42
+
+# Rollback to a specific transaction
+yum history rollback 42
+
+# Reinstall packages from a specific transaction
+yum history reinstall 42
+
+```
+
+
+
 ### Apt
 
 debian package managment. apt-get is dpkg top couch  
@@ -54,11 +92,4 @@ dpkg: https://www.cyberciti.biz/howto/question/linux/dpkg-cheat-sheet.php
     dpkg -l libgtk[0-9]* | grep ^i  ; search in installed
 
 
-### Yum
 
-	$ yum install pkg-name
-	$ yum remove pkg-name
-	$  yum search pkg-name
-	$ yum list available
-	$ yum list installed
-	$ yum list installed | grep nfs
