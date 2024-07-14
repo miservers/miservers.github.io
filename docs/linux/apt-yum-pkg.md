@@ -69,26 +69,27 @@ apt upgrade-dist # linux distribution upgrade
 
 **To disable downloading translations**
 
-    echo 'Acquire::Languages "none";' >> /etc/apt/apt.conf.d/99translations
+  echo 'Acquire::Languages "none";' >> /etc/apt/apt.conf.d/99translations
 
 ### Dpkg
 
 dpkg: https://www.cyberciti.biz/howto/question/linux/dpkg-cheat-sheet.php  
 
 ```sh
-	dpkg -l # list of installed packages.
-    dpkg -l | grep gdb
-	dpkg -i /root/bochs.81-1_i386.deb # install manually
-	dpkg [--remove | --purge] bochs
-	dpkg -L {package} : list	where files were installed
-	dpkg -s {package} : output package status, if installed or not, vesrion, dependencies
+dpkg -l # list of installed packages.
+dpkg -l | grep gdb
+
+dpkg -i /root/bochs.81-1_i386.deb # install manually
+dpkg [--remove | --purge] bochs
+dpkg -L {package} : list	where files were installed
+dpkg -s {package} : output package status, if installed or not, vesrion, dependencies
 ```
 
 **Install a special version of a pkg**
 
 ```sh
-	apt-cache showpkg <package-name> # lists all available versions. 
-	apt install <package-name>=<version-number>
+apt-cache showpkg <package-name> # lists all available versions. 
+apt install <package-name>=<version-number>
 ```
 
 **Misc commands**
