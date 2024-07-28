@@ -3,6 +3,8 @@ supported tls versions:
 
 rabbitmq-diagnostics --silent tls_versions
 
+rabbitmq-diagnostics cipher_suites --format openssl --silent
+
 
 
 
