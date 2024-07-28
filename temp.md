@@ -6,7 +6,7 @@ sudo lsof -n -i4TCP:5672 | grep LISTEN
 
 
 
-##SSL
+## SSL
 
 https://www.rabbitmq.com/docs/ssl#tls-versions
 
