@@ -1,4 +1,12 @@
-SSL
+### The following example uses lsof to display OS processes that listen on port 5672 and use IPv4:
+
+sudo lsof -n -i4TCP:5672 | grep LISTEN
+
+
+
+
+
+##SSL
 
 https://www.rabbitmq.com/docs/ssl#tls-versions
 
