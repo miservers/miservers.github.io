@@ -1,4 +1,13 @@
-### The following example uses lsof to display OS processes that listen on port 5672 and use IPv4:
+## Rabbit
+supported tls versions:
+
+rabbitmq-diagnostics --silent tls_versions
+
+
+
+
+## Divers 
+The following example uses lsof to display OS processes that listen on port 5672 and use IPv4:
 
 sudo lsof -n -i4TCP:5672 | grep LISTEN
 
