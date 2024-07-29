@@ -1,9 +1,11 @@
 ## Java: Default and supported TLS versions
 
 * Java 8 Update 161 and Later: 
+
   ** TLS 1.2 is enabled by default. 
 
 * Java 11 and Later: 
+
 ** TLS 1.3 is supported, 
 ** TLS 1.2 remains the default version. 
 
