@@ -146,6 +146,12 @@ openssl s_client -showcerts -verify 5 -connect www.yousite.com:443 < /dev/null
    openssl s_client -msg -connect  127.0.0.1:20076
    openssl s_client -debug -connect  127.0.0.1:20076
 ```
+Explain:
+
+- **verify return:1**   => Check **success** for a specific certificate in the certificate chain 
+- **verify return:0**   => Check **error** for a specific certificate in the certificate chain 
+- **Verify return code: 0 (ok)** => Result OK from the whole verification process
+   
 
 ## Auto Signed Certificat 
 ---------------------------------
