@@ -151,6 +151,7 @@ Explain:
 - **verify return:1**   => Check **success** for a specific certificate in the certificate chain 
 - **verify return:0**   => Check **error** for a specific certificate in the certificate chain 
 - **Verify return code: 0 (ok)** => Result OK from the whole verification process
+- **Secure Renegotiation IS NOT supported**: rengociation is neot supported in TLS 1.3
    
 
 ## Auto Signed Certificat 
