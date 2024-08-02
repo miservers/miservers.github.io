@@ -268,12 +268,13 @@ locate cacerts
 https://chadstechnoworks.com/technology_mainpage.html
 
 - Extract the certificate:
+  
 ```sh
 $ echo | openssl s_client -connect miservers.github.io:443  2>/dev/null | openssl x509 > miservers.crt
 ```
 
 - Get the Intermediate Certificate:
-- 
+  
 ```
 $ openssl x509 -in miservers.crt -text -noout | grep -i "issuer"
 
