@@ -1,7 +1,8 @@
 ---
 layout: default
 title: SSL
-parent: Security
+parent:  SSL
+grand_parent: Security
 nav_order: 1
 ---
 
