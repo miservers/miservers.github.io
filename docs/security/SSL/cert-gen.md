@@ -66,18 +66,4 @@ Decode The Private Key:
 	openssl rsa -check -in example-priv-key.pem
   
 
-### KeyStores PKCS12 and JKS 
-**PKCS#12 KeyStore** is an archive format, commonly used to contain both private keys and their Certificates. **JKS KeyStore** is specific to Java. Since Java 9, the default keystore format is PKCS12. 
-
-**Generate a PKCS12 KeyStore**
-
-    openssl pkcs12 -export -in example-cert.pem -inkey example-priv-key.pem -name example -out  example-pkcs.p12 
-
-**Convert PKCS12 to JKS**
-
-	keytool -importkeystore -srcstoretype pkcs12 -srckeystore example-pkcs.p12 -destkeystore example-keystore.jks
-
-### Convert PEM to CRT ( for Apache)
-
-	openssl x509 -outform der -in example-cert.pem -out example-cert.crt
     	
