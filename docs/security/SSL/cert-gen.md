@@ -6,10 +6,10 @@ grand_parent: Security
 nav_order: 1
 ---
 
-## Genartaion de Certificat - complete Tuto 
--------------------------------------------------------
 
-Create CSR request config <ins>example-csr.conf</ins>
+### Create CSR File  Config 
+
+<ins>example-csr.conf</ins>
 
 	[ req ]
 	default_bits       = 4096
@@ -38,7 +38,7 @@ Create CSR request config <ins>example-csr.conf</ins>
 	subjectAltName  = DNS:www.example.com,DNS:www2.example.com 
 
 
-### Create the CSR ( Certificate Request) 
+### Generate the CSR ( Certificate Request) 
 
 Create CSR request from CSR Conf:
 
