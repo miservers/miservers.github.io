@@ -146,6 +146,13 @@ openssl s_client -showcerts -verify 5 -connect www.yousite.com:443 < /dev/null
    openssl s_client -msg -connect  127.0.0.1:20076
    openssl s_client -debug -connect  127.0.0.1:20076
 ```
+Explain:
+
+- **verify return:1**   => Check **success** for a specific certificate in the certificate chain 
+- **verify return:0**   => Check **error** for a specific certificate in the certificate chain 
+- **Verify return code: 0 (ok)** => Result OK from the whole verification process
+- **Secure Renegotiation IS NOT supported**: rengociation is neot supported in TLS 1.3
+   
 
 ## Auto Signed Certificat 
 ---------------------------------
@@ -261,10 +268,13 @@ locate cacerts
 https://chadstechnoworks.com/technology_mainpage.html
 
 - Extract the certificate:
-
-`$ echo | openssl s_client -connect miservers.github.io:443  2>/dev/null | openssl x509 > miservers.crt`
+  
+```sh
+$ echo | openssl s_client -connect miservers.github.io:443  2>/dev/null | openssl x509 > miservers.crt
+```
 
 - Get the Intermediate Certificate:
+  
 ```
 $ openssl x509 -in miservers.crt -text -noout | grep -i "issuer"
 
@@ -275,6 +285,7 @@ $ curl -O http://cacerts.digicert.com/DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt
 ```
 
 - Check if it is root or intermediary
+  
 ```
 $ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text | grep -i CN=
         Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
@@ -284,6 +295,7 @@ $ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text |
 If Issuer-CN equals to Subject-CN, it is root cert, else it is an intermadiry cert. The cert above is intermidiary.
 
 - Get the Root cert
+  
 ```
 $ openssl x509 -in DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt -inform DER -text | grep -i issuer
         Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
@@ -293,6 +305,7 @@ $ curl -O http://cacerts.digicert.com/DigiCertGlobalRootG2.crt
 ``` 
 
 - It is root cert: IssuerCN = SubjectCN
+  
 ```sh
 $ openssl x509 -in DigiCertGlobalRootG2.crt -inform DER -text | grep -i CN=
         Issuer: C=US, O=DigiCert Inc, OU=www.digicert.com, CN=DigiCert Global Root G2
