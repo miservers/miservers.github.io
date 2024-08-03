@@ -9,9 +9,6 @@ nav_order: 8
 
 ## WSO2 Api Manager
  - WSO2 API Manager is used for securing, and exposing an enterprise's digital services as managed APIs 
- - https://wso2.com/api-manager/
- - Free : https://github.com/wso2/product-apim/releases/tag/v4.3.0
-
  ![a](/docs/images/wso2apim-diagram.png)
 
 1. Creating and publishing an API via the Publisher Portal of WSO2 API-M.
@@ -21,12 +18,24 @@ nav_order: 8
 5. Invoking the API with the generated keys.
 
 ### Install
-Download from link above, setup JAVA_HOME, unzip the archive. That's all
+Download from link above, setup JAVA_HOME, unzip the archive. Be carefull about the Java version. That's all!
+
+- https://wso2.com/api-manager/
+- Free : https://github.com/wso2/product-apim/releases/tag/v4.3.0
+
+ 
 
 ### Start/Stop
 ~~~bash
-/opt/wso2am-4.3.0/bin$ ./api-manager.sh
+/opt/wso2am-4.3.0/bin$ sh api-manager.sh start
 ~~~
+
+### Urls
+- Mgt Console URL  : <a>https://localhost:9443/carbon/
+- API Developer Portal : <a>https://localhost:9443/devportal
+- API Publisher  : <a>https://localhost:9443/publisher
+
+Login: admin/admin
 
 ### Publisher
 - <a>https://localhost:9443/publisher/
@@ -64,4 +73,9 @@ You cannot change password by modifying this file.
   * **wso2-apigw-errors.log**: API Gateway logs
 
 **Logs Configuration** : `log4j2.properties` 
+
+### Known Errors
+- 403 Forbidden to acces Management Console https://localhost:9443/carbon
+> Solution: Clear Brower cache. Try with incognito!
+
     

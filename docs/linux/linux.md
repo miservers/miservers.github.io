@@ -253,3 +253,16 @@ Enable Root to connect via ssh
 > To Reverse: ` echo dG8gYmUgaGlkZGVu | base64 -d`
 >
 
+
+**cUrl**
+> `curl -k -v -H "Content-Type: application/json"  -X POST -d @auth_req.json https://localhost:9443/carbon/admin/login.jsp`
+
+auth_req.json 
+```json
+{ 
+   "username": "admin",
+   "password": "admin"
+}
+```
+
+
