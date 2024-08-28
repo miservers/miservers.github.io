@@ -1,3 +1,7 @@
+## Production
+
+To find out which process is using port 80 (commonly used by web servers):lsof -i :80
+
 ## Java: Default and supported TLS versions
 
 * Java 8 Update 161 and Later: 
