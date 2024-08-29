@@ -12,6 +12,11 @@ nav_order: 1
 sudo lsof -i :8080
 ~~~
 
+~~~sh
+sudo lsof -i :8080 | grep LISTEN
+~~~
+
+
 ### Biggest files/directories
 ~~~sh
 du -sm * | sort -n
