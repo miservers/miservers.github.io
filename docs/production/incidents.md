@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Incidents de Production
+title: Incidents
 parent:  Production
 nav_order: 2
 ---
