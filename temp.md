@@ -1,10 +1,3 @@
-## Production
-
-To find out which process is using port 80 (commonly used by web servers):
-
-~~~sh
-lsof -i :80
-~~~
 
 ## Java: Default and supported TLS versions
 
