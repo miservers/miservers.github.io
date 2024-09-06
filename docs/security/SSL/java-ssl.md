@@ -30,13 +30,13 @@ nav_order: 2
 
 Java versions **11.0.11**, **1.8.0_291** and up have TLSv1 and TLSv1.1 disabled by default
 
-### Disable Tlsv1
+### Disable/Enable Tlsv1 
 
 
 In **java.security** file. In Java 11 and up it is located in the folder conf/security/ under your JAVA_HOME.
 
 ~~~
-jdk.tls.disabledAlgorithms=SSLv3, Tlsv1, RC4, DES, ....
+JAVA_OPTS="-Djdk.tls.disabledAlgorithms=SSLv3, Tlsv1, RC4, DES, ....
 ~~~
 
 Or 
@@ -44,6 +44,13 @@ Or
 ~~~
 -Djdk.tls.disabledAlgorithms=Tlsv1
 ~~~ 
+
+
+**Enable TLS v1, v1.1 and v1.2**
+
+~~~
+JAVA_OPTS="-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2"
+~~~~
 
 ### Connect using TLSv1.2
 
