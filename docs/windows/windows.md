@@ -1,3 +1,9 @@
+---
+layout: default
+title: Windows
+parent: Windows
+nav_order: 1
+---
 
 ## Admin Commands
 **CMD ->:**
