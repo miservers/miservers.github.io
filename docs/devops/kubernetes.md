@@ -1,6 +1,11 @@
+---
+layout: default
+title: Docker
+parent: DevOps
+nav_order: 6
+---
 
-## Kubernetes
---------------------------------
+
 ### Architecture
 ![art](/docs/images/kubernetes-cluster-architecture.webp)
 
