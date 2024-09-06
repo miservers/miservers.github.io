@@ -36,7 +36,7 @@ Java versions **11.0.11**, **1.8.0_291** and up have TLSv1 and TLSv1.1 disabled 
 In **java.security** file. In Java 11 and up it is located in the folder conf/security/ under your JAVA_HOME.
 
 ~~~
-JAVA_OPTS="-Djdk.tls.disabledAlgorithms=SSLv3, Tlsv1, RC4, DES, ....
+JAVA_OPTS="-Djdk.tls.disabledAlgorithms=SSLv3,Tlsv1,RC4,DES, ....
 ~~~
 
 Or 
