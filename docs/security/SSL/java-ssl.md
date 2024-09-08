@@ -37,7 +37,7 @@ Java versions **11.0.11**, **1.8.0_291** and up have TLSv1 and TLSv1.1 disabled 
 | javax.net.debug | Enable Java SSL debugging<br>Eg: -Djavax.net.debug=all or  -Djavax.net.debug=ssl:handshake:verbose|
 | https.protocols | Controls the protocol version used by Java clients which obtain https connections<br>  -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2|
 | jdk.tls.client.protocols | Controls the underlying platform TLS implementation .<br> Eg: -Djdk.tls.client.protocols=TLSv1.1,TLSv1.2<br> Available: JDK 8 , Java 7 update 95, Java 6 update 121|
-| https.proxyHost<br>http.proxyPort<br>https.proxyHost<br>https.proxyPort| Use of Http(s) protocol|
+| https.proxyHost<br>http.proxyPort<br>https.proxyHost<br>https.proxyPort| Use of Http(s) protocol<br> Eg: -Dhttp.proxyHost=proxy.example.com -Dhttp.proxyPort=8080|
 
 
 ### Disable/Enable Tlsv1 
