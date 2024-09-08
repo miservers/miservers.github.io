@@ -24,12 +24,12 @@ nav_order: 2
 
 
 
-| Java Version                                       | TLS Protocol                              | 
+| Java Version                                       | TLS Protocols                              | 
 | -------------------------------------------------- | ----------------------------------------- |
 | Java 11 and Later                                  | - TLS 1.2: default <br>- TLS 1.3: supported                        |
-| Java 8                                             | - TLS 1.2: defalut ( Update 161 and Later)                         |
-| Java 7                                             | - TLS v1: default <br>- TLS v1.1, TLS 1.2: supported               |
-| Java 6                                             | - TLS v1.1: update 111 and above <br>- TLS v1: default <br>- SSLv3 |
+| Java 8                                             | TLSv1.2 (default)<br>- TLSv1.1<br>- TLSv1<br>- SSLv3                         |
+| Java 7                                             | TLSv1.2<br>- TLSv1.1<br>- TLSv1 (default)<br>- SSLv3              |
+| Java 6                                             | - TLS v1.1 (JDK 6 update 111 and above)<br>- TLSv1 (default)<br>- SSLv3 |
 | Java 5 and Earlier                                 | - SSLv3 : default <br>- TLS is not supported.|
 
 Java versions **11.0.11**, **1.8.0_291** and up have TLSv1 and TLSv1.1 disabled by default
