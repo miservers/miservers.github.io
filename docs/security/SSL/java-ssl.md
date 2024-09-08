@@ -20,10 +20,6 @@ nav_order: 2
 
 ### Java: Default and supported TLS versions
 
-
-
-
-
 | Java Version                                       | TLS Protocols                              | 
 | -------------------------------------------------- | ----------------------------------------- |
 | Java 11 and Later                                  | - TLS 1.2 : default <br>- TLS 1.3: supported                        |
@@ -33,6 +29,16 @@ nav_order: 2
 | Java 5 and Earlier                                 | - SSLv3 : default <br>- TLS is not supported.|
 
 Java versions **11.0.11**, **1.8.0_291** and up have TLSv1 and TLSv1.1 disabled by default
+
+
+### JSSE Parameters
+| Parameter  | Description |
+|------------|-------------|
+| javax.net.debug | Enable Java SSL debugging<br>Eg: -Djavax.net.debug=all or  -Djavax.net.debug=ssl:handshake:verbose|
+| https.protocols | Controls the protocol version used by Java clients which obtain https connections<br>  -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2|
+| jdk.tls.client.protocols | Controls the underlying platform TLS implementation .<br> Eg: -Djdk.tls.client.protocols=TLSv1.1,TLSv1.2<br> Available: JDK 8 , Java 7 update 95, Java 6 update 121|
+| https.proxyHost<br>http.proxyPort<br>https.proxyHost<br>https.proxyPort| Use of Http(s) protocol|
+
 
 ### Disable/Enable Tlsv1 
 
