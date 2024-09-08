@@ -32,6 +32,7 @@ Java versions **11.0.11**, **1.8.0_291** and up have TLSv1 and TLSv1.1 disabled 
 
 
 ### JSSE Parameters
+
 | Parameter                | Description                                                                                       |
 | ------------------------ | ------------------------------------------------------------------------------------------------- |
 | javax.net.debug          | Enable Java SSL debugging<br>Eg: -Djavax.net.debug=all or  -Djavax.net.debug=ssl:handshake:verbose|
