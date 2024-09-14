@@ -9,9 +9,9 @@ nav_order: 2
 
 
 
-To create an alert in AppDynamics, you first need to set up health rules and then configure policies to trigger actions like sending notifications. Follow these steps:
+To create an alert in AppDynamics, you first need to set up health rules and then configure policies to trigger actions like sending notifications. 
 
-## Step 1: Create a Health Rule
+### Step 1: Create a Health Rule
 Health rules define the conditions under which alerts should be triggered.
 
 3. **Click "Create Health Rule"**.
@@ -21,7 +21,7 @@ Health rules define the conditions under which alerts should be triggered.
 7. Optionally, you can configure **multiple conditions** using logical operators (AND/OR).
 
 
-## Step 2: Configure a Policy to Trigger Alerts
+### Step 2: Configure a Policy to Trigger Alerts
 
 Now, associate the health rule with actions like sending notifications when a violation occurs.
 
