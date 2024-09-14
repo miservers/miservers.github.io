@@ -1,10 +1,16 @@
-```markdown
-# Troubleshooting with AppD Console
+---
+layout: default
+title: Network Troubleshooting
+parent:  Ansible
+grand_parent: AppDynamics
+nav_order: 1
+---
+
+
 
 ## a. Check Business Transactions
-1. Log in to the AppDynamics Console and navigate to the application experiencing connectivity issues.
-2. Go to the **Business Transactions** tab and locate the specific transaction involving the remote service call.
-3. Business Transactions provide insights into the performance of critical operations, including response times, throughput, and error rates.
+
+ Go to the **Business Transactions** tab and locate the specific transaction involving the remote service call.
 
 ## b. Check Errors and Exceptions
 1. Under the **Transaction Snapshots** or **Errors** tab, review any logged errors.
