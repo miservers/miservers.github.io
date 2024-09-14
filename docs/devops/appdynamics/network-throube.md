@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Network Troubleshooting
-parent:  Ansible
-grand_parent: AppDynamics
+parent:  AppDynamics
+grand_parent: DevOps
 nav_order: 1
 ---
 
