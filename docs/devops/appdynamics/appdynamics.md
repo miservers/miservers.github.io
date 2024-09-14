@@ -5,7 +5,6 @@ parent: DevOps
 nav_order: 5
 has_toc: true
 ---
-Env: RHEL 7
 
 ## Concepts:
 --------------------------------------------------------
