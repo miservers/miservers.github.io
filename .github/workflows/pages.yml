@@ -22,7 +22,11 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
-          bundler-cache: true
+          bundler-cache: false
+      - name: Install gems
+        run: |
+          bundle config set frozen false
+          bundle install
       - uses: actions/configure-pages@v5
       - name: Build Jekyll site
         run: bundle exec jekyll build --destination _site
