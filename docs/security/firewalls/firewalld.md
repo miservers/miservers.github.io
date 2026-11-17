@@ -80,3 +80,20 @@ See More about a service. eg ssh : **/usr/lib/firewalld/services/ssh.xml**
   		<short>SSH</short>
 	  	<port protocol="tcp" port="22"/>
 	</service>
+
+
+Supervision des connexions ouverts:
+
+    $ firwall-cmd  --list-connections
+
+Activer la journalisation des evenements:
+
+    $ firewall-cmd --set-log-denied=all
+
+Logs
+
+    journalctl -u firewalld | grep "BLOCK"
+
+	grep "BLOCK" /var/log/firewalld
+
+	journalctl -u firewalld -f

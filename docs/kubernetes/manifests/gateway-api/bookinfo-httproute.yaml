@@ -1,0 +1,57 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookinfo-httproute
+spec:
+  parentRefs:
+  - name: bookinfo-gateway
+  hostnames:
+  - "bookinfo.safarit.local"
+  rules:
+  - matches:
+    - path:
+        type: Exact
+        value: /productpage
+    - path:
+        type: PathPrefix
+        value: /static
+    - path:
+        type: Exact
+        value: /login
+    - path:
+        type: Exact
+        value: /logout
+    - path:
+        type: PathPrefix
+        value: /api/v1/products
+    backendRefs:
+    - name: bookinfo-svc
+      port: 9080
+---
+apiVersion: v1                                
+kind: Pod                                 
+metadata:                                   
+  labels:                                   
+    app: bookinfo                                 
+  name: bookinfo-pod
+spec:                               
+  containers:                                   
+  - image: istio/examples-bookinfo-reviews-v3
+    name: bookinfo-pod                          
+    ports:                                    
+    - containerPort: 9080
+---
+apiVersion: v1                                
+kind: Service
+metadata:                                   
+  labels:                                   
+    app: bookinfo-pod                                 
+  name: bookinfo-svc 
+spec:                                       
+  ports:
+  - port: 9080                             
+    protocol: TCP                       
+    targetPort: 9080
+  selector:                                 
+    app: bookinfo-pod
+

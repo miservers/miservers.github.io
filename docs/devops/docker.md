@@ -5,6 +5,12 @@ parent: DevOps
 nav_order: 5
 ---
 
+### Commandes
+Entrer en sh dans le conteneur:
+~~~
+docker exec -it <nom_du_conteneur> bash
+~~~
+
 ## Quick Start
 ----------------------------------------------------
 

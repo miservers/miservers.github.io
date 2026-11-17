@@ -1,5 +1,28 @@
+kubernetes:
+  title: Kubernetes
+  url: docs/kubernetes
+  items:
+    - title: CKA
+      slug: CKA
+    - title: Ingress
+      slug: ingress
+    - title: Config Map
+      slug: configMap
+    - title: Network Policy
+      slug: networkpolicy
+    - title: Network
+      slug: network
+    - title: Cluster Management
+      slug: cluster-management
+    - title: Storage
+      slug: storage
+    - title: Scheduling
+      slug: Workloads-Scheduling
+    - title: Prometheus
+      slug: Prometheus
+   
 middleware:
-  title: Middleware
+  title: Middlewaret
   url: docs/middleware
   items:
     - title: JBoss
@@ -12,7 +35,7 @@ middleware:
 
     - title: Weblogic 
       slug: weblogic
-      icon: fa-weblogic.png
+      icon: fa-weblogic.svg
 
     - title: Websphere 
       slug: websphere
@@ -58,6 +81,10 @@ devops:
       slug: ansible/tower
       icon: fa-ansible-tower.png
 
+    - title: Gitlab CI
+      slug: gitlab-ci
+      icon: fa-gitlab-ci.png
+
     - title: AppDynamics
       slug: appdynamics
       icon: fa-appdynamics.png
@@ -69,7 +96,6 @@ devops:
     - title: Docker
       slug: docker
       icon: fa-docker.png
-
 
 data-base:
   title: Data Base
@@ -84,7 +110,10 @@ data-base:
     - title: Postgresql
       slug: postgresql
       icon: fa-postgresql.png
-
+    - title: Redis
+      slug: redis
+      icon: fa-redis.png
+    
 linux:
   title: Linux
   url: docs/linux
@@ -105,4 +134,15 @@ linux:
       slug: kvm
       icon: fa-kvm.png
           
-    
+security:
+  title: Securiy
+  url: docs/security
+  items:
+    - title: Apache Security
+      slug: secure-apache
+    - title: TLS
+      slug: tls
+    - title: Java Security
+      slug: java-security
+    - title: Firewalls
+      slug: firewalls

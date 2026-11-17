@@ -83,7 +83,7 @@ Restart SSHD service
 ~~~
 
 Change the **vagrant** user password:
-~~~sh
+CHANGE_ME
 [vagrant@centos2 ~]$ sudo passwd  vagrant
 ~~~
 

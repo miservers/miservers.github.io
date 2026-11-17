@@ -37,7 +37,7 @@ See This [Tuto](https://redhatgov.io/workshops/ansible_automation)
 
 Differents methods can be used:
 - user/password:
-- SSH Private Key. Use the **~/.ssh/id_rsa** of the tower machine. However, tower machine must be able to connect to remote machine without password, see **ssh-copy-id**.
+CHANGE_ME SSH Private Key. Use the **~/.ssh/id_rsa** of the tower machine. However, tower machine must be able to connect to remote machine without password, see **ssh-copy-id**.
 
 ![to](/docs/images/ansible-tower-credentials.png)
 OR

@@ -99,7 +99,7 @@ cellName=rhel2Cell01
 nodeName=rhel2CellManager01
 appServerNodeName=rhel2Node01
 adminUserName=wasadmin
-adminPassword=changeit
+adminPassword=CHANGE_ME
 enableAdminSecurity=true
 ~~~
 
@@ -114,7 +114,7 @@ hostName=rhel3
 dmgrHost=rhel2
 dmgrPort=8879
 dmgrAdminUserName=wasadmin
-dmgrAdminPassword=changeit
+dmgrAdminPassword=CHANGE_ME
 ~~~
 
 Run below command to create profiles:

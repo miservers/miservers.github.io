@@ -32,7 +32,7 @@ Add to server.xml
     <Resource name="jdbc/myDS" auth="Container"
        type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
        url="jdbc:oracle:thin:@127.0.0.1:1521:mysid"
-       username="scott" password="tiger" maxTotal="20" maxIdle="10" maxWaitMillis="-1"
+       username="scott" password="CHANGE_ME" maxTotal="20" maxIdle="10" maxWaitMillis="-1"
 	   removeAbandonedTimeout="180" 
        removeAbandoned="true" 
        logAbandoned="true" 
@@ -72,7 +72,7 @@ add to server.xml ou in context.xml(deploy the DS on all applications)
     	  removeAbandoned="true"
     	  removeAbandonedTimeout="60"
           logAbandoned="false" 
-          username="mywiki" password="changeit" 
+          username="mywiki" password="CHANGE_ME" 
     	  driverClassName="com.mysql.jdbc.Driver"
           url="jdbc:mysql://localhost:3306/mywikidb"
      />
@@ -94,7 +94,7 @@ add to server.xml ou in context.xml(deploy the DS on all applications)
 ```xml
 <Resource name="jdbc/myDS" auth="Container" type="javax.sql.DataSource"
        username="postgres"
-       password="postgres"
+       password="CHANGE_ME"
        driverClassName="org.postgresql.Driver"
        url="jdbc:postgresql://localhost:5432/yourDatabaseName"
        maxTotal="25"

@@ -34,7 +34,7 @@ ssl_options.certfile   = /etc/rabbitmq/server_certificate.pem
 ssl_options.keyfile    = /etc/rabbitmq/server_key.pem
 ssl_options.verify     = verify_peer
 ssl_options.fail_if_no_peer_cert = true
-ssl_options.password   = changeit
+ssl_options.password   = CHANGE_ME
 ~~~
 
 

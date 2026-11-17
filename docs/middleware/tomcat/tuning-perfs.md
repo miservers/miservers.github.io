@@ -49,7 +49,7 @@ Prereq:
 # cat tomcat-users.xml
   <role rolename="manager-jmx"/>
   <role rolename="manager-gui"/>
-  <user username="tomcat" password="changeit" roles="manager-gui,manager-jmx"/>
+  <user username="tomcat" password="CHANGE_ME" roles="manager-gui,manager-jmx"/>
 ```
 Heap Memory:  
 <http://localhost:8080/manager/jmxproxy/?get=java.lang:type=Memory&att=HeapMemoryUsage>

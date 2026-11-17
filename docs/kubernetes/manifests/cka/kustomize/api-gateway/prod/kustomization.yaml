@@ -1,0 +1,16 @@
+resources:
+- ../base
+patches:
+  - path: increase_replicas.yaml
+  - path: patch-hpa.yaml
+namespace: api-gateway-prod
+namePrefix: prod-
+labels:
+  - pairs:
+      app: api2
+      env: production
+    includeSelectors: true 
+images:
+- name: nginx
+  newName: bitnami/nginx
+  newTag: "1.4.0"

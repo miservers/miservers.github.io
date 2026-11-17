@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: safar-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: safari-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 2Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/volumes/Data"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: safari
+  name: safari
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: safari
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: safari
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        volumeMounts:
+          - mountPath: "/tmp/safari-data"
+            name: safari-vol
+        resources: {}
+      volumes:
+      - name: safari-vol 
+        persistentVolumeClaim:
+          claimName: safar-pvc 

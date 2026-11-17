@@ -108,7 +108,7 @@ ansible-playbook -i prod-inventory tomcat-playbook.yml
 - name: Create webadmin user
       user:
         name: webadmin
-        password: $5$YQXOijrsiwvkIEMJ$SmB42.jlkrOyg0G/QArrHxV6rqzL3p2
+        password: CHANGE_ME
         group: web
         state: present
 ~~~
@@ -263,7 +263,7 @@ When you want to execute the playbook, you will prompted to enter the password
 ansible-playbook -i inventory playbook.yml --ask-vault-pass
 
 Vault password: 
-~~~
+CHANGE_ME
 
 To avoid being prompted for password, you can use Vault password file:
   

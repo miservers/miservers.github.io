@@ -25,7 +25,7 @@
     - name: Create webadmin user
       user:
         name: webadmin
-        password: $5$YQXOijrsiwvkIEMJ$SmB42.jlkrOyg0GHnIt2LWukVu5/QArrHxV6rqzL3p2        
+        password: CHANGE_ME        
         group: web
         state: present
 

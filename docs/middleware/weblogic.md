@@ -250,7 +250,7 @@ $DOMAIN_HOME/bin/stopManagedWebLogic.sh <managedServer>
 Edit Boot Identity File: **$DOMAIN_HOME/servers/AdminServer/security/boot.properties**
 
     sername=weblogic
-    password=Change_it
+    password=CHANGE_ME
 
 The first time the admin server start, it reads this file and overwrite it with encrypted username/password. 
 

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    matchLabels:
+      run: api-gateway
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: api-gateway
+    spec:
+      containers:
+      - name: app
+        image: nginx
+        ports:
+        - containerPort: 80

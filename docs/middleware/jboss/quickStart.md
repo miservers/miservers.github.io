@@ -18,7 +18,7 @@ nav_order: 1
 
 	./standalone.sh -b 192.168.56.103 -bmanagement 192.168.56.103
  
-	./jboss-cli.sh --user=jbossadmin --password=Changeit2! 
+	./jboss-cli.sh --user=jbossadmin --password=CHANGE_ME 
                  --connect --controller=$HOST:9990  command=:shutdown
 
 ### Console:

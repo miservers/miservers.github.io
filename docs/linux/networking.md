@@ -13,6 +13,73 @@ Wich IP is pinging me?
 
 	$ tcpdump -n -i enp0s8 icmp and icmp[icmptype]=icmp-echo
 
+## Iptables
+Iptables est un outil userspace pour configuer le module noyau **Netfilter** qui est la base du firewall. 
+
+Iptables maintient ses règles dans des tables:
+🔹 1. **filter**
+
+Table par défaut : elle contrôle le filtrage du trafic (firewall).
+
+Chaînes :
+
+- INPUT : trafic entrant vers la machine locale.
+- OUTPUT : trafic sortant depuis la machine.
+- FORWARD : trafic qui traverse la machine (routage).
+
+
+
+📌 Exemple :
+~~~
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+~~~
+
+2. **nat** (Network Address Translation)
+
+Sert à modifier les adresses IP ou les ports, souvent pour le port forwarding ou le masquerading.
+
+Chaînes :
+
+- PREROUTING : avant routage (ex : redirection de ports).
+
+- POSTROUTING : après routage (ex : masquerade).
+
+- OUTPUT : pour les connexions locales.
+
+Exemple: rediriger le flux arrivant sur  le port 8080 vers le port local 80
+~~~sh
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+~~~
+
+Pour pouvoir  y acceder depuis localhost, il faut creer une chaine OUTPUT
+~~~sh
+curl http://localhost:8080
+
+iptables -L -n -t nat
+   
+sudo iptables -t nat -A OUTPUT -p tcp --dport 8080 -j REDIRECT --to-port 80
+~~~
+
+- tables raw,  mangle,security
+
+**Pour autoriser les connexions entrantes sur le port 80**
+
+~~~sh
+iptables -I INPUT 1 -p tcp --dport 80 -m state --state NEW -j ACCEP
+~~~
+- **-I INPUT 1**: là c'est la règle à la tête de la table
+
+**Sauvegarder la configuration**
+~~~sh
+service iptables save
+~~~
+
+**Lister les règles du firewall***
+~~~sh
+iptables -t filter -L -n
+~~~
+
+
 ## Network Manager
 ### Configure a Static IP
 List all net devices: **nmcli**

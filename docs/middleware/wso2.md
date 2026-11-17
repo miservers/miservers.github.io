@@ -47,7 +47,7 @@ Login: admin/admin
 ```ini
 [super_admin]
 username = "admin"
-password = "admin"
+password = "CHANGE_ME"
 ```
 You cannot change password by modifying this file.
 

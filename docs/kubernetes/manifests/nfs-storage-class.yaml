@@ -1,0 +1,15 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-sc
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "false"
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 10.24.1.20 # Remplacer par l'adresse IP du serveur NFS
+  share: /data
+reclaimPolicy: Delete #Retain
+volumeBindingMode: WaitForFirstConsumer  #Immediate
+allowVolumeExpansion: true
+mountOptions:
+  - nfsvers=4.1

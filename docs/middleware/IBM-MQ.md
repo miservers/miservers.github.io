@@ -371,7 +371,7 @@ Environment: IBM MQ 9.3, Centos 7.
 
 		$ ps -ef | grep runmqlsr
 
-- Authentication by userid/password : so QM1 can transmit message on QM2/QL.1
+- Authentication by userid/password : CHANGE_ME QM1 can transmit message on QM2/QL.1
 
 			$ useradd adam  // password changeit
 			$ setmqaut -m QM2 -n QL.1 -t queue -p adam +all

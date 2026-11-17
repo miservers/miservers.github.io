@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-sidecar
+  labels:
+    app: mysid
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysid
+  template:
+    metadata:
+      labels:
+        app: mysid
+    spec:
+      containers:
+        - name: mysid
+          image: alpine:latest
+          command: 
+          - sh
+          - -c
+          - |
+            while true; do echo "logging" >> /var/log/sidlogs.log; sleep 2; done
+          
+          volumeMounts:
+            - name: log-volume
+              mountPath: /var/log
+      initContainers:
+        - name: logshipper
+          image: alpine:latest
+          # Setting restartPolicy: Always makes this a sidecar container.
+          restartPolicy: Always
+          command: ['sh', '-c', 'tail -F /var/logs/sidlogs.log']
+          volumeMounts:
+            - name: log-volume
+              mountPath: /var/logs
+      volumes:
+        - name: log-volume
+          emptyDir: {}

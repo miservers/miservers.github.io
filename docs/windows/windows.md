@@ -1,28 +1,25 @@
----
-layout: default
-title: Windows
-parent: Windows
-nav_order: 1
----
 
-## Admin Commands
-**CMD ->:**
-- ipconfig /all
-- ipconfig /displaydns  : display DNS client cache
-- nslookup server1.safar.com
-- tracert www.google.fr
-- netstat
-- netstat -a -n
-- netstat -r : display routing table
-- route print : show routing table
-- systeminfo
+### Notes
+- Sur windows server, par defaut, il n'est possibles d'ouvrir que **2** sessions simultanées.
+- dsa : acces à l'AD
 
-## Shortcuts
-- Plusieurs Ecrans : Wind + P -> Etendre ou autre
+### GPO
 
-## Run Commands
- - MSTSC: Remote Desktop (Terminal server)
- - services.msc
- - perfmon
- - compmgmt.msc:  to access the Computer Management console, which is a centralized tool for managing various system components and settings.
- - resmon:  used in the Windows operating system to monitor and analyze system resources, including CPU usage, memory usage, disk activity, and network activity. 
+### KB
+mise à jour
+
+
+### Powershell
+scripts **.ps1**
+
+
+### MSC - Microsoft Management Control MMC
+les .msc permettent d'acceder au console de management de Microsoft
+. **Win+R**
+
+- *services.msc*
+- *gpedit.msc* : acces au GPO strategies de groupe
+- *regedit.msc*: registre
+- *taskschd.msc*: planificateur de taches
+- *compmgmt.msc*: gestion de l'ordinateur
+- *dsa.msc*: acces à l'AD, disponible sur les controleurs de domaines.

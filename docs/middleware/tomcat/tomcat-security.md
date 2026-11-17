@@ -13,7 +13,7 @@ nav_order: 4
 
 Generate the encrypted password: 
 
-```sh
+CHANGE_ME
     TOMCAT_HOME/bin/digest.sh -a sha-256 s3cr3t
     s3cr3t:abb62be83c64497e48608ae0987da$1$918643e3a75d367b0ad45a34bd67..
 ```
@@ -30,7 +30,7 @@ Edit <ins>tomcat-users.xml</ins>
 
 ```xml
   <role rolename="manager-gui"/>
-  <user username="admin123"  password="abb62be83c64497e48608ae0987da$1$918643e3a75d367b0ad45a34bd67..." roles="manager-gui"/>
+  <user username="admin123"  password="CHANGE_ME" roles="manager-gui"/>
 ```
 
 Restart Tomcat
@@ -62,7 +62,7 @@ Add this options to _CATALINA_OPTS_
 
 ```sh
     -Djavax.net.ssl.trustStore=/path/truststore.jks 
-    -Djavax.net.ssl.trustStorePassword=**** 
+    -Djavax.net.ssl.trustStorePassword=CHANGE_ME 
     -Djavax.net.ssl.trustStoreType=JKS
 ```
 

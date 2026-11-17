@@ -10,7 +10,7 @@
   become: yes
   user:
     name: "{{ tomcat_group }}"
-    password: $5$CBFXJeNVZMz7SL46$yJJHz1OIyBNM30fRtndO4e8nLb/HPUQMbFu3hmRmx26
+    password: CHANGE_ME
     state: present
 
 - name: Setup the the JAVA_HOME

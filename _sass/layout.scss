@@ -12,7 +12,7 @@
     width: $nav-width-md;
     height: 100%;
     border-right: $border $border-color;
-    align-items: flex-start;
+    align-items: flex-end;
   }
 
   @include mq(lg) {

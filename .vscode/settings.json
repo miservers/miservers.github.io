@@ -1,0 +1,19 @@
+{
+    "debug.saveBeforeStart": "none",
+    "files.associations": {
+        "*plays.yml": "ansible",
+        "*.yml": "ansible",
+    },
+    
+    "yaml.schemas": {
+    "https://json.schemastore.org/composer": "/*"
+    },
+    "cSpell.words": [
+        "defini",
+        "dela",
+        "nginx",
+        "noeud",
+        "paus",
+        "Yamls"
+    ]
+}

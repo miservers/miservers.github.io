@@ -7,16 +7,32 @@ permalink: /
 icon_dir: docs/images/icon
 ---
 
+<style>
+      
+    .col {
+      column-count: 2;
+      column-gap: 40px; /* optionnel : espace entre les colonnes */
+      list-style-type: disc; /* style des puces */
+    }
+    .in {
+        display: inline-block;
+        border: 1px solid red;
+        margin: 10px;
+    }
+</style>
+
+
 {% for category in site.data.docs %}
+  <div>
 	<p class="label">{{category[1].title}}</p>
-	<div class="cards">
+	<ul class="col">
 	{% for item in category[1].items %}
-		<div class="card">
-		  <a href="{{category[1].url}}/{{item.slug}}" >
-		    <img src="{{page.icon_dir}}/{{item.icon}}"   alt="">
-			</a>
-		</div>
-	{% endfor %} 
+    <li>
+	        <a href="{{category[1].url}}/{{item.slug}}">
+   {{item.title}}</a>
+    </li>
+	{% endfor %}
+	</ul>
 	</div>
 {% endfor %} 
 

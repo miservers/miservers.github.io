@@ -1,0 +1,9 @@
+resources:
+- statefulset.yaml
+- service.yaml
+
+secretGenerator:
+- name: kustomize-secret-test-2
+  literals:
+  - username=admin
+  - password=CHANGE_ME

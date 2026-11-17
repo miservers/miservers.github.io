@@ -1,10 +1,4 @@
----
-layout: default
-title: GDB
-parent: Programming
-nav_order: 5
----
-
+## GDB
 This usecase apply to C/C++ programs.
 
 **Important** : the code must be compiled with `-g` debug flag.

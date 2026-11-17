@@ -205,9 +205,9 @@ done
 **=~** operator permits to check a string againt a **regex**. I return **0(true)** if the string matches the regex, **1(false)** else.
 
 ~~~sh
-password="aLo7np"
+password="CHANGE_ME"
 
-if [[ $password =~ [0-9]+ ]]; then 
+if [[ $password =CHANGE_ME [0-9]+ ]]; then 
   echo "Password contain a digit" 
 else  
   echo "Password does not contain digits" 

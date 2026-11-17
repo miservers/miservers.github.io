@@ -16,22 +16,12 @@ C**I/CD**: Continuous Integration/Delivery
 
 ![alt](/docs/images/jenkins-DevOps-tools.webp)
 
-### Getting Started
-**Start Jenkins**
-~~~sh
-systemctl start jenkins
-~~~
+### Gitlab - Jenkins Integration
+https://medium.com/@maheshwar.ramkrushna/integrating-jenkins-with-gitlab-using-personal-access-tokens-for-secure-ci-cd-automation-1b9d73f517c8
 
 ### Pipeline
 Example 
 ![alt](/docs/images/jenkins-pipeline-flow.png)
-
-### Config Files
-On Linux(Ubuntu 22.04):
-- user: jenkins
-- JENKINS_HOME=/var/lib/jenkins
-- service script: /lib/systemd/system/jenkins.service
-
 
 ### Jenkins, Git and Maven Integration
 Git and Maven must be installed on the machine.
@@ -60,6 +50,23 @@ pipeline {
     }
 }
 ~~~ 
+
+### Pipeline: snippets
+`jenkinsfile`
+
+**Creer un sous-repertoire sous home et y faire un git checkout**
+```
+stage('Checkout branche recette') {
+      steps {
+        dir('config-rec') {
+          git branch: 'recette',
+              url: "${env.CONFIG_REPO_URL}",
+              credentialsId: 'bitbucket-credentials'
+        }
+        echo "Branche recette récupérée"
+      }
+    }
+```
 
 ### Jenkins & Ansible
 1. Install Ansible Plugin in Jenkins

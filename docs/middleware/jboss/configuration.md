@@ -79,7 +79,7 @@ Using CLI
 
 	data-source add --name=PostgresDS --jndi-name=java:/PostgresDS 
 			--driver-name=postgres --connection-url=jdbc:postgresql://localhost:5432/postgresdb 
-			--user-name=admin --password=admin
+			--user-name=admin --password=CHANGE_ME
 
 	reload
 

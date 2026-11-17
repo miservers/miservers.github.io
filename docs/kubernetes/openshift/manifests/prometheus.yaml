@@ -1,0 +1,33 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: dev-monitoring-group
+  namespace: dev-monitoring
+spec:
+  targetNamespaces:
+  - dev-monitoring
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: prometheus
+  namespace: dev-monitoring
+spec:
+  channel: beta
+  installPlanApproval: Automatic
+  name: prometheus
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  namespace: dev-monitoring
+spec:
+  replicas: 1
+  serviceAccountName: prometheus-k8s
+  serviceMonitorSelector: {}
+  resources:
+    requests:
+      memory: 400Mi

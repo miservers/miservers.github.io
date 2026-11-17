@@ -4,6 +4,12 @@ title: Python
 parent: Programming
 nav_order: 10
 ---
+
+### List Installed packages
+~~~
+pip list
+~~~
+
 ### Lists
 ~~~py
 animals = ["lion", "vache", "mouton", "souris"]

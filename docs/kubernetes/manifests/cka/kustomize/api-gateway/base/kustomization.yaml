@@ -1,0 +1,14 @@
+namespace: tochange
+namePrefix: dev-
+nameSuffix: "-001"
+labels:
+  - pairs:
+      app: bingo
+    includeSelectors: true 
+commonAnnotations:
+  oncallPager: 800-555-1212
+resources:
+- deployment.yaml
+- service.yaml
+- horizontal-scaling-config.yaml
+- hpa.yaml
