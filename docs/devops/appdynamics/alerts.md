@@ -6,119 +6,111 @@ grand_parent: DevOps
 nav_order: 3
 ---
 
-# Alertes AppDynamics : Health Rules et Policies
+# Alertes AppDynamics — notes de production
 
-Guide pratique pour **AppDynamics Controller on-premises 23.x**. Les seuils ci-dessous sont des exemples à calibrer selon le trafic, les horaires et les objectifs de service.
+**Controller on-premises 23.x.** Seuils ci-dessous = exemples à ajuster avec les métriques réelles et le trafic de l'application.
 
-## Comprendre le circuit d'alerte
+## Rappels rapides
 
-| Élément | Rôle | Exemple |
-|:--|:--|:--|
-| Métrique | Mesure remontée par un agent | Temps de réponse moyen d'une Business Transaction (BT) |
-| Health Rule | Définit le périmètre, les conditions et les niveaux Warning/Critical | Réponse au-dessus d'une baseline |
-| Violation | Événement créé lorsque la règle est enfreinte | `Health Rule Violation Started - Critical` |
-| Policy | Sélectionne l'événement et l'action | Courriel à l'astreinte |
+- **Health Rule (HR)** : scope + métrique + condition Warning/Critical + fenêtre d'évaluation.
+- **Policy** : événement de violation + action (mail, webhook, outil d'incident).
+- **Started** : première notification. **Continues** : rappel facultatif, cadencé par `Wait Time after Violation`. Ne pas activer tous les rappels sans besoin.
+- **Persistance 5/10 min** : dépassement sur 5 points dans une fenêtre de 10 min, pas forcément 5 minutes consécutives.
+- **Baseline** : comportement habituel d'une métrique. **P95** : percentile d'une distribution. Une baseline n'est pas automatiquement le P95.
+- **Scope** : cibler les BT, tiers, nœuds ou serveurs utiles. Pour une erreur précise (HTTP 500, 401, SSLHandshake), vérifier que l'agent expose bien la métrique ou l'événement correspondant.
 
-Une Health Rule peut signaler une violation sans envoyer de message : la notification dépend d'une Policy et d'une action associée. [Documentation Health Rules](https://docs.appdynamics.com/appd/onprem/23.x/latest/en/appdynamics-essentials/alert-and-respond/health-rules).
+[Health Rules](https://docs.appdynamics.com/appd/onprem/23.x/latest/en/appdynamics-essentials/alert-and-respond/health-rules) · [Conditions et persistance](https://docs.appdynamics.com/appd/onprem/23.x/23.11/en/appdynamics-essentials/alert-and-respond/health-rules/health-rule-conditions) · [Wait Time](https://docs.appdynamics.com/display/PRMY23/Health%2BRule%2BSchedules)
 
-## Baseline, P95 et persistance
+## Règles à conserver
 
-Une **baseline dynamique** décrit le comportement habituel d'une *métrique choisie*. Une condition peut comparer cette métrique à sa baseline quotidienne ou hebdomadaire avec un pourcentage ou un nombre d'écarts types. Le **P95**, lui, est un percentile : 95 % des observations sont inférieures ou égales à sa valeur. Une baseline n'est donc pas automatiquement un P95. Pour alerter sur un percentile, choisir et vérifier explicitement cette métrique dans le Controller ; ne pas mélanger moyenne et P95 dans la même formule. [Documentation des conditions](https://docs.appdynamics.com/appd/onprem/23.x/23.11/en/appdynamics-essentials/alert-and-respond/health-rules/health-rule-conditions).
+### Business Transactions
 
-La baseline **Daily Trend** compare des périodes horaires comparables. Elle ne signifie pas simplement « les sept derniers jours ». Vérifier l'historique et le volume de mesures avant de l'utiliser. [Documentation des baselines](https://docs.appdynamics.com/display/PRMY23/.Dynamic%2BBaselines%2Bv23.9).
-
-### Exemple : Login trop lent
-
-**Hypothèse illustrative** : la baseline Daily Trend du *temps de réponse moyen* de la BT `Login` vaut **1 100 ms** à 10 h. Avec un écart de **+25 %**, le seuil vaut **1 375 ms** (`1 100 × 1,25`).
-
-| Réglage | Valeur d'exemple |
+| Alerte | Condition de départ |
 |:--|:--|
-| Type et scope | Business Transaction, BT `Login` |
-| Condition Critical | Temps de réponse moyen > baseline Daily Trend de 25 % |
-| Fenêtre | `Use data from last 5 min(s)` |
-| Persistance | `Trigger only when violation occurs 5 times in the last 5 min(s)` |
-| Garde-fou | Condition de charge minimale si le faible trafic crée du bruit |
+| `BT_Slow` / `BT_TempsRéponse_Lent` | Temps de réponse moyen > baseline +3σ, charge ≥30 appels/min, 5/10 min ; ou seuil fixe >2 s selon la BT. |
+| `BT_TempsRéponse_TrèsLent` | P95 >4 s, **si cette métrique est disponible** dans le Controller. |
+| `BT_Trafic_Chute_Soudaine` | Baisse anormale du nombre d'appels d'une BT normalement active ; limiter aux plages de service. |
+| `BT_Taux_Lenteur_Augmenté` | Transactions lentes >10 % du total, avec un volume minimal. |
+| `BT_Errors` | Warning : erreurs >2 %. Critical : erreurs >5 % **et** >10 erreurs/min, 5/10 min. Rappel éventuel après 10 min. |
 
-**5 fois sur 5 minutes** porte sur les points de mesure de la fenêtre ; ce n'est pas un chronomètre déclenché au premier dépassement. Avec **3 fois sur 5 minutes**, les dépassements n'ont pas besoin d'être consécutifs. Le moment exact de l'événement dépend de l'évaluation et des données disponibles. Une persistance ne se configure que pour une fenêtre de **30 minutes ou moins**. [Documentation des seuils de persistance](https://docs.appdynamics.com/appd/onprem/23.x/23.11/en/appdynamics-essentials/alert-and-respond/health-rules/health-rule-conditions).
+**Exemple Login** : si la baseline du *temps moyen* à 10 h vaut 1 100 ms, une déviation de +25 % donne un seuil de **1 375 ms**. Choisir `5 fois sur 5 min` si chaque point de la fenêtre doit dépasser le seuil. Ne pas appeler cette baseline « P95 » sans avoir sélectionné la métrique P95. Avec peu d'appels, ajouter un minimum de charge et éventuellement un seuil absolu.
 
-Une seule requête lente peut faire bondir la moyenne ou le taux d'erreur d'une BT peu sollicitée. Ajouter si besoin un minimum d'appels/minute ; pour une BT normalement très rapide, combiner la baseline avec un seuil absolu. [Documentation on-premises](https://docs.appdynamics.com/appd/onprem/23.x/latest/en/appdynamics-essentials/alert-and-respond/health-rules).
+### Erreurs et exceptions
 
-## Créer une Health Rule
-
-1. Dans **Alert & Respond → Health Rules**, choisir l'application et le type adapté : BT, Tier/Node ou Server.
-2. Définir le **scope** exact : BT, tier, nœud ou groupe de serveurs. Une règle ciblant une erreur précise ne doit pas englober toutes les BT sans intention.
-3. Configurer séparément **Warning** et **Critical**. Contrôler le chemin de la métrique, l'unité, l'agrégation et les opérateurs `ANY`, `ALL` ou l'expression personnalisée.
-4. Choisir `Use data from last`, la persistance si utile et `Wait Time after Violation`. Ce dernier règle la fréquence des événements *Continues*, pas le délai de la première alerte.
-5. Examiner l'historique avec **Alert Sensitivity Tuning** lorsque le type de règle et son mode d'évaluation le permettent.
-
-[Créer une Health Rule](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/configure-health-rules/create-a-health-rule) · [Configurer les conditions](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/configure-health-rules/create-and-configure-conditions) · [Wait Time](https://docs.appdynamics.com/display/PRMY23/Health%2BRule%2BSchedules)
-
-### Catalogue de départ
-
-| Règle | Condition indicative | À vérifier avant activation |
-|:--|:--|:--|
-| `BT_LOGIN_LATENCY_CRITICAL` | BT `Login`, temps moyen > baseline +25 %, 5/5 min | Volume d'appels, baseline et seuil absolu |
-| `BT_ERRORS_CRITICAL` | Taux d'erreur >5 % **et** nombre d'erreurs significatif, 5/10 min | Définition des erreurs et dénominateur |
-| `JVM_HEAP_USED_WARNING` | Heap >85 % sur une fenêtre adaptée | Évolution après GC et Xmx |
-| `INFRA_CPU_HIGH_WARNING` | CPU >85 % pendant plusieurs mesures | Charge normale, agent et licence |
-| `DB_RESPONSE_CRITICAL` | Temps DB > baseline ou seuil fixe | Backend affecté et nombre d'appels |
-
-Ces seuils ne sont **pas des valeurs par défaut AppDynamics**. Une erreur HTTP 5xx, une exception Java et une erreur de BT ne sont pas nécessairement équivalentes : confirmer ce que remonte l'agent.
-
-### Absence de données et disponibilité
-
-Une métrique absente peut produire l'état **Unknown**. L'option `Evaluate to true on no data` change ce comportement ; la documentation recommande de la **désactiver pour les métriques de disponibilité**. L'absence de trafic d'une BT ne démontre pas à elle seule que l'application est indisponible. Distinguer heures creuses, agent arrêté et service inaccessible ; compléter au besoin par un contrôle actif de l'endpoint. [Conditions et données manquantes](https://docs.appdynamics.com/appd/onprem/23.x/23.11/en/appdynamics-essentials/alert-and-respond/health-rules/health-rule-conditions).
-
-Pour CPU, mémoire et processus, vérifier que le **Machine Agent** et les fonctions de visibilité requises remontent les données. Copier le chemin exact depuis le **Metric Browser** de votre Controller. [Documentation Machine Agents](https://docs.appdynamics.com/appd/23.x/latest/en/application-monitoring/install-app-server-agents/machine-agents).
-
-## Configurer la Policy
-
-1. Sélectionner l'application, l'environnement et les Health Rules concernées.
-2. Pour une première notification, choisir **Health Rule Violation Started - Critical**, et éventuellement **Started - Warning**.
-3. Activer **Health Rule Violation Continues** uniquement pour un rappel utile. Régler `Wait Time after Violation` pour éviter les notifications répétées.
-4. Associer les actions au bon niveau : courriel, webhook ou outil d'incident. Inclure application, entité, règle, sévérité et lien vers la violation.
-5. Tester réception, retour à la normale et horaires de notification avec l'astreinte.
-
-Les événements *Started* et *Continues* sont distincts ; il n'est pas nécessaire d'activer systématiquement les deux. [Health Rule Schedules](https://docs.appdynamics.com/display/PRMY23/Health%2BRule%2BSchedules) · [Events Reference](https://docs.appdynamics.com/appd/23.x/23.1/en/appdynamics-essentials/monitor-events/events-reference).
-
-### Nommage conseillé
-
-```text
-Health Rule : <DOMAINE>_<METRIQUE>_<SEVERITE>
-Exemple     : BT_LOGIN_LATENCY_CRITICAL
-
-Policy      : POL_<ENV>_<DOMAINE>_<SEVERITE>
-Exemple     : POL_PROD_BT_CRITICAL
-```
-
-Documenter le propriétaire, le scope, la justification du seuil et le runbook dans la description. Vérifier la cohérence des niveaux Warning et Critical.
-
-## Diagnostiquer une alerte
-
-| Symptôme | Contrôles |
+| Alerte | Condition de départ |
 |:--|:--|
-| Pas de violation | Scope, métrique, unité, trafic, fenêtre, persistance et données manquantes |
-| Violation sans notification | Policy activée, événement *Started*, filtres, action et destinataire |
-| Rappels trop nombreux | Événement *Continues* et `Wait Time after Violation` |
-| Règle grise ou inconnue | Agent, fraîcheur des métriques et traitement de l'absence de données |
-| Faux positifs | Seuil absolu, charge minimale, baseline et horaires de service |
+| `Erreur_HTTP_5xx_Elevée` | HTTP 5xx >2 % ; vérifier le nombre d'appels et la métrique réellement collectée. |
+| `Erreur_JAVA_Exception_Non_Gérée` | Augmentation des exceptions non gérées ; filtrer la classe ou le type si possible. |
+| `Erreur_API_Externe` | Erreurs répétées sur un appel REST/service externe ; isoler le backend concerné. |
 
-Tester d'abord sur une règle maîtrisée, puis ajuster selon les événements réellement produits. Un **Transaction Snapshot** ou la **Flow Map** peut aider au diagnostic si les données correspondantes ont été capturées ; leur création n'est pas garantie par la seule violation de la Health Rule.
+Une erreur HTTP, une exception Java et une erreur de BT ne sont pas forcément la même mesure.
 
-![États des Health Rules dans le Controller](/docs/images/appdynamics_RulesStatus.png)
+### Disponibilité et processus
 
-### Captures de configuration
+| Alerte | Condition de départ |
+|:--|:--|
+| `App_Inactive_AucuneRequête` | Aucune requête sur une BT normalement active pendant X min ; exclure les heures creuses. |
+| `App_JVM_HS` | Agent/nœud indisponible ou redémarrage suspect ; vérifier `Agent/App/Availability` dans le Metric Browser. L'absence d'agent ne prouve pas seule que la JVM est arrêtée. |
+| `App_ServiceIndisponible_Endpoint` | Échec de `/health` ou `/actuator/health` ; nécessite un contrôle actif adapté si l'endpoint n'est pas instrumenté. |
+| `Linux_Process_Missing` | Processus absent via Machine Agent/extension ; chemin `Hardware Resources/Process/<process-name>|Count` à confirmer localement. |
+| `INFRA_MACHINE_AGENT_HS` | Disponibilité Machine Agent <1 ; fenêtre courte, par exemple 5 min, et rappels maîtrisés. |
 
-![Health Rule, écran 1](/docs/images/appdynamics/Appdynamics-HR-1.jpg)
-![Health Rule, écran 2](/docs/images/appdynamics/Appdynamics-HR-2.jpg)
-![Health Rule, écran 3](/docs/images/appdynamics/Appdynamics-HR-3.jpg)
-![Health Rule, écran 4](/docs/images/appdynamics/Appdynamics-HR-4.jpg)
-![Policy, écran 1](/docs/images/appdynamics/Appdynamics-POL-1.jpg)
-![Policy, écran 2](/docs/images/appdynamics/Appdynamics-POL-2.jpg)
-![Policy, écran 3](/docs/images/appdynamics/Appdynamics-POL-3.jpg)
-![Policy, écran 4](/docs/images/appdynamics/Appdynamics-POL-4.jpg)
+Pour les métriques absentes, examiner le statut **Unknown** et le réglage `Evaluate to true on no data` ; la documentation recommande de le désactiver pour les métriques de disponibilité. [Détails](https://docs.appdynamics.com/appd/onprem/23.x/23.11/en/appdynamics-essentials/alert-and-respond/health-rules/health-rule-conditions).
 
-### Références complémentaires
+### Infrastructure et JVM
 
-- [Health Rule API — AppDynamics 23.x](https://docs.appdynamics.com/appd/23.x/latest/en/extend-appdynamics/appdynamics-apis/alert-and-respond-api/health-rule-api)
-- [Dépannage Alert and Respond — AppDynamics 23.x](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/troubleshoot-alert-and-respond-problems)
+| Alerte | Condition de départ |
+|:--|:--|
+| `CPU_Hot` / `INFRA_CPU_HIGH` | CPU >75 % Warning, >85 % Critical, par exemple 5/5 min. |
+| `Memory_Pressure` / `INFRA_USED_MEMORY_HIGH` | Mémoire >75 % Warning, >90 % Critical ; vérifier mémoire disponible et pression réelle. |
+| `JVM_Heap_Memory_Saturé` | Heap >85 % ; observer la valeur **après GC** et sa tendance. |
+| `JVM_FullGC_Frequence_Elevée` | Full GC >5/min (exemple) ; vérifier durée des pauses et impact. |
+| `JVM_CPU_Taux_Elevé` | CPU JVM >90 % de façon persistante. |
+| `JVM_Threads_Bloqués` | Nombre de threads bloqués au-dessus d'un seuil défini pour l'application. |
+
+**Server Monitoring** : installer/configurer le Machine Agent et vérifier les droits/licences de visibilité serveur avant de créer des HR Server Health. Confirmer les chemins et unités dans le Metric Browser. [Machine Agents](https://docs.appdynamics.com/appd/23.x/latest/en/application-monitoring/install-app-server-agents/machine-agents).
+
+### Base de données et services externes
+
+| Alerte | Condition de départ |
+|:--|:--|
+| `DB_TempsRéponse_Lent` | Appel DB >1 s ou >baseline, avec volume minimal. |
+| `DB_Erreurs_Fréquentes` | Erreurs DB >2 % ; identifier la base et le type d'erreur. |
+| `API_Tiers_Réponse_Lente` | Service REST externe >2 s ; cibler le service. |
+| `API_Tiers_Erreurs_Répétées` | Plus de 3 échecs/min vers le même service (exemple). |
+
+### Métriques personnalisées Spring Boot
+
+| Alerte | Condition de départ |
+|:--|:--|
+| `Actuator_Latence_File_Message` | Latence de traitement Kafka/RabbitMQ >seuil. |
+| `Actuator_UtilisateursActifs_Baisse` | Utilisateurs actifs <seuil pendant une plage pertinente. |
+| `Actuator_TauxConversion_Baisse` | KPI métier en baisse par rapport à la référence. |
+
+**À vérifier** : une métrique Actuator n'est pas automatiquement une métrique AppDynamics. Prévoir sa collecte par une extension ou une intégration et contrôler son chemin dans le Metric Browser.
+
+## Policy et nommage
+
+- Pour une notification initiale : `Health Rule Violation Started - Critical` ; ajouter Warning selon l'astreinte.
+- Pour les rappels : `Health Rule Violation Continues` uniquement si nécessaire ; régler `Wait Time after Violation`.
+- Actions à conserver : `Notif_Email_Incident_Critique`, `Notif_Slack_Warning_App`, `Notif_PagerDuty_Downtime`. Ce sont des **actions de Policy**, pas des métriques ni des Health Rules.
+- Nom HR : `DOMAINE_METRIQUE_SEVERITE` (ex. `JVM_HEAP_USED_CRITICAL`).
+- Nom Policy : `POL_ENV_DOMAINE_SEVERITE` (ex. `POL_PROD_BT_CRITICAL`).
+- Dans la description : application, scope, seuil, propriétaire et lien vers le runbook.
+
+## Vérification rapide
+
+| Symptôme | Contrôler |
+|:--|:--|
+| Règle grise / inconnue | Agent, arrivée des métriques, fenêtre et absence de données. |
+| Violation sans mail | Policy activée, événement *Started*, filtre, action et destinataire. |
+| Trop d'alertes | Scope, charge minimale, seuil, persistance, événements *Continues*. |
+| Pas de violation | Chemin de métrique, unité, trafic, opérateur et fenêtre. |
+
+Un Transaction Snapshot ou une Flow Map aide au diagnostic **si les données ont été capturées** ; la HR seule ne garantit pas leur création. [Dépannage officiel](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/troubleshoot-alert-and-respond-problems).
+
+![Statuts des règles dans le Controller](/docs/images/appdynamics_RulesStatus.png)
+
+**Mes captures** : [HR 1](/docs/images/appdynamics/Appdynamics-HR-1.jpg) · [HR 2](/docs/images/appdynamics/Appdynamics-HR-2.jpg) · [HR 3](/docs/images/appdynamics/Appdynamics-HR-3.jpg) · [HR 4](/docs/images/appdynamics/Appdynamics-HR-4.jpg) · [Policy 1](/docs/images/appdynamics/Appdynamics-POL-1.jpg) · [Policy 2](/docs/images/appdynamics/Appdynamics-POL-2.jpg) · [Policy 3](/docs/images/appdynamics/Appdynamics-POL-3.jpg) · [Policy 4](/docs/images/appdynamics/Appdynamics-POL-4.jpg)
+
+[API Health Rules](https://docs.appdynamics.com/appd/23.x/latest/en/extend-appdynamics/appdynamics-apis/alert-and-respond-api/health-rule-api)
