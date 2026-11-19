@@ -10,16 +10,41 @@ nav_order: 3
 
 **Controller on-premises 23.x.** Seuils ci-dessous = exemples à ajuster avec les métriques réelles et le trafic de l'application.
 
-## Rappels rapides
+## Configuration rapide : Health Rule → Policy → Action
 
-- **Health Rule (HR)** : scope + métrique + condition Warning/Critical + fenêtre d'évaluation.
-- **Policy** : événement de violation + action (mail, webhook, outil d'incident).
-- **Started** : première notification. **Continues** : rappel facultatif, cadencé par `Wait Time after Violation`. Ne pas activer tous les rappels sans besoin.
-- **Persistance 5/10 min** : dépassement sur 5 points dans une fenêtre de 10 min, pas forcément 5 minutes consécutives.
-- **Baseline** : comportement habituel d'une métrique. **P95** : percentile d'une distribution. Une baseline n'est pas automatiquement le P95.
-- **Scope** : cibler les BT, tiers, nœuds ou serveurs utiles. Pour une erreur précise (HTTP 500, 401, SSLHandshake), vérifier que l'agent expose bien la métrique ou l'événement correspondant.
+Une **Health Rule** détecte un problème ; la **Policy** déclenche l'**Action** (mail, webhook, outil d'incident).
 
-[Health Rules](https://docs.appdynamics.com/appd/onprem/23.x/latest/en/appdynamics-essentials/alert-and-respond/health-rules) · [Conditions et persistance](https://docs.appdynamics.com/appd/onprem/23.x/23.11/en/appdynamics-essentials/alert-and-respond/health-rules/health-rule-conditions) · [Wait Time](https://docs.appdynamics.com/display/PRMY23/Health%2BRule%2BSchedules)
+1. **Health Rule** — `Alert & Respond > Health Rules` : sélectionner le type (BT, Node, Server…), le scope, les conditions *Warning/Critical* et la fenêtre d'évaluation.
+2. **Action** — `Alert & Respond > Actions` : créer ou réutiliser l'action de notification.
+3. **Policy** — `Alert & Respond > Policies` : sélectionner la Health Rule, l'événement `Health Rule Violation Started - Critical` (et *Warning* si utile), puis l'action.
+4. **Tester** — vérifier la violation dans le Controller, l'événement émis et la réception de la notification.
+
+**Captures Health Rules (Controller 23.x)**
+
+![Configuration d'une Health Rule AppDynamics — capture 1](/docs/images/appdynamics/Appdynamics-HR-1.jpg)
+
+![Configuration d'une Health Rule AppDynamics — capture 2](/docs/images/appdynamics/Appdynamics-HR-2.jpg)
+
+**Captures Policies (déclencheur et action)**
+
+![Configuration d'une Policy AppDynamics — capture 1](/docs/images/appdynamics/Appdynamics-POL-1.jpg)
+
+![Configuration d'une Policy AppDynamics — capture 2](/docs/images/appdynamics/Appdynamics-POL-2.jpg)
+
+{: .warning }
+> **Attention :** une Health Rule sans Policy/Action ne garantit aucune notification. Éviter l'événement `Continues` si les rappels ne sont pas nécessaires.
+
+## Réglages à retenir
+
+| Réglage | Point d'attention |
+|:--|:--|
+| **Scope** | Cibler les BT, tiers, nœuds ou serveurs pertinents. Vérifier la collecte des métriques (HTTP 500, SSLHandshake, etc.). |
+| **Persistance** | `5 fois sur 10 min` = cinq points en dépassement dans la fenêtre, pas nécessairement consécutifs. |
+| **Baseline / P95** | Baseline = comportement habituel ; P95 = percentile. Ne pas les confondre. |
+| **Continues** | Rappels facultatifs, cadencés via `Wait Time after Violation`. |
+| **No data** | Un manque de métriques peut donner l'état `Unknown`. Contrôler `Evaluate to true on no data` selon le type de règle. |
+
+[Créer une Health Rule](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/configure-health-rules/create-a-health-rule) · [Conditions et persistance](https://docs.appdynamics.com/appd/onprem/23.x/23.11/en/appdynamics-essentials/alert-and-respond/health-rules/health-rule-conditions) · [Policies](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/policies) · [Actions](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/actions)
 
 ## Règles à conserver
 
@@ -33,7 +58,7 @@ nav_order: 3
 | `BT_Taux_Lenteur_Augmenté` | Transactions lentes >10 % du total, avec un volume minimal. |
 | `BT_Errors` | Warning : erreurs >2 %. Critical : erreurs >5 % **et** >10 erreurs/min, 5/10 min. Rappel éventuel après 10 min. |
 
-**Exemple Login** : si la baseline du *temps moyen* à 10 h vaut 1 100 ms, une déviation de +25 % donne un seuil de **1 375 ms**. Choisir `5 fois sur 5 min` si chaque point de la fenêtre doit dépasser le seuil. Ne pas appeler cette baseline « P95 » sans avoir sélectionné la métrique P95. Avec peu d'appels, ajouter un minimum de charge et éventuellement un seuil absolu.
+**Exemple Login** : baseline du temps moyen à 10 h = 1 100 ms ; +25 % = **1 375 ms**. `5 fois sur 5 min` impose cinq points en dépassement. Prévoir un minimum d'appels si la BT est peu sollicitée. Ne pas confondre baseline et P95.
 
 ### Erreurs et exceptions
 
@@ -109,8 +134,10 @@ Pour les métriques absentes, examiner le statut **Unknown** et le réglage `Eva
 
 Un Transaction Snapshot ou une Flow Map aide au diagnostic **si les données ont été capturées** ; la HR seule ne garantit pas leur création. [Dépannage officiel](https://docs.appdynamics.com/appd/23.x/latest/en/appdynamics-essentials/alert-and-respond/troubleshoot-alert-and-respond-problems).
 
+**Statuts des Health Rules**
+
 ![Statuts des règles dans le Controller](/docs/images/appdynamics_RulesStatus.png)
 
-**Mes captures** : [HR 1](/docs/images/appdynamics/Appdynamics-HR-1.jpg) · [HR 2](/docs/images/appdynamics/Appdynamics-HR-2.jpg) · [HR 3](/docs/images/appdynamics/Appdynamics-HR-3.jpg) · [HR 4](/docs/images/appdynamics/Appdynamics-HR-4.jpg) · [Policy 1](/docs/images/appdynamics/Appdynamics-POL-1.jpg) · [Policy 2](/docs/images/appdynamics/Appdynamics-POL-2.jpg) · [Policy 3](/docs/images/appdynamics/Appdynamics-POL-3.jpg) · [Policy 4](/docs/images/appdynamics/Appdynamics-POL-4.jpg)
+**Autres captures de configuration** : [HR 3](/docs/images/appdynamics/Appdynamics-HR-3.jpg) · [HR 4](/docs/images/appdynamics/Appdynamics-HR-4.jpg) · [Policy 3](/docs/images/appdynamics/Appdynamics-POL-3.jpg) · [Policy 4](/docs/images/appdynamics/Appdynamics-POL-4.jpg)
 
 [API Health Rules](https://docs.appdynamics.com/appd/23.x/latest/en/extend-appdynamics/appdynamics-apis/alert-and-respond-api/health-rule-api)
