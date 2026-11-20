@@ -249,7 +249,7 @@ Créer le template **`Template HTTP Health`** depuis **Data collection → Templ
 | **Macro (template)** | `{$HEALTH.URL}` | `https://monapp.example.com/actuator/health` |
 | **Web scenario** | Name | `Application Health` |
 | | Update interval | `1m` |
-| | Attempts | `2` |
+| | Attempts | `1` |
 | **Step** | Name | `GET health` |
 | | URL | `{$HEALTH.URL}` |
 | | Timeout | `5s` |
@@ -274,10 +274,10 @@ Le Web Scenario crée automatiquement ces items :
 **Trigger — indisponibilité persistante :**
 
 ~~~zabbix
-min(/Template HTTP Health/web.test.fail[Application Health],3m)>0
+min(/Template HTTP Health/web.test.fail[Application Health],5m)>0
 ~~~
 
-L'alerte se déclenche si **toutes les valeurs reçues dans la fenêtre de 3 minutes** indiquent un échec. La fonction `min()` ne garantit pas qu'il y ait des données pendant toute cette fenêtre : prévoir un contrôle de collecte séparé.
+**Un contrôle par minute ; alerte si tous les contrôles reçus durant les 5 dernières minutes sont KO.** Avec `Attempts = 1`, aucun nouvel essai n'est lancé en cas de problème réseau. La fonction `min()` ne garantit pas qu'il y ait des données sur toute la période : conserver le contrôle `nodata()` ci-dessous et vérifier la période d'initialisation.
 
 **Trigger — réponse lente (moyenne > 2 s sur 5 min) :**
 
