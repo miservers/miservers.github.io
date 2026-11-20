@@ -227,6 +227,83 @@ PRÉCÉDENCE
   Ex aequo entre templates au même niveau : plus petit ID
 ~~~
 
+## 7. Superviser une URL `/health` (Web Scenario)
+
+**Cas pratique :** Spring Boot Actuator, URL différente pour INT / REC / PROD. Le contrôle est effectué **depuis Zabbix Server ou Zabbix Proxy** (et non depuis l'agent Linux).
+
+~~~text
+GET https://monapp.example.com/actuator/health
+HTTP/1.1 200 OK
+
+{"status":"UP"}
+~~~
+
+![Supervision HTTP health : template, Zabbix et endpoint Spring Boot](/docs/images/zabbix/http-health-flow.svg)
+
+### Niveau Template : macros et scénario
+
+Créer le template **`Template HTTP Health`** depuis **Data collection → Templates**.
+
+| Élément | Paramètre | Valeur |
+|:--|:--|:--|
+| **Macro (template)** | `{$HEALTH.URL}` | `https://monapp.example.com/actuator/health` |
+| **Web scenario** | Name | `Application Health` |
+| | Update interval | `1m` |
+| | Attempts | `2` |
+| **Step** | Name | `GET health` |
+| | URL | `{$HEALTH.URL}` |
+| | Timeout | `5s` |
+| | Required status codes | `200` |
+| | Required string (regex) | `"status"\s*:\s*"UP"` |
+
+Créer le scénario depuis **Data collection → Templates → Template HTTP Health → Web → Create web scenario**, puis ajouter le step. L'expression régulière cherche le statut `UP` malgré d'éventuels espaces dans le JSON.
+
+**Condition de succès :** la réponse a le code HTTP **200** **et** contient la chaîne attendue. Un HTTP 200 avec `{"status":"DOWN"}` fait échouer le step.
+
+### Niveau Template : items automatiques et triggers
+
+Le Web Scenario crée automatiquement ces items :
+
+| Item | Rôle |
+|:--|:--|
+| `web.test.fail[Application Health]` | `0` : scénario réussi ; valeur positive : numéro du step échoué |
+| `web.test.rspcode[Application Health,GET health]` | Dernier code HTTP obtenu |
+| `web.test.time[Application Health,GET health,resp]` | Temps de réponse en secondes |
+| `web.test.error[Application Health]` | Message d'erreur du dernier scénario |
+
+**Trigger — indisponibilité persistante :**
+
+~~~zabbix
+min(/Template HTTP Health/web.test.fail[Application Health],3m)>0
+~~~
+
+L'alerte se déclenche si **toutes les valeurs reçues dans la fenêtre de 3 minutes** indiquent un échec. La fonction `min()` ne garantit pas qu'il y ait des données pendant toute cette fenêtre : prévoir un contrôle de collecte séparé.
+
+**Trigger — réponse lente (moyenne > 2 s sur 5 min) :**
+
+~~~zabbix
+avg(/Template HTTP Health/web.test.time[Application Health,GET health,resp],5m)>2
+~~~
+
+### Niveau Host : association et surcharge
+
+| Host Zabbix | Macro `{$HEALTH.URL}` définie sur le Host |
+|:--|:--|
+| `APP-INT` | `https://app-int.example.com/actuator/health` |
+| `APP-REC` | `https://app-rec.example.com/actuator/health` |
+| `APP-PROD` | `https://app.example.com/actuator/health` |
+
+Associer **`Template HTTP Health`** aux hôtes. La macro **Host** est prioritaire sur celle du template : **un seul template suffit** pour les trois environnements.
+
+### Contrôles de production
+
+- Depuis le **Zabbix Server/Proxy**, tester `curl -i --max-time 5 https://.../actuator/health` (DNS, routage, proxy sortant, TLS et authentification si nécessaire).
+- Vérifier le résultat dans **Monitoring → Latest data**, puis **Monitoring → Problems**.
+- Surveiller également l'**absence de collecte** (par exemple `nodata(/Template HTTP Health/web.test.fail[Application Health],5m)=1`).
+- Pour détailler des composants comme `db`, `redis` ou `diskSpace`, préférer **HTTP Agent + JSONPath** à un simple contrôle global `UP`.
+
+**Choix :** **Web Scenario** pour disponibilité / code HTTP / latence ; **HTTP Agent** pour exploiter le JSON comme métriques indépendantes.
+
 ## Références officielles
 
 - [Zabbix — Templates](https://www.zabbix.com/documentation/current/en/manual/config/templates)
@@ -236,3 +313,7 @@ PRÉCÉDENCE
 - [Zabbix Agent — `proc.num[]`](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/zabbix_agent)
 - [Zabbix — Trigger expressions](https://www.zabbix.com/documentation/current/en/manual/config/triggers/expression)
 - [Zabbix — Configurer un host et ses macros](https://www.zabbix.com/documentation/current/en/manual/config/hosts/host)
+
+- [Zabbix — Web monitoring / Web scenarios](https://www.zabbix.com/documentation/current/en/manual/web_monitoring)
+- [Zabbix — Web monitoring items](https://www.zabbix.com/documentation/current/en/manual/web_monitoring/items)
+- [Zabbix — HTTP Agent](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/http)

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="340" viewBox="0 0 1080 340" role="img" aria-labelledby="title desc">
+<title id="title">Supervision URL health Spring Boot par Web Scenario Zabbix</title>
+<desc id="desc">Le template fournit la macro de l'URL, Zabbix Server ou Proxy effectue la requête HTTP et vérifie le code 200 ainsi que le statut UP.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#3876b6"/></marker></defs>
+<rect width="1080" height="340" rx="18" fill="#f6f9fc"/>
+<text x="28" y="43" font-family="Arial,sans-serif" font-weight="700" font-size="23" fill="#20324e">Web Scenario : contrôle de /actuator/health</text>
+<rect x="26" y="89" width="326" height="186" rx="14" fill="#ffffff" stroke="#9cbee1" stroke-width="2"/>
+<rect x="26" y="89" width="326" height="49" rx="14" fill="#205c9a"/><rect x="26" y="116" width="326" height="22" fill="#205c9a"/>
+<text x="43" y="120" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="white">Template HTTP Health</text>
+<text x="43" y="167" font-family="monospace" font-size="14" fill="#254260">{$HEALTH.URL}</text>
+<text x="43" y="193" font-family="Arial,sans-serif" font-size="14" fill="#254260">Web Scenario : Application Health</text>
+<text x="43" y="218" font-family="Arial,sans-serif" font-size="14" fill="#254260">Step : GET health · toutes les 1 min</text>
+<text x="43" y="247" font-family="Arial,sans-serif" font-size="14" fill="#254260">Expected : 200 + "status":"UP"</text>
+<path d="M353 184 H401" fill="none" stroke="#3876b6" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="409" y="111" width="254" height="139" rx="14" fill="#e5f0fe" stroke="#a3c4ea" stroke-width="2"/>
+<text x="536" y="149" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#245281">Zabbix Server</text>
+<text x="536" y="174" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#245281">ou Zabbix Proxy</text>
+<text x="536" y="204" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#325a7a">Exécute GET HTTPS</text>
+<text x="536" y="227" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#325a7a">Vérifie code + contenu</text>
+<path d="M664 184 H709" fill="none" stroke="#3876b6" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="718" y="94" width="340" height="180" rx="14" fill="#ffffff" stroke="#8dcca3" stroke-width="2"/>
+<rect x="737" y="112" width="302" height="48" rx="9" fill="#e2f5e8"/>
+<text x="888" y="143" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#1d6740">Spring Boot</text>
+<text x="739" y="191" font-family="monospace" font-size="15" fill="#315a43">/actuator/health</text>
+<text x="739" y="223" font-family="monospace" font-size="16" fill="#1d6740">HTTP 200</text>
+<text x="739" y="249" font-family="monospace" font-size="15" fill="#1d6740">{"status":"UP"}</text>
+<text x="35" y="310" font-family="Arial,sans-serif" font-size="15" fill="#556d87">Le contrôle ne nécessite pas d'agent Zabbix sur le serveur applicatif.</text>
+</svg>
