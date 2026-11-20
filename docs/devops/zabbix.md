@@ -271,13 +271,53 @@ Le Web Scenario crée automatiquement ces items :
 | `web.test.time[Application Health,GET health,resp]` | Temps de réponse en secondes |
 | `web.test.error[Application Health]` | Message d'erreur du dernier scénario |
 
-**Trigger — indisponibilité persistante :**
+### Triggers : 5 min KO, puis 2 contrôles OK
+
+**PROBLEM — 6 échecs consécutifs, soit 5 minutes entre le premier et le sixième relevé** (avec un contrôle toutes les minutes) :
 
 ~~~zabbix
-min(/Template HTTP Health/web.test.fail[Application Health],5m)>0
+count(/Template HTTP Health/web.test.fail[Application Health],#6)=6
+and
+min(/Template HTTP Health/web.test.fail[Application Health],#6)>0
 ~~~
 
-**Un contrôle par minute ; alerte si tous les contrôles reçus durant les 5 dernières minutes sont KO.** Avec `Attempts = 1`, aucun nouvel essai n'est lancé en cas de problème réseau. La fonction `min()` ne garantit pas qu'il y ait des données sur toute la période : conserver le contrôle `nodata()` ci-dessous et vérifier la période d'initialisation.
+- `count(...,#6)=6` : attendre **au moins 6 mesures** ; évite une alerte dès le premier KO après création de l'item.
+- `min(...,#6)>0` : **les 6 dernières mesures sont toutes KO** (un seul OK, valeur `0`, empêche l'alerte).
+- `Attempts = 1` : pas de tentative supplémentaire dans le même scénario. La **fréquence reste 1m**.
+
+**RECOVERY — 2 succès consécutifs :**
+
+Dans le trigger, choisir **OK event generation → Recovery expression** et saisir :
+
+~~~zabbix
+max(/Template HTTP Health/web.test.fail[Application Health],#2)=0
+~~~
+
+`max(...,#2)=0` signifie que **les 2 dernières mesures sont OK**. Zabbix clôture l'incident quand **l'expression PROBLEM est fausse ET l'expression RECOVERY est vraie**.
+
+> **Attention :** `#6` signifie 6 valeurs reçues, pas une durée garantie. Si des collectes manquent ou sont retardées, les six mesures peuvent couvrir plus de 5 minutes. Superviser la collecte avec un trigger `nodata()` distinct.
+
+### Comprendre les paramètres de min() et max()
+
+~~~text
+min(/host/item,period[:time_shift])
+max(/host/item,period[:time_shift])
+~~~
+
+| Paramètre | Rôle | Exemple |
+|:--|:--|:--|
+| `/host/item` | Hôte (ou template) et clé de l'item | `/Template HTTP Health/web.test.fail[Application Health]` |
+| `period` | Période réelle ou nombre d'échantillons | `5m` ou `#6` |
+| `:time_shift` | Décalage temporel facultatif **dans le 2e argument** | `5m:now-1h` |
+
+| Expression | Lecture |
+|:--|:--|
+| `min(...,5m)` | Plus petite valeur **reçue dans les 5 dernières minutes** |
+| `min(...,#6)` | Plus petite des **6 dernières valeurs** |
+| `max(...,#2)` | Plus grande des **2 dernières valeurs** |
+| `min(...,5m:now-1h)` | Minimum sur 5 min **il y a une heure** |
+
+Exemple : valeurs `1, 1, 0, 1, 1` → `min = 0` (au moins un OK), `max = 1` (au moins un KO).
 
 **Trigger — réponse lente (moyenne > 2 s sur 5 min) :**
 
@@ -299,7 +339,7 @@ Associer **`Template HTTP Health`** aux hôtes. La macro **Host** est prioritair
 
 - Depuis le **Zabbix Server/Proxy**, tester `curl -i --max-time 5 https://.../actuator/health` (DNS, routage, proxy sortant, TLS et authentification si nécessaire).
 - Vérifier le résultat dans **Monitoring → Latest data**, puis **Monitoring → Problems**.
-- Surveiller également l'**absence de collecte** (par exemple `nodata(/Template HTTP Health/web.test.fail[Application Health],5m)=1`).
+- Créer une alerte **perte de supervision** distincte après **3 minutes sans donnée** : `nodata(/Template HTTP Health/web.test.fail[Application Health],3m)=1`. Ne pas assimiler une absence de mesures à un HTTP KO.
 - Pour détailler des composants comme `db`, `redis` ou `diskSpace`, préférer **HTTP Agent + JSONPath** à un simple contrôle global `UP`.
 
 **Choix :** **Web Scenario** pour disponibilité / code HTTP / latence ; **HTTP Agent** pour exploiter le JSON comme métriques indépendantes.
@@ -317,3 +357,5 @@ Associer **`Template HTTP Health`** aux hôtes. La macro **Host** est prioritair
 - [Zabbix — Web monitoring / Web scenarios](https://www.zabbix.com/documentation/current/en/manual/web_monitoring)
 - [Zabbix — Web monitoring items](https://www.zabbix.com/documentation/current/en/manual/web_monitoring/items)
 - [Zabbix — HTTP Agent](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/http)
+- [Zabbix — Aggregate functions : min(), max(), count()](https://www.zabbix.com/documentation/current/en/manual/config/triggers/expression/aggregate)
+- [Zabbix — Configuring a trigger : Recovery expression](https://www.zabbix.com/documentation/current/en/manual/config/triggers/trigger)
