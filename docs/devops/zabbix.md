@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Zabbix — Templates et macros
+title: Zabbix
 parent: DevOps
 nav_order: 8
 has_toc: true
 ---
 
-# Zabbix — Templates, macros et supervision d'Apache HTTPD
+# Zabbix
 
 **Objectif :** superviser un processus `httpd` sur RHEL et `apache2` sur Ubuntu avec **un seul template**, des macros surchargeables et une alerte anti-faux positifs. Exemples applicables à Zabbix 7.x/8.x (interface selon version).
 
