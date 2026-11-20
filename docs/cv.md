@@ -34,17 +34,17 @@ Anglais courant.
 
 ## Compétences techniques
 
-- Outils DevOps — Jenkins, Ansible,  Docker, Git, Maven, Nagios, Jira, XL Deploy
-- Langages — JAVA, Servlet, JSP, EJB , JDBC, Java Beans, Applet , SQL, PHP, JavaScript, jQuery, XML, HTML, XSL.
-- Logiciels — JBOSS  — EAP /Wildfly, JON 2, JBoss ESB
-- IBM WebSphere,  IBM MQ , BO , BODS, CFT, Citrix
-- Weblogic, Tomcat, Apache/IHS
-- NetBeans, Eclipse, RAD, struts, JSF, Spring, Mule, Ajax
-- Ant, Maven, Git, NodeJS, Docker
-- Gestion de conf. : CVS, SVN.
-- SGBDR —  — Oracle , SQL Server  Access, MySQL, PostgreSQL
-- Modélisation — UML
-- OS   —  — Linux , Solaris, AIX
+- **DevOps / CI/CD :** Jenkins, Ansible, Git, Maven, XL Release, XL Deploy, Argo CD
+- **Kubernetes :** Kubernetes, OpenShift, Docker, Helm, NetworkPolicy, Routes
+- **Middleware Java :** JBoss EAP, WildFly, IBM WebSphere, WebLogic, Tomcat, Spring Boot
+- **Langages / Scripts :** Java, Bash, Python, Jython, SQL, YAML, XML
+- **Web / Réseau :** Apache HTTPD, Nginx, F5, TLS, LDAP, SSO
+- **Observabilité :** AppDynamics, Prometheus, Grafana, OpenSearch, Filebeat, Nagios
+- **Messaging :** RabbitMQ, IBM MQ, Redis, CFT
+- **Tests de charge :** JMeter, NeoLoad
+- **SGBDR :** Oracle, SQL Server, MySQL, PostgreSQL, DB2
+- **Architecture :** UML, SOA, Java EE
+- **OS :** Red Hat Enterprise Linux (RHEL), AlmaLinux, Rocky Linux, Ubuntu
 
 ## Expériences professionnelles
 
@@ -66,7 +66,7 @@ Anglais courant.
 - Administration middleware, diagnostic JVM et support de production niveau 3.
 - Supervision des applications et analyse des performances avec AppDynamics, Filebeat et OpenSearch.
 
-**Environnement :** Kubernetes, OpenShift, Helm, Argo CD, Docker, NetworkPolicy, Routes  DevOps : Jenkins, XL Release/Deploy, Git, Bash, YAML  Java, Spring Boot, JBoss EAP, Apache HTTPD, Nginx, Linux RHEL, F5, AppDynamics, OpenSearch
+**Environnement :** Kubernetes, OpenShift, Helm, Argo CD, Docker, NetworkPolicy, Routes ; DevOps : Jenkins, XL Release/Deploy, Git, Bash, YAML ; Java, Spring Boot, JBoss EAP, Apache HTTPD, Nginx, Red Hat Enterprise Linux (RHEL), F5, AppDynamics, OpenSearch
 
 
 ### Jav 2019  -  Dec 2023: Intégrateur DevOps - Ingénieur de Production  – CNP Assurances
@@ -86,7 +86,7 @@ Anglais courant.
 - Rédaction des documents d'exploitation.
 - Migration de Weblogic à Tomcat
 
-**Environnement :** Java/JEE, Weblogic, JBoss EAP, Tomcat, Apache, Oracle  DevOps: Jenkins, Ansible, Docker, XL Release/Deploy, Git, Maven  AIX, RedHat Linux, VMware
+**Environnement :** Java / Java EE, WebLogic, JBoss EAP, Tomcat, Apache HTTPD, Oracle ; DevOps : Jenkins, Ansible, Docker, XL Release/Deploy, Git, Maven ; Red Hat Enterprise Linux (RHEL), VMware
 
 
 ### Fev 2012  -  Oct 2018: Ingénieur de Production - Référent  Technique– Veolia
@@ -107,7 +107,7 @@ Anglais courant.
 - Rédaction des documents d’exploitation,
 - Audit des applications et Support aux équipes de développement
 
-**Environnement :** Java/JEE, JBOSS EAP, WebSphere,  Weblogic, Tomcat, CFT, Oracle , Nagios, BO DS, Talend, NeoLoad, JMeter, Redhat Linux, Aix
+**Environnement :** Java / Java EE, JBoss EAP, IBM WebSphere, WebLogic, Tomcat, CFT, Oracle, Nagios, Talend, NeoLoad, JMeter, Red Hat Enterprise Linux (RHEL)
 
 
 ### Mars 2010  -  Oct. 2011 : Référant technique – ORANGE(OBS)
@@ -126,18 +126,18 @@ Anglais courant.
 - Support niveau 2 et 3, et gestion des incidents
 - Tests de performance , tuning Pool JDBC, Threads,…) et JVM
 
-**Environnement :** Java EE, JBoss, Weblogic 10,  Linux/RedHat, VMware/vSphere, Oracle 10g, ATG, NeoLoad, Nagios, Jython
+**Environnement :** Java EE, JBoss, WebLogic, Red Hat Enterprise Linux (RHEL), VMware vSphere, Oracle, NeoLoad, Nagios, Jython
 
 
 ### Sep. 2009 - Dec. 2009 : Consultant Websphere – Manpower
 
-**Synthèse :** Accompagnement de Manpower dans la migration à Websphere 7 de son Portail Client en ligne.
+**Synthèse :** Accompagnement de Manpower dans la migration du portail client vers une nouvelle plateforme WebSphere.
 
 **Rôle :** Expert Websphere
 
 **Réalisations :**
 
-- Migration de Websphere 5.1 à Websphere 7.0
+- Migration et modernisation des plateformes IBM WebSphere
 - Industrialisation des installations de Websphere
 - Mise en place de scripts jython pour automatiser la configuration de Websphere et le déploiement des applications
 - Configuration de la sécurité Spnego (SSO, Kerberos)
@@ -147,7 +147,7 @@ Anglais courant.
 - Monitoring (plugin Nagios)
 - Support sur Websphere
 
-**Environnement :** Java EE, Websphere 5.1/6/7.0, IHS, Linux/RedHat 5, VMware, DB2, OpenSTA, IBM Support Assistant, Jython/jacl, Spnego, Kerberos, Tivoli Performance Viewer, Nagios
+**Environnement :** Java EE, IBM WebSphere, IBM HTTP Server, Red Hat Enterprise Linux (RHEL), VMware, DB2, Jython, SPNEGO/Kerberos, Nagios
 
 
 ### Mars. 2009 -  Juillet 2009 : Chef d’équipe et Architecte JEE – DSI Douane Senegalaise
@@ -167,7 +167,7 @@ Anglais courant.
 - Rédaction des documents/scripts d’installation pour la production
 - Test de charge et optimisation des serveurs
 
-**Environnement :** J2EE,  Struts, Eclipse, DB2, WebSphere, Hibernate, Spring, JMeter, Rational Rose, AS400
+**Environnement :** Java EE, IBM WebSphere, DB2, Hibernate, Spring, JMeter, UML
 
 
 ### Fev 2008 - Jan 2009 : Administrateur Websphere/JBOSS – Support niveau 3 – ATOS Infogérance
@@ -188,7 +188,7 @@ Anglais courant.
 - Audit des applications
 - Support et traitement des incidents niveau 3
 
-**Environnement :** Java/JEE 5, JBOSS 4.3 EAP, WebSphere 5/6.1, JBOSS EAP 4.3, Weblogic 10, Tomcat 6, HeapAnalyser, GCCollector, Jconsole, JON 2, Oracle 10g, MySQL, Nagios, Redhat 5, Aix 5.3
+**Environnement :** Java EE, JBoss EAP, IBM WebSphere, WebLogic, Tomcat, Oracle, MySQL, Nagios, JConsole, Red Hat Enterprise Linux (RHEL)
 
 
 ### Déc. 2004 - Fév. 2008 : Ingénieur études et développement / Architecte logiciel Java EE – Steria
@@ -199,11 +199,11 @@ Anglais courant.
 
 **Réalisations :**
 
-- Conception et développement de frameworks Java/JEE (EJB, Servlets, JSP, Struts) : architecture logicielle, UML, design patterns et dossiers de conception.
+- Conception et développement d’applications Java EE : architecture logicielle, UML, design patterns et dossiers de conception.
 - Encadrement d’équipes techniques (4 à 6 personnes), chiffrage et coordination des développements.
-- Conception d’architectures SOA et intégration avec Mule ESB et MQSeries.
-- Industrialisation des environnements de développement et de test, gestion des versions et livraisons (Ant, CVS).
+- Conception d’architectures SOA et intégration avec Mule ESB et IBM MQ.
+- Industrialisation des environnements de développement et de test, gestion des versions et des livraisons.
 - Intégration, déploiements, migrations applicatives, tests de charge et optimisation des performances JVM.
 - Missions clients : Pages Jaunes (référentiel), EDF (PICTREL), Orange (PAID et flotte), SFR (activation de services).
 
-**Environnement :** Java/JEE, EJB, Servlets, JSP, Struts, Spring, Hibernate, UML, SOA, Mule ESB, WebSphere, WebLogic, MQSeries, Oracle, DB2, JMeter, Ant, CVS, Rational Rose, Linux, Solaris, AIX
+**Environnement :** Java EE, Spring, Hibernate, UML, SOA, Mule ESB, IBM WebSphere, WebLogic, IBM MQ, Oracle, DB2, JMeter, Linux
