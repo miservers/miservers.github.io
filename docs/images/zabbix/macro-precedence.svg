@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="525" viewBox="0 0 1080 525" role="img" aria-labelledby="title desc">
+<title id="title">Ordre de priorité des macros Zabbix</title>
+<desc id="desc">La macro du host passe avant celle des templates directement liés, puis des templates hérités, puis celle définie globalement. À niveau égal de templates, le plus petit ID gagne.</desc>
+<defs><marker id="p" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9" fill="#6684a8"/></marker></defs>
+<rect width="1080" height="525" rx="18" fill="#f7f9fc"/>
+<text x="36" y="46" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#1b2c47">Précédence : résolution de {$PROC.NAME}</text>
+<text x="36" y="74" font-family="Arial,sans-serif" font-size="15" fill="#5d7087">Zabbix parcourt les niveaux dans cet ordre et retient la première valeur trouvée.</text>
+<rect x="37" y="106" width="702" height="76" rx="13" fill="#d9f2e3" stroke="#4baf78" stroke-width="2"/>
+<rect x="54" y="123" width="37" height="38" rx="10" fill="#197448"/>
+<text x="72" y="148" font-family="Arial,sans-serif" font-size="19" text-anchor="middle" font-weight="700" fill="#ffffff">1</text>
+<text x="111" y="137" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#135e38">Host — priorité maximale</text>
+<text x="111" y="165" font-family="monospace" font-size="16" fill="#31523d">{$PROC.NAME} = httpd</text>
+<path d="M390 184 L390 203" stroke="#6684a8" stroke-width="2" marker-end="url(#p)"/>
+<rect x="37" y="211" width="702" height="76" rx="13" fill="#e3eefe" stroke="#91b7ea" stroke-width="2"/>
+<rect x="54" y="228" width="37" height="38" rx="10" fill="#2b6db1"/>
+<text x="72" y="253" font-family="Arial,sans-serif" font-size="19" text-anchor="middle" font-weight="700" fill="#ffffff">2</text>
+<text x="111" y="242" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#214e83">Template directement associé</text>
+<text x="111" y="269" font-family="monospace" font-size="16" fill="#315172">{$PROC.NAME} = apache2</text>
+<path d="M390 289 L390 308" stroke="#6684a8" stroke-width="2" marker-end="url(#p)"/>
+<rect x="37" y="316" width="702" height="76" rx="13" fill="#edf1fa" stroke="#b8c4dd" stroke-width="2"/>
+<rect x="54" y="333" width="37" height="38" rx="10" fill="#597399"/>
+<text x="72" y="358" font-family="Arial,sans-serif" font-size="19" text-anchor="middle" font-weight="700" fill="#ffffff">3</text>
+<text x="111" y="347" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#344f72">Templates hérités (profondeur 2, 3…)</text>
+<text x="111" y="374" font-family="monospace" font-size="16" fill="#445c7b">{$PROC.NAME} = nginx</text>
+<path d="M390 394 L390 413" stroke="#6684a8" stroke-width="2" marker-end="url(#p)"/>
+<rect x="37" y="421" width="702" height="76" rx="13" fill="#f0f0f3" stroke="#c6c9d2" stroke-width="2"/>
+<rect x="54" y="438" width="37" height="38" rx="10" fill="#747f92"/>
+<text x="72" y="463" font-family="Arial,sans-serif" font-size="19" text-anchor="middle" font-weight="700" fill="#ffffff">4</text>
+<text x="111" y="451" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#4f596a">Global — dernier recours</text>
+<text x="111" y="479" font-family="monospace" font-size="16" fill="#4f596a">{$PROC.NAME} = java</text>
+<rect x="772" y="146" width="274" height="225" rx="15" fill="#ffffff" stroke="#c6d4e5" stroke-width="2"/>
+<text x="795" y="185" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#1d395d">Conflit au même niveau</text>
+<path d="M794 204 H1021" stroke="#d8e1eb" stroke-width="2"/>
+<text x="795" y="237" font-family="Arial,sans-serif" font-size="17" fill="#344f70">Template A : ID 104</text>
+<text x="795" y="268" font-family="Arial,sans-serif" font-size="17" fill="#344f70">Template B : ID 207</text>
+<rect x="791" y="296" width="236" height="47" rx="10" fill="#d9f2e3"/>
+<text x="909" y="326" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#176a3f">A gagne (ID 104)</text>
+<text x="910" y="397" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#617286">Éviter les macros homonymes</text>
+<text x="910" y="418" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#617286">sur des templates parallèles.</text>
+</svg>

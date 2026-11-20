@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="395" viewBox="0 0 1080 395" role="img" aria-labelledby="title desc">
+<title id="title">Alerte HTTPD absente depuis deux minutes</title>
+<desc id="desc">Les deux premières mesures montrent cinq processus Apache, puis les suivantes zéro. Après deux minutes entièrement à zéro, la fonction max sur deux minutes vaut zéro.</desc>
+<rect width="1080" height="395" rx="18" fill="#f7f9fc"/>
+<text x="34" y="45" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#1b2b45">Trigger : absence persistante pendant 2 minutes</text>
+<text x="34" y="72" font-family="monospace" font-size="15" fill="#526b89">max(...,2m) &lt; 1</text>
+<rect x="319" y="105" width="442" height="191" rx="10" fill="#fff1f0"/>
+<text x="541" y="126" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" fill="#a23c3c">Fenêtre 2 min sans aucun processus</text>
+<path d="M90 147 H929 M90 255 H929" stroke="#d1ddeb" stroke-width="1" stroke-dasharray="6 6"/>
+<path d="M90 100 V298 H933" fill="none" stroke="#92a3b8" stroke-width="2"/>
+<text x="59" y="151" font-family="Arial,sans-serif" font-size="16" fill="#354e70">5</text>
+<text x="59" y="260" font-family="Arial,sans-serif" font-size="16" fill="#354e70">0</text>
+<text x="32" y="328" font-family="Arial,sans-serif" font-size="14" fill="#4b617c">Secondes</text>
+<polyline points="100,147 210,147 320,255 430,255 540,255 650,255 760,255 870,255" fill="none" stroke="#2863ac" stroke-width="4" stroke-linejoin="round"/>
+<g fill="#2863ac" stroke="#fff" stroke-width="3"><circle cx="100" cy="147" r="8"/><circle cx="210" cy="147" r="8"/><circle cx="320" cy="255" r="8"/><circle cx="430" cy="255" r="8"/><circle cx="540" cy="255" r="8"/><circle cx="650" cy="255" r="8"/><circle cx="760" cy="255" r="8"/><circle cx="870" cy="255" r="8"/></g>
+<g font-family="monospace" font-size="14" fill="#506781" text-anchor="middle"><text x="100" y="284">0</text><text x="210" y="284">30</text><text x="320" y="284">60</text><text x="430" y="284">90</text><text x="540" y="284">120</text><text x="650" y="284">150</text><text x="760" y="284">180</text><text x="870" y="284">210</text></g>
+<path d="M760 112 V303" stroke="#bd3d3d" stroke-width="3" stroke-dasharray="6 5"/>
+<rect x="783" y="156" width="259" height="71" rx="11" fill="#fbe0df" stroke="#dfa9a6"/>
+<text x="798" y="183" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#913636">À t = 180 s</text>
+<text x="798" y="207" font-family="monospace" font-size="15" fill="#913636">max(2m) = 0 → PROBLEM</text>
+<rect x="33" y="344" width="1012" height="34" rx="8" fill="#eaf2fc"/>
+<text x="49" y="367" font-family="Arial,sans-serif" font-size="15" fill="#385677">Les intervalles de mesure sont de 30 s ; aucune alerte tant qu'un relevé positif reste dans la fenêtre.</text>
+</svg>

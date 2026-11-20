@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="460" viewBox="0 0 1120 460" role="img" aria-labelledby="title desc">
+<title id="title">Supervision Zabbix : template, serveur et hôtes</title>
+<desc id="desc">Un template définit une clé avec macro. Zabbix résout la macro pour chaque hôte et le Zabbix Agent compte les processus Apache httpd ou apache2.</desc>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#3672bf"/></marker></defs>
+<rect width="1120" height="460" rx="20" fill="#f7f9fc"/>
+<text x="34" y="46" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#18283f">Un template, plusieurs hôtes</text>
+<text x="34" y="73" font-family="Arial,sans-serif" font-size="15" fill="#566984">Contrôle passif : résolution des macros côté Zabbix, collecte des processus côté Agent</text>
+<rect x="32" y="113" width="323" height="282" rx="16" fill="#ffffff" stroke="#c8d8ed" stroke-width="2"/>
+<rect x="32" y="113" width="323" height="52" rx="16" fill="#1759a2"/><rect x="32" y="147" width="323" height="18" fill="#1759a2"/>
+<text x="52" y="146" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#ffffff">TEMPLATE HTTPD</text>
+<text x="54" y="199" font-family="monospace" font-size="16" fill="#263649">{$PROC.NAME} = httpd</text>
+<text x="54" y="236" font-family="monospace" font-size="16" fill="#263649">{$PROC.MIN} = 1</text>
+<text x="54" y="277" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#18283f">Item</text>
+<text x="54" y="302" font-family="monospace" font-size="14" fill="#263649">proc.num[{$PROC.NAME}]</text>
+<text x="54" y="342" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#18283f">Trigger</text>
+<text x="54" y="366" font-family="Arial,sans-serif" font-size="14" fill="#576c84">Absent pendant 2 minutes</text>
+<rect x="414" y="156" width="258" height="195" rx="16" fill="#ebf4ff" stroke="#9abce6" stroke-width="2"/>
+<text x="543" y="199" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#174d89">ZABBIX SERVER</text>
+<text x="543" y="234" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#335572">Résout la macro par host</text>
+<text x="543" y="262" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#335572">Interroge l'agent</text>
+<text x="543" y="290" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#335572">Évalue le trigger</text>
+<path d="M356 254 L407 254" fill="none" stroke="#3672bf" stroke-width="3" marker-end="url(#a)"/>
+<rect x="739" y="112" width="349" height="133" rx="15" fill="#ffffff" stroke="#b6d8c5" stroke-width="2"/>
+<rect x="755" y="129" width="317" height="34" rx="8" fill="#e8f6ed"/>
+<text x="770" y="152" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#19653c">HOST RHEL01 — Agent</text>
+<text x="759" y="193" font-family="monospace" font-size="16" fill="#233c2f">proc.num[httpd]</text>
+<text x="759" y="222" font-family="Arial,sans-serif" font-size="15" fill="#4c6256">Résultat : 5 processus</text>
+<rect x="739" y="269" width="349" height="133" rx="15" fill="#ffffff" stroke="#e9c8a1" stroke-width="2"/>
+<rect x="755" y="286" width="317" height="34" rx="8" fill="#fff1df"/>
+<text x="770" y="308" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#935200">HOST UBUNTU01 — Agent</text>
+<text x="759" y="347" font-family="monospace" font-size="16" fill="#614016">proc.num[apache2]</text>
+<text x="759" y="375" font-family="Arial,sans-serif" font-size="15" fill="#806342">Macro Host : apache2</text>
+<path d="M673 218 L733 174" fill="none" stroke="#3672bf" stroke-width="3" marker-end="url(#a)"/>
+<path d="M673 289 L733 332" fill="none" stroke="#3672bf" stroke-width="3" marker-end="url(#a)"/>
+<text x="543" y="420" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#60748f">La même définition de contrôle s'applique aux deux systèmes.</text>
+</svg>
