@@ -1,15 +1,16 @@
 ---
 layout: default
-title: CV Abderrahim RAHALI — V1 Steria
+title: CV Abderrahim RAHALI — V2
 nav_order: 9
 permalink: /cv/
 ---
 
 # Abderrahim RAHALI
 
-**Ingénieur de production — Intégrateur DevOps — Expert WebSphere, WebLogic, JBoss**
+**Ingénieur de production senior — Kubernetes / OpenShift — DevOps & CI/CD — Expert middleware Java**
 
-[**Télécharger le CV actuel (Word, regroupement Steria)**](/docs/files/CV_RAHALI_Abderrahim_V1_Steria.docx)  
+[**Télécharger le CV V2 (Word, version actuelle)**](/docs/files/CV_RAHALI_Abderrahim_V2.docx)  
+[**Télécharger le CV V1 Steria (Word, version précédente)**](/docs/files/CV_RAHALI_Abderrahim_V1_Steria.docx)  
 [**Télécharger le CV V1 (Word, missions détaillées)**](/docs/files/CV_RAHALI_Abderrahim_V1.docx)  
 [**Télécharger le CV original (Word, sans coordonnées)**](/docs/files/CV_RAHALI_Abderrahim_Original_Sans_Coordonnees.docx)  
 [**Consulter la V1 en Markdown**](/cv/v1/)
@@ -190,58 +191,19 @@ Anglais courant.
 **Environnement :** Java/JEE 5, JBOSS 4.3 EAP, WebSphere 5/6.1, JBOSS EAP 4.3, Weblogic 10, Tomcat 6, HeapAnalyser, GCCollector, Jconsole, JON 2, Oracle 10g, MySQL, Nagios, Redhat 5, Aix 5.3
 
 
-### Nov. 2005 - Fév. 2008 : Ingénieur études et développement / Architecte logiciel Java EE – Steria
+### Déc. 2004 - Fév. 2008 : Ingénieur études et développement / Architecte logiciel Java EE – Steria
 
-**Synthèse :** Missions de conception, développement et architecture Java EE chez Orange, SFR et EDF.
+**Synthèse :** Missions de développement, conception et architecture Java EE chez Pages Jaunes, EDF, Orange et SFR.
 
 **Rôle :** Ingénieur études et développement, puis chef d’équipe / architecte logiciel
 
 **Réalisations :**
 
-- Conception et développement d’applications Java/JEE : architecture logicielle, UML, dossiers de conception et standards de développement.
-- Encadrement d’équipes techniques (4 à 6 personnes), chiffrage, répartition des tâches et accompagnement des développeurs.
+- Conception et développement de frameworks Java/JEE (EJB, Servlets, JSP, Struts) : architecture logicielle, UML, design patterns et dossiers de conception.
+- Encadrement d’équipes techniques (4 à 6 personnes), chiffrage et coordination des développements.
 - Conception d’architectures SOA et intégration avec Mule ESB et MQSeries.
-- Intégration, migrations applicatives, tests de validation et industrialisation des environnements.
-- Tests de charge, tuning JVM et optimisation des performances applicatives.
-- Principales missions : Orange (encaissement PAID, portail flotte), SFR (activation de services), EDF (PICTREL).
+- Industrialisation des environnements de développement et de test, gestion des versions et livraisons (Ant, CVS).
+- Intégration, déploiements, migrations applicatives, tests de charge et optimisation des performances JVM.
+- Missions clients : Pages Jaunes (référentiel), EDF (PICTREL), Orange (PAID et flotte), SFR (activation de services).
 
-**Environnement :** Java/JEE, Struts, Spring, Hibernate, UML, SOA, Mule ESB, WebSphere, WebLogic, MQSeries, Oracle, DB2, JMeter, Rational Rose, Linux, Solaris, AIX
-
-
-### Déc. 2004 – Oct. 2005 : Ingénieur d’Etude – MPG/Pages Jaunes
-
-**Synthèse :** Système d'information qui permet d'alimenter le référentiel Pages Jaunes à partir des flux provenant de l'INSEE et des différents opérateurs de Télécom.
-
-**Rôle :** Ingénieur d'études et de développement
-
-**Réalisations :**
-
-  Développement des frameworks de l’application (utilisation intensive d'UML, de design patterns, EJB/Servlet/Jsp/Struts)
-  Responsable :
-- de l'industrialisation des développements : mise en place et
-  maintenance de l'environnement de développement et des
-  plateformes de tests
-- de la génération des versions et des livraisons -release
-  manager-(développement d'un framework de gestion des
-  versions et des livraisons avec Ant et CVS)
-- de la problématique des performances : tests de charge (plan
-  de tests, analyse), optimisations de code.
-  Mise en place d’un document de conception du logiciel (UML/Objecteering)
-  Support sur l’application auprès des testeurs.
-
-**Environnement :** JAVA/J2EE, EJB, JSP, Servlets, Struts, Weblogic, Oracle 9i, Lomboz, Eclipse, Log4j, UML, Objecteering, CVS
-
-
-### Mars 2004 – Juillet. 2004 : Ingénieur Stagiaire – Raisonance (Editeur de logiciel)
-
-**Synthèse :** Logiciel permettant de simuler, tester et  déboguer n'importe quel microcontrôleur
-
-**Rôle :** Stage de fin d'études
-
-**Réalisations :**
-
-  Conception du logiciel à l'aide de l'UML
-  Développement en C++
-  Test et validation
-
-**Environnement :** JAVA/J2EE, EJB, JSP, Servlets, Struts, Lomboz, Eclipse, Log4j,  C++, Visual C++, JAVA, UML, Objecteering, CVS
+**Environnement :** Java/JEE, EJB, Servlets, JSP, Struts, Spring, Hibernate, UML, SOA, Mule ESB, WebSphere, WebLogic, MQSeries, Oracle, DB2, JMeter, Ant, CVS, Rational Rose, Linux, Solaris, AIX
