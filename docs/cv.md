@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CV Abderrahim RAHALI — V1
+title: CV Abderrahim RAHALI — V1 Steria
 nav_order: 9
 permalink: /cv/
 ---
@@ -9,7 +9,10 @@ permalink: /cv/
 
 **Ingénieur de production — Intégrateur DevOps — Expert WebSphere, WebLogic, JBoss**
 
-[**Télécharger le CV au format Word (.docx) — V1**](/docs/files/CV_RAHALI_Abderrahim_V1.docx)
+[**Télécharger le CV actuel (Word, regroupement Steria)**](/docs/files/CV_RAHALI_Abderrahim_V1_Steria.docx)  
+[**Télécharger le CV V1 (Word, missions détaillées)**](/docs/files/CV_RAHALI_Abderrahim_V1.docx)  
+[**Télécharger le CV original (Word, sans coordonnées)**](/docs/files/CV_RAHALI_Abderrahim_Original_Sans_Coordonnees.docx)  
+[**Consulter la V1 en Markdown**](/cv/v1/)
 
 ## Compétences
 
@@ -187,92 +190,22 @@ Anglais courant.
 **Environnement :** Java/JEE 5, JBOSS 4.3 EAP, WebSphere 5/6.1, JBOSS EAP 4.3, Weblogic 10, Tomcat 6, HeapAnalyser, GCCollector, Jconsole, JON 2, Oracle 10g, MySQL, Nagios, Redhat 5, Aix 5.3
 
 
-### Septembre 2007  - Février 2008 : Architecte Expert technique – SIE/Orange
+### Nov. 2005 - Fév. 2008 : Ingénieur études et développement / Architecte logiciel Java EE – Steria
 
-**Synthèse :** Refonte  du « Portail  flotte one line » pour les entreprises bénéficiant de l’offre « Orange business solutions ».
+**Synthèse :** Missions de conception, développement et architecture Java EE chez Orange, SFR et EDF.
 
-**Rôle :** Architecte - Expertise technique
-
-**Réalisations :**
-
-- Installation technique des plateformes d’intégration et production
-- Définition des scénarios de tests, réalisation des dossiers de recette et réalisation de la recette, analyse des anomalies et rédaction du bilan de VABF.
-- Audit du code Java et de la sécurité
-- Optimisation des performances (Hpjmeter, JVM, OpenSta)
-- Administration/paramétrage de websphere
-- Rédaction des documents d’installation et d’exploitation
-- Scripting pour l'industrialisation des configurations : création des serveurs, pool de connexion, arrêt/démarrage…
-- Support niveau 3
-
-**Environnement :** JEE 5,  Struts,  WSAD/RAD, WebSphere 5.1, Jonas 5, Oracle 9i, DB2, Solaris, Aix 3
-
-
-### Oct. 2006 -  Aout 2007 : Chef d’équipe et Architecte logiciel – NSI V2/SFR
-
-**Synthèse :** Refonte de la plate forme d'activation de services de SFR-SI
-
-**Rôle :** Chef d'équipe et architecture logicielle
+**Rôle :** Ingénieur études et développement, puis chef d’équipe / architecte logiciel
 
 **Réalisations :**
 
-- Encadrement et suivi de l’équipe (4 personnes)
-- Mise en place d’une architecture SOA (Bus Mule)
-- conception du progiciel
-- Rédaction du dossier de conception/architecture
-- Mise en place des normes et standards de développement
-- Intégration
-- Déploiement des applications JAVA/J2EE sur les différentes plates-formes
-  (Intégration, recettes et production)
-- Rédaction des documents/scripts d’installation pour la production
-- Test de charge et optimisation des serveurs
+- Conception et développement d’applications Java/JEE : architecture logicielle, UML, dossiers de conception et standards de développement.
+- Encadrement d’équipes techniques (4 à 6 personnes), chiffrage, répartition des tâches et accompagnement des développeurs.
+- Conception d’architectures SOA et intégration avec Mule ESB et MQSeries.
+- Intégration, migrations applicatives, tests de validation et industrialisation des environnements.
+- Tests de charge, tuning JVM et optimisation des performances applicatives.
+- Principales missions : Orange (encaissement PAID, portail flotte), SFR (activation de services), EDF (PICTREL).
 
-**Environnement :** J2EE,  Struts, Php, Eclipse, Oracle 9i, Weblogic 8.1, MQSeries,  Mule ESB, Hibernate, Spring, JMeter, Rational Rose, Aix 3,
-
-
-### Fév. 2006 -  Sep 2006 : Chef d’équipe et Architecte logiciel – SIE PAID/Orange
-
-**Synthèse :** Harmonisation des systèmes d'encaissement de l'ensemble des filiales de France Télécom.
-
-**Rôle :** Chef d'équipe et architecture logicielle
-
-**Réalisations :**
-
-- Mise en place de l’architecture
-- Suivi et formation de l'équipe (6 personnes)
-- Chiffrage et distribution de tâches
-- Mise en place du dossier de conception UML (sous Rational Rose)
-- Reverse-engineering
-- Normalisation des environnements de développement :
-  •  Rédaction d’un document d’installation
-  •  Mise en place des tests Juint
-  •  Vérification des normes de développement
-  •  Conception UML (Rational Rose)
-- Migration du WebSphere v5 à v6
-- Intégration
-- Tests de validation
-
-**Environnement :** J2EE, WebSphere v5 et v5  , MQSeries , Oracle 9i, WSAD/RAD, Rational Rose, UML, Solaris
-
-
-### Nov. 2005 -   Janv. 2006 : Ingénieur d’Etude – PICTREL/EDF
-
-**Synthèse :** Refonte des processus « petites interventions » clientèle
-
-**Rôle :** Expert technique
-
-**Réalisations :**
-
-- Expertise environnement J2EE (pour Tuning des performances du système PICTREL)
-- Mise en place des benchs qui simulent les pics d’activités du système PICTREL et détermination des différents indicateurs à  surveiller pendants les tirs des tests de charges.
-  Administration et tuning :
-- des serveurs Solaris et Aix (tuning des performances)
-- de Weblogic et de la JVM (configuration et tuning)
-- d’Oracle (optimisation des requêtes, configuration, utilisation
-  des statspack, de tkProf,…)
-  Test de charge du Portail (partie web) à l’aide de OpenSTA
-  Assistance sur l’architecture J2EE
-
-**Environnement :** JAVA/J2EE, Weblogic 8.1, Oracle 9i, OpenSTA, Hpjmeter,  PSmeter,JProfiler, Statspack, TkProf, Solaris, Aix
+**Environnement :** Java/JEE, Struts, Spring, Hibernate, UML, SOA, Mule ESB, WebSphere, WebLogic, MQSeries, Oracle, DB2, JMeter, Rational Rose, Linux, Solaris, AIX
 
 
 ### Déc. 2004 – Oct. 2005 : Ingénieur d’Etude – MPG/Pages Jaunes
