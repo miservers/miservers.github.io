@@ -8,272 +8,102 @@ has_toc: true
 
 # Zabbix
 
-**Objectif :** superviser un processus `httpd` sur RHEL et `apache2` sur Ubuntu avec **un seul template**, des macros surchargeables et une alerte anti-faux positifs. Exemples applicables à Zabbix 7.x/8.x (interface selon version).
+Deux contrôles réutilisables : **présence d'Apache** et **disponibilité d'un endpoint /health**. Les seuils et les cibles sont paramétrés par macros, sans dupliquer les templates.
 
-## 1. Les objets Zabbix
+## Templates, items et macros
 
-| Objet | À quoi sert-il ? | Exemple |
+| Objet | Où ? | Usage |
 |:--|:--|:--|
-| **Host (hôte)** | Machine ou service réellement supervisé ; interface Agent, groupe, templates associés | `RHEL01` |
-| **Template** | Modèle réutilisable appliqué à un ou plusieurs hôtes | `Template HTTPD` |
-| **Item (élément)** | Collecte périodique d'une valeur | `proc.num[httpd]` |
-| **Trigger (déclencheur)** | Expression calculée à partir des items, crée un événement **PROBLEM/OK** | processus absent pendant 2 min |
-| **Macro utilisateur** | Paramètre configurable, utilisable dans les clés et seuils | `{$PROC.NAME}` |
-| **LLD / Discovery** | Découvre automatiquement des ressources et crée items/triggers depuis des prototypes | interfaces, systèmes de fichiers |
-| **Graph / Dashboard** | Affiche les métriques et leur évolution | nombre de processus |
-| **Action** | Envoie une notification ou exécute une opération lors d'un événement | email/astreinte ; **configurée côté Zabbix**, pas automatiquement par le template |
+| **Template** | Data collection → Templates | Définit items, triggers, macros par défaut, LLD, graphes |
+| **Host** | Data collection → Hosts | Interface de collecte, templates associés, macros surchargées |
+| **Item** | Template | Collecte une valeur à intervalle fixe |
+| **Trigger** | Template | Évalue les valeurs, produit PROBLEM / OK |
+| **Action** | Alerts → Actions | Route les événements vers les destinataires |
+| **Agent** | Serveur Linux | Exécute les clés d'items (ex. `proc.num[]`) |
 
-Un **template ne supervise rien tout seul** : il doit être associé à un **host** doté du moyen de collecte approprié.
+Un template seul ne collecte rien : il s'applique à un host. Pour un item **Zabbix agent passif**, Zabbix Server/Proxy interroge l'agent ; un **Web Scenario** est exécuté côté Server/Proxy, sans agent Linux.
 
-![Architecture : template, serveur Zabbix et deux hôtes Linux](/docs/images/zabbix/template-host-flow.svg)
+![Template, Zabbix Server et hôtes Linux](/docs/images/zabbix/template-host-flow.svg)
 
-### Qui fait quoi, à quel niveau ?
+### Précédence des macros utilisateur
 
-| Niveau | Définition / exécution |
-|:--|:--|
-| **Template** | Item, trigger, valeurs par défaut des macros, discovery, graphiques |
-| **Host** | Adresse/interface Agent, liaison au template, **surcharge** des macros |
-| **Zabbix Server / Proxy** | Résolution des macros, orchestration des contrôles passifs, réception des valeurs ; le Server évalue les triggers |
-| **Zabbix Agent sur Linux** | Exécute `proc.num[httpd]` et renvoie le nombre de processus |
-| **Global Zabbix** | Macros globales et actions communes |
+**Host → template directement lié → templates hérités (par profondeur) → Global.**
 
-> **Mode de collecte de cet exemple :** item `Zabbix agent` **passif**. En mode actif, l'agent collecte et envoie les valeurs ; le schéma de transport change, pas le principe des macros.
+![Précédence des macros Zabbix](/docs/images/zabbix/macro-precedence.svg)
 
-## 2. Créer le template HTTPD
+À profondeur égale, si plusieurs templates définissent la même macro, **le plus petit ID de template gagne**. Éviter ces collisions.
 
-Dans **Data collection → Templates → Create template** :
+Pour contrôler la valeur appliquée : **Data collection → Hosts → Macros → Inherited and host macros**.
 
-- **Template name** : `Template HTTPD`
-- **Template group** : groupe de templates existant (ex. `Templates/Applications`)
+Autres syntaxes à connaître : `{HOST.NAME}` (macro prédéfinie), `{#FSNAME}` (LLD), `{$FS.PFREE.MIN.CRIT:"/"}` (macro utilisateur avec contexte).
 
-### Macros — onglet « Macros » du template
+## 1. Présence du processus HTTPD
 
-| Macro | Valeur par défaut | Rôle |
+Créer **`Template HTTPD`**.
+
+| Niveau | Paramètre | Valeur |
 |:--|:--|:--|
-| `{$PROC.NAME}` | `httpd` | Nom du processus Linux |
-| `{$PROC.MIN}` | `1` | Minimum attendu avant alerte |
+| Template / Macros | `{$PROC.NAME}` | `httpd` |
+| Template / Macros | `{$PROC.MIN}` | `1` |
+| Template / Items | Name | `HTTPD: Process count` |
+| | Type / Key | `Zabbix agent` / `proc.num[{$PROC.NAME}]` |
+| | Interval / Type of information | `30s` / `Numeric (unsigned)` |
+| Template / Triggers | Name / Severity | `HTTPD: Process is not running` / `High` |
 
-Les valeurs du template servent de **défaut**, pas de valeurs figées.
-
-### Item — dans « Items → Create item »
-
-| Champ | Valeur |
-|:--|:--|
-| **Name** | `HTTPD: Process count` |
-| **Type** | `Zabbix agent` |
-| **Key** | `proc.num[{$PROC.NAME}]` |
-| **Type of information** | `Numeric (unsigned)` |
-| **Update interval** | `30s` |
-| **Enabled** | Oui |
-
-Syntaxe exacte de la clé :
-
-~~~text
-proc.num[<name>,<user>,<state>,<cmdline>,<zone>]
-~~~
-
-`proc.num[httpd]` compte tous les processus dont le **nom** est `httpd`, tous utilisateurs et états confondus. Un résultat `0` signifie **aucun processus trouvé**, `5` signifie **cinq processus** (Apache peut avoir un parent et plusieurs workers).
-
-La macro est résolue par **Zabbix**, pas par une variable d'environnement du serveur Linux :
-
-~~~text
-Template : proc.num[{$PROC.NAME}]
-RHEL01   : {$PROC.NAME} = httpd   -> proc.num[httpd]
-UBUNTU01 : {$PROC.NAME} = apache2 -> proc.num[apache2]
-~~~
-
-### Trigger — dans « Triggers → Create trigger »
-
-**Name :** `HTTPD: Process is not running`  
-**Severity :** `High` (à adapter à l'impact du service)
+**Trigger — processus absent pendant les contrôles des 2 dernières minutes :**
 
 ~~~zabbix
 max(/Template HTTPD/proc.num[{$PROC.NAME}],2m)<{$PROC.MIN}
 ~~~
 
-Avec `{$PROC.MIN}=1`, l'alerte apparaît si **la valeur maximale** du nombre de processus durant les deux dernières minutes reste **à 0**.
+`proc.num[]` compte les processus (pas le service systemd). Apache peut avoir plusieurs workers : `5` n'est pas une anomalie. Pour une détection immédiate, utiliser `last()` plutôt que `max()`.
 
-Comparaison :
+![Détection d'absence du processus dans le temps](/docs/images/zabbix/trigger-timeline.svg)
 
-~~~zabbix
-# Détection immédiate (plus sensible aux redémarrages)
-last(/Template HTTPD/proc.num[{$PROC.NAME}])<{$PROC.MIN}
+**Surcharge sur les hosts :**
 
-# Détection persistante (recommandée ici)
-max(/Template HTTPD/proc.num[{$PROC.NAME}],2m)<{$PROC.MIN}
-~~~
-
-![Chronologie d'un arrêt d'Apache et évaluation du trigger après deux minutes](/docs/images/zabbix/trigger-timeline.svg)
-
-> **Attention :** sans valeurs reçues, un `max()` ne prouve pas que le processus est arrêté. Surveiller séparément la perte de données de l'agent.
-
-## 3. Associer le template aux hôtes et surcharger la macro
-
-Dans **Data collection → Hosts**, ouvrir le host, associer `Template HTTPD` dans **Templates** puis vérifier **Macros**.
-
-| Host | Macro `{$PROC.NAME}` au niveau Host | Valeur effective | Clé interrogée |
-|:--|:--|:--|:--|
-| `RHEL01` | non définie | `httpd` (héritée du template) | `proc.num[httpd]` |
-| `UBUNTU01` | `apache2` | `apache2` (surcharge) | `proc.num[apache2]` |
-| `RHEL02` | non définie | `httpd` (héritée du template) | `proc.num[httpd]` |
-
-**Ne pas dupliquer le template pour changer un nom de processus** : définir la macro sur le host concerné.
-
-## 4. Précédence des macros : qui gagne ?
-
-Zabbix recherche une macro utilisateur `{$MACRO}` dans cet ordre :
-
-1. **Host** — priorité la plus haute.
-2. **Templates directement liés au host** — profondeur 1.
-3. **Templates hérités par ces templates** — profondeur 2, puis 3, etc.
-4. **Global** — priorité la plus basse.
-
-![Ordre de résolution des macros Zabbix](/docs/images/zabbix/macro-precedence.svg)
-
-**Conflit important :** si deux templates **au même niveau** définissent la même macro, **la valeur du template ayant le plus petit ID Zabbix est retenue**. Ce n'est ni l'ordre d'affichage ni l'ordre d'association : éviter cette collision.
-
-Exemple :
-
-| Niveau | `{$PROC.NAME}` |
-|:--|:--|
-| Host `RHEL01` | `httpd` |
-| Template directement lié | `apache2` |
-| Template ancêtre | `nginx` |
-| Global | `java` |
-| **Valeur effective** | **`httpd`** |
-
-Si la macro n'existe pas au niveau Host, Zabbix descend dans l'héritage, puis cherche au niveau global. **Si elle n'existe nulle part, elle ne sera pas résolue.**
-
-**Vérifier la valeur réelle :** **Data collection → Hosts → [hôte] → Macros → Inherited and host macros**.
-
-### Autres familles de macros
-
-| Catégorie | Syntaxe | Exemple d'usage |
+| Host | `{$PROC.NAME}` effectif | Item évalué |
 |:--|:--|:--|
-| **Utilisateur** | `{$PROC.NAME}` | paramètre modifiable |
-| **Prédéfinie** | `{HOST.NAME}` | afficher le nom d'hôte dans une alerte |
-| **LLD** | `{#FSNAME}` | nom de partition découvert automatiquement |
-| **Utilisateur avec contexte** | `{$FS.PFREE.MIN.CRIT:"/"}` | seuil adapté à la partition `/` |
+| RHEL01 | `httpd` (template) | `proc.num[httpd]` |
+| UBUNTU01 | `apache2` (host) | `proc.num[apache2]` |
 
-Une **macro LLD** vient d'une règle de découverte ; elle n'est pas la même chose qu'une macro utilisateur à surcharger sur un host.
-
-## 5. Tester réellement la supervision
-
-### Côté Linux
+Vérification sur Linux :
 
 ~~~bash
-# Nom réel du processus, processus Apache visibles
 ps -eo pid,comm,args | grep -E '[h]ttpd|[a]pache2'
-
-# Service RHEL ou Ubuntu, selon l'OS
-systemctl status httpd
-systemctl status apache2
-
-# Tester l'item sur le host où tourne l'agent
-zabbix_agentd -t 'proc.num[httpd]'
-# ou Agent 2
-zabbix_agent2 -t 'proc.num[httpd]'
-
-# Exemple sous Ubuntu
-zabbix_agent2 -t 'proc.num[apache2]'
+zabbix_agent2 -t 'proc.num[httpd]'   # RHEL
+zabbix_agent2 -t 'proc.num[apache2]' # Ubuntu
 ~~~
 
-**Résultat attendu :** un entier `>= 1` si Apache tourne. Pour un item passif, contrôler aussi la connectivité **Zabbix Server/Proxy → Agent TCP 10050** et la configuration `Server=` / `ListenPort=`.
+**À surveiller séparément :** absence de données Agent (l'absence de mesures n'est pas un arrêt d'Apache). Exemple :
 
-### Côté Zabbix
-
-1. **Monitoring → Latest data** : filtrer le host, chercher `HTTPD: Process count`. Confirmer des valeurs récentes.
-2. **Data collection → Hosts → Items** : consulter l'état de l'item ; lancer **Test** ou **Execute now** si disponible.
-3. **Host → Macros → Inherited and host macros** : vérifier le nom de processus **effectif**.
-4. **Monitoring → Problems** : constater l'événement après absence persistante.
-5. Tester en **recette** (arrêt/redémarrage contrôlé d'Apache) avant d'activer les notifications de production.
-
-### Diagnostics rapides
-
-| Symptôme | Vérification |
-|:--|:--|
-| `proc.num` renvoie toujours `0` | Nom réel (`httpd` vs `apache2`) ; utilisateur ; commande `ps` |
-| Item `Not supported` | Clé, agent/version, paramètres, logs Agent |
-| Pas de valeurs | Agent actif, port 10050, proxy, pare-feu, interface Host |
-| Alerte jamais déclenchée | Macro héritée, fenêtre 2 min, données récentes, trigger actif |
-| Alerte après chaque restart | Garder `max(...,2m)` ; ajuster la fenêtre |
-| Apache présent mais HTTP indisponible | Ajouter une sonde HTTP : présence du processus **≠** disponibilité applicative |
-
-### Compléter la supervision pour la production
-
-- **Perte de collecte** : un trigger distinct, par exemple `nodata(/Template HTTPD/proc.num[{$PROC.NAME}],3m)=1`, pour distinguer **absence de données** et **absence de processus**.
-- **Disponibilité HTTP** : web scenario/HTTP Agent sur une URL de santé réelle, avec contrôle du code de réponse.
-- **Notification** : une **Action** côté Zabbix routant le trigger vers le bon groupe d'astreinte ; éviter d'envoyer une alerte critique pour chaque redémarrage technique prévu.
-
-## 6. Fiche récapitulative
-
-~~~text
-TEMPLATE : Template HTTPD
-  macros   {$PROC.NAME} = httpd ; {$PROC.MIN} = 1
-  item     proc.num[{$PROC.NAME}] ; Zabbix agent ; 30s
-  trigger  max(/Template HTTPD/proc.num[{$PROC.NAME}],2m)<{$PROC.MIN}
-
-HOST RHEL01
-  template = Template HTTPD
-  -> proc.num[httpd]
-
-HOST UBUNTU01
-  template = Template HTTPD
-  macro {$PROC.NAME} = apache2
-  -> proc.num[apache2]
-
-PRÉCÉDENCE
-  Host > templates directs > templates hérités (par profondeur) > Global
-  Ex aequo entre templates au même niveau : plus petit ID
+~~~zabbix
+nodata(/Template HTTPD/proc.num[{$PROC.NAME}],3m)=1
 ~~~
 
-## 7. Superviser une URL `/health` (Web Scenario)
+## 2. Disponibilité HTTP /actuator/health
 
-**Cas pratique :** Spring Boot Actuator, URL différente pour INT / REC / PROD. Le contrôle est effectué **depuis Zabbix Server ou Zabbix Proxy** (et non depuis l'agent Linux).
+Créer **`Template HTTP Health`** puis **Web → Create web scenario**. Ce contrôle part du **Zabbix Server/Proxy**, pas de la machine applicative.
 
-~~~text
-GET https://monapp.example.com/actuator/health
-HTTP/1.1 200 OK
+![Web Scenario : Zabbix vers Spring Boot](/docs/images/zabbix/http-health-flow.svg)
 
-{"status":"UP"}
-~~~
-
-![Supervision HTTP health : template, Zabbix et endpoint Spring Boot](/docs/images/zabbix/http-health-flow.svg)
-
-### Niveau Template : macros et scénario
-
-Créer le template **`Template HTTP Health`** depuis **Data collection → Templates**.
-
-| Élément | Paramètre | Valeur |
+| Niveau | Paramètre | Valeur |
 |:--|:--|:--|
-| **Macro (template)** | `{$HEALTH.URL}` | `https://monapp.example.com/actuator/health` |
-| **Web scenario** | Name | `Application Health` |
-| | Update interval | `1m` |
-| | Attempts | `1` |
-| **Step** | Name | `GET health` |
-| | URL | `{$HEALTH.URL}` |
-| | Timeout | `5s` |
+| Template / Macros | `{$HEALTH.URL}` | `https://monapp.example.com/actuator/health` |
+| Web Scenario | Name | `Application Health` |
+| | Update interval / Attempts | **`1m` / `1`** |
+| Step | Name | `GET health` |
+| | URL / Timeout | `{$HEALTH.URL}` / `5s` |
 | | Required status codes | `200` |
 | | Required string (regex) | `"status"\s*:\s*"UP"` |
 
-Créer le scénario depuis **Data collection → Templates → Template HTTP Health → Web → Create web scenario**, puis ajouter le step. L'expression régulière cherche le statut `UP` malgré d'éventuels espaces dans le JSON.
+Un HTTP 200 avec `"status":"DOWN"` reste **KO**.
 
-**Condition de succès :** la réponse a le code HTTP **200** **et** contient la chaîne attendue. Un HTTP 200 avec `{"status":"DOWN"}` fait échouer le step.
+L'item de décision est `web.test.fail[Application Health]` : **0 = OK**, **> 0 = numéro de l'étape en échec**.
 
-### Niveau Template : items automatiques et triggers
+### Stratégie d'alerte
 
-Le Web Scenario crée automatiquement ces items :
-
-| Item | Rôle |
-|:--|:--|
-| `web.test.fail[Application Health]` | `0` : scénario réussi ; valeur positive : numéro du step échoué |
-| `web.test.rspcode[Application Health,GET health]` | Dernier code HTTP obtenu |
-| `web.test.time[Application Health,GET health,resp]` | Temps de réponse en secondes |
-| `web.test.error[Application Health]` | Message d'erreur du dernier scénario |
-
-### Triggers : 5 min KO, puis 2 contrôles OK
-
-**PROBLEM — 6 échecs consécutifs, soit 5 minutes entre le premier et le sixième relevé** (avec un contrôle toutes les minutes) :
+**PROBLEM : six échecs consécutifs.** À un contrôle par minute, ils couvrent cinq minutes entre le premier et le dernier relevé.
 
 ~~~zabbix
 count(/Template HTTP Health/web.test.fail[Application Health],#6)=6
@@ -281,81 +111,70 @@ and
 min(/Template HTTP Health/web.test.fail[Application Health],#6)>0
 ~~~
 
-- `count(...,#6)=6` : attendre **au moins 6 mesures** ; évite une alerte dès le premier KO après création de l'item.
-- `min(...,#6)>0` : **les 6 dernières mesures sont toutes KO** (un seul OK, valeur `0`, empêche l'alerte).
-- `Attempts = 1` : pas de tentative supplémentaire dans le même scénario. La **fréquence reste 1m**.
-
-**RECOVERY — 2 succès consécutifs :**
-
-Dans le trigger, choisir **OK event generation → Recovery expression** et saisir :
+**RECOVERY : deux contrôles OK consécutifs.** Régler **OK event generation → Recovery expression** :
 
 ~~~zabbix
 max(/Template HTTP Health/web.test.fail[Application Health],#2)=0
 ~~~
 
-`max(...,#2)=0` signifie que **les 2 dernières mesures sont OK**. Zabbix clôture l'incident quand **l'expression PROBLEM est fausse ET l'expression RECOVERY est vraie**.
+Le retour à OK nécessite que l'expression PROBLEM soit fausse **et** l'expression RECOVERY vraie.
 
-> **Attention :** `#6` signifie 6 valeurs reçues, pas une durée garantie. Si des collectes manquent ou sont retardées, les six mesures peuvent couvrir plus de 5 minutes. Superviser la collecte avec un trigger `nodata()` distinct.
+**Perte de collecte (trigger distinct) :**
 
-### Comprendre les paramètres de min() et max()
+~~~zabbix
+nodata(/Template HTTP Health/web.test.fail[Application Health],3m)=1
+~~~
+
+> `#6` désigne **six valeurs**, pas strictement cinq minutes : un retard de collecte décale l'alerte. `count(...,#6)=6` évite un déclenchement dès les premiers échantillons après création de l'item.
+
+**Par environnement :** associer le même template aux hosts `APP-INT`, `APP-REC` et `APP-PROD` ; surcharger seulement `{$HEALTH.URL}` sur chaque host.
+
+Autres métriques issues du scénario :
+
+| Item | Usage |
+|:--|:--|
+| `web.test.rspcode[Application Health,GET health]` | Code HTTP |
+| `web.test.time[Application Health,GET health,resp]` | Temps de réponse (s) |
+| `web.test.error[Application Health]` | Dernière erreur |
+
+Pour la latence (exemple, moyenne > 2 s sur 5 min) :
+
+~~~zabbix
+avg(/Template HTTP Health/web.test.time[Application Health,GET health,resp],5m)>2
+~~~
+
+Si l'objectif est d'extraire `db`, `redis` ou `diskSpace` du JSON, préférer un **HTTP Agent** avec preprocessing JSONPath.
+
+## 3. Rappel sur min(), max() et leurs paramètres
 
 ~~~text
 min(/host/item,period[:time_shift])
 max(/host/item,period[:time_shift])
 ~~~
 
-| Paramètre | Rôle | Exemple |
-|:--|:--|:--|
-| `/host/item` | Hôte (ou template) et clé de l'item | `/Template HTTP Health/web.test.fail[Application Health]` |
-| `period` | Période réelle ou nombre d'échantillons | `5m` ou `#6` |
-| `:time_shift` | Décalage temporel facultatif **dans le 2e argument** | `5m:now-1h` |
-
-| Expression | Lecture |
+| Expression | Signification |
 |:--|:--|
-| `min(...,5m)` | Plus petite valeur **reçue dans les 5 dernières minutes** |
-| `min(...,#6)` | Plus petite des **6 dernières valeurs** |
-| `max(...,#2)` | Plus grande des **2 dernières valeurs** |
-| `min(...,5m:now-1h)` | Minimum sur 5 min **il y a une heure** |
+| `min(...,5m)` | Minimum des valeurs collectées durant les 5 dernières minutes |
+| `min(...,#6)` | Minimum des 6 dernières valeurs |
+| `max(...,#2)` | Maximum des 2 dernières valeurs |
+| `min(...,5m:now-1h)` | Minimum sur 5 minutes, une heure dans le passé |
 
-Exemple : valeurs `1, 1, 0, 1, 1` → `min = 0` (au moins un OK), `max = 1` (au moins un KO).
+Pour `web.test.fail` : **`min > 0` = tous KO** ; **`max = 0` = tous OK**. Le décalage `:time_shift` fait partie du **deuxième paramètre**, pas d'un troisième argument.
 
-**Trigger — réponse lente (moyenne > 2 s sur 5 min) :**
+## 4. Vérifications de production
 
-~~~zabbix
-avg(/Template HTTP Health/web.test.time[Application Health,GET health,resp],5m)>2
-~~~
+- **Latest data** : valeurs et fréquence réellement reçues ; **Problems** : événements et récupération.
+- **Macros héritées** : contrôler la valeur effective sur le host.
+- **HTTP** : faire un `curl -i --max-time 5 <URL>` depuis le **Zabbix Server/Proxy** (DNS, TLS, routage, proxy, authentification).
+- **Agent passif** : vérifier connectivité TCP 10050, `Server=` et logs de l'agent.
+- **Notifications** : vérifier les Actions et tester l'arrêt contrôlé en recette.
 
-### Niveau Host : association et surcharge
+## Références
 
-| Host Zabbix | Macro `{$HEALTH.URL}` définie sur le Host |
-|:--|:--|
-| `APP-INT` | `https://app-int.example.com/actuator/health` |
-| `APP-REC` | `https://app-rec.example.com/actuator/health` |
-| `APP-PROD` | `https://app.example.com/actuator/health` |
-
-Associer **`Template HTTP Health`** aux hôtes. La macro **Host** est prioritaire sur celle du template : **un seul template suffit** pour les trois environnements.
-
-### Contrôles de production
-
-- Depuis le **Zabbix Server/Proxy**, tester `curl -i --max-time 5 https://.../actuator/health` (DNS, routage, proxy sortant, TLS et authentification si nécessaire).
-- Vérifier le résultat dans **Monitoring → Latest data**, puis **Monitoring → Problems**.
-- Créer une alerte **perte de supervision** distincte après **3 minutes sans donnée** : `nodata(/Template HTTP Health/web.test.fail[Application Health],3m)=1`. Ne pas assimiler une absence de mesures à un HTTP KO.
-- Pour détailler des composants comme `db`, `redis` ou `diskSpace`, préférer **HTTP Agent + JSONPath** à un simple contrôle global `UP`.
-
-**Choix :** **Web Scenario** pour disponibilité / code HTTP / latence ; **HTTP Agent** pour exploiter le JSON comme métriques indépendantes.
-
-## Références officielles
-
-- [Zabbix — Templates](https://www.zabbix.com/documentation/current/en/manual/config/templates)
-- [Zabbix — Création d'un template](https://www.zabbix.com/documentation/current/en/manual/config/templates/template)
-- [Zabbix — User macros : héritage, précédence et conflits](https://www.zabbix.com/documentation/current/en/manual/config/macros/user_macros)
-- [Zabbix — User macros avec contexte](https://www.zabbix.com/documentation/current/en/manual/config/macros/user_macros_context)
-- [Zabbix Agent — `proc.num[]`](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/zabbix_agent)
-- [Zabbix — Trigger expressions](https://www.zabbix.com/documentation/current/en/manual/config/triggers/expression)
-- [Zabbix — Configurer un host et ses macros](https://www.zabbix.com/documentation/current/en/manual/config/hosts/host)
-
-- [Zabbix — Web monitoring / Web scenarios](https://www.zabbix.com/documentation/current/en/manual/web_monitoring)
-- [Zabbix — Web monitoring items](https://www.zabbix.com/documentation/current/en/manual/web_monitoring/items)
-- [Zabbix — HTTP Agent](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/http)
-- [Zabbix — Aggregate functions : min(), max(), count()](https://www.zabbix.com/documentation/current/en/manual/config/triggers/expression/aggregate)
-- [Zabbix — Configuring a trigger : Recovery expression](https://www.zabbix.com/documentation/current/en/manual/config/triggers/trigger)
+- [Templates](https://www.zabbix.com/documentation/current/en/manual/config/templates)
+- [Macros utilisateur et priorité](https://www.zabbix.com/documentation/current/en/manual/config/macros/user_macros)
+- [Clés Zabbix Agent — proc.num](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/zabbix_agent)
+- [Web scenarios](https://www.zabbix.com/documentation/current/en/manual/web_monitoring)
+- [Métriques de Web Monitoring](https://www.zabbix.com/documentation/current/en/manual/web_monitoring/items)
+- [Expressions / fonctions historiques](https://www.zabbix.com/documentation/current/en/manual/config/triggers/expression)
+- [Triggers et Recovery expression](https://www.zabbix.com/documentation/current/en/manual/config/triggers/trigger)
