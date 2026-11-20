@@ -7,7 +7,7 @@ permalink: /cv/
 
 # Abderrahim RAHALI
 
-**Ingénieur de production senior — Kubernetes / OpenShift — DevOps & CI/CD — Expert middleware Java**
+**Ingénieur de production — Kubernetes / OpenShift — DevOps & CI/CD — Expert middleware Java**
 
 [**Télécharger le CV V2 (Word, version actuelle)**](/docs/files/CV_RAHALI_Abderrahim_V2.docx)  
 [**Télécharger le CV V1 Steria (Word, version précédente)**](/docs/files/CV_RAHALI_Abderrahim_V1_Steria.docx)  
