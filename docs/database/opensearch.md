@@ -41,8 +41,20 @@ Paramètres propres à chaque nœud :
 node.name: os-node1
 node.roles: [master, data, ingest]
 network.host: 10.0.0.11
-# os-node2 : mêmes rôles, node.name=os-node2, network.host=10.0.0.12
-# os-witness : node.roles=[master], node.name=os-witness, network.host=10.0.0.13
+~~~
+
+~~~yaml
+# os-node2
+node.name: os-node2
+node.roles: [master, data, ingest]
+network.host: 10.0.0.12
+~~~
+
+~~~yaml
+# os-witness
+node.name: os-witness
+node.roles: [master]
+network.host: 10.0.0.13
 ~~~
 
 **À prévoir :** TLS inter-nœuds (Security Plugin), TCP 9300, `number_of_replicas: 1` sur les index concernés. `cluster.initial_master_nodes` ne doit **pas** rester après le bootstrap.
@@ -56,7 +68,11 @@ GET /_cat/master?v
 GET /_cat/shards?v
 GET /_cat/indices?v
 GET /_cluster/allocation/explain
+GET /_nodes/stats/jvm,fs,process
+GET /_cat/thread_pool?v
 ~~~
+
+**Lecture :** `green` = primaires + réplicas alloués ; `yellow` = réplique manquante ; `red` = primaire indisponible. Un nœud témoin perdu laisse le quorum à 2/3 ; deux nœuds perdus : plus de majorité.
 
 ## Snapshots sur NFS
 
@@ -65,6 +81,19 @@ GET /_cluster/allocation/explain
 ### Repository
 
 Sur les nœuds autorisés, monter `nfs-backup:/exports/opensearch` sur `/mnt/opensearch-backup` (montage persistant, droits utilisateur `opensearch`). `path.repo` doit être configuré sur les trois nœuds et OpenSearch redémarré.
+
+Sur chaque data node :
+
+~~~bash
+findmnt /mnt/opensearch-backup
+df -hT /mnt/opensearch-backup
+sudo -u opensearch test -r /mnt/opensearch-backup
+sudo -u opensearch test -w /mnt/opensearch-backup
+# Contrôler également UID/GID et permissions côté serveur NFS
+id opensearch
+~~~
+
+**Attention :** ne pas tester l'écriture en modifiant manuellement les fichiers du repository. La validation OpenSearch se fait avec `_verify` et un snapshot de test.
 
 ~~~http
 PUT /_snapshot/backup_nfs?verify=false
@@ -129,6 +158,22 @@ GET /_cat/recovery?v
 
 **Attendu :** 1 document, `valeur: 123`. Utiliser d'autres noms si le test a déjà été exécuté.
 
+**Diagnostics en cas d'échec :**
+
+| Symptomatique | Vérifier |
+|:--|:--|
+| `repository_verification_exception` | NFS / permissions sur les nœuds master + data |
+| `repository_missing_exception` | Repository non enregistré / mauvais nom |
+| `snapshot_missing_exception` | Snapshot absent ou autre repository |
+| `PARTIAL` ou `FAILED` | `failures`, état des shards, logs du master |
+| `yellow` après restauration | Nombre de replicas et allocation sur les deux data nodes |
+
+~~~bash
+journalctl -u opensearch --since "30 minutes ago" --no-pager
+grep -Ei 'snapshot|repository|exception' /var/log/opensearch/opensearch.log | tail -40
+~~~
+
+
 **Limite :** réussite avec un data node élu master ≠ garantie quand le témoin devient master. Ne pas automatiser en production sans accès NFS correct sur le témoin.
 
 ## Sauvegarde quotidienne : Bash + cron
@@ -175,6 +220,14 @@ api "$API/_snapshot/$REPO/_all" |
 
 Authentification `/etc/opensearch/snapshot.netrc` : `machine os-node1.example.local`, `login snapshot_service`, `password ...`. **Permissions 600**, compte dédié, TLS vérifié. Ne pas stocker de secret dans Git.
 
+~~~text
+machine os-node1.example.local
+login snapshot_service
+password MOT_DE_PASSE_A_REMPLACER
+~~~
+
+Les droits du compte doivent autoriser la lecture du cluster et les opérations du repository. Un `401/403` est un problème d'authentification ou d'autorisation, pas un problème NFS.
+
 ~~~bash
 sudo chmod 600 /etc/opensearch/snapshot.netrc
 sudo chmod 750 /usr/local/sbin/opensearch-snapshot.sh
@@ -211,6 +264,22 @@ Interroger les API toutes les 1–5 min depuis un **Machine Agent**, puis publie
 GET /_cluster/health
 GET /_snapshot/backup_nfs/_all
 ~~~
+
+**Exemple de métriques Bash** (à transmettre au Machine Agent) :
+
+~~~bash
+# "$health" est le JSON de GET /_cluster/health
+nodes=$(jq -r '.number_of_nodes' <<<"$health")
+data=$(jq -r '.number_of_data_nodes' <<<"$health")
+status=$(jq -r '.status' <<<"$health")
+case "$status" in green) level=2;; yellow) level=1;; *) level=0;; esac
+
+echo "name=Custom Metrics|OpenSearch|Nodes,value=$nodes,aggregator=OBSERVATION,time-rollup=CURRENT,cluster-rollup=INDIVIDUAL"
+echo "name=Custom Metrics|OpenSearch|Data Nodes,value=$data,aggregator=OBSERVATION,time-rollup=CURRENT,cluster-rollup=INDIVIDUAL"
+echo "name=Custom Metrics|OpenSearch|Cluster Status,value=$level,aggregator=OBSERVATION,time-rollup=CURRENT,cluster-rollup=INDIVIDUAL"
+~~~
+
+Pour l'âge de sauvegarde : extraire le dernier `end_time_in_millis` d'un snapshot `auto-*` en état `SUCCESS`, puis calculer `(now - end_time)/60` en minutes. Publier aussi une valeur `API Up` (0/1). Ajouter une alerte **absence de données Machine Agent** : un script arrêté ne doit pas masquer un incident.
 
 **Ne pas superviser uniquement le cron :** contrôler le dernier snapshot `SUCCESS`, l'échec de la collecte et l'âge de la dernière sauvegarde. Faire un test de restauration périodique.
 
