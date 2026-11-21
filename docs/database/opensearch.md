@@ -152,7 +152,7 @@ GET /_cat/shards?v
 
 ### 1. Préparer et déclarer le repository
 
-Monter **le même partage NFS au même chemin sur les 3 nœuds**, y compris os-witness : le master élu doit pouvoir accéder au dépôt. Les permissions doivent permettre à l'utilisateur OpenSearch de lire et écrire. Prévoir un montage persistant et un stockage de sauvegarde distinct du stockage des données.
+Pour un repository `fs` fiable, monter **le même partage NFS au même chemin sur les 3 nœuds**, y compris os-witness : le master élu doit pouvoir accéder au dépôt. Les permissions doivent permettre à l'utilisateur OpenSearch de lire et écrire. Prévoir un montage persistant et un stockage de sauvegarde distinct du stockage des données. **Cas actuel : le témoin n'a pas accès au NFS ; voir le test ci-dessous, uniquement pour diagnostiquer, pas pour valider une configuration HA de production.**
 
 Exemple de montage Linux (adapter l'export et /etc/fstab) :
 
@@ -212,6 +212,98 @@ GET /_cat/recovery?v
 ~~~
 
 Le snapshot doit contenir les index demandés. En recette, comparer aussi le nombre de documents et la santé des shards. Ne pas restaurer les index système en aveugle.
+
+## Test de fonctionnement : témoin sans accès NFS
+
+**Contexte :** os-node1 et os-node2 accèdent au NFS, mais **os-witness (master-éligible) n'y accède pas**. Les commandes suivantes s'exécutent dans OpenSearch Dashboards / Dev Tools. Tester sur un **index dédié**, sans toucher aux données applicatives. `verify=false` **ignore la vérification à l'enregistrement**, mais ne rend pas le dépôt utilisable par le témoin.
+
+### 1. Identifier le master et contrôler le repository
+
+~~~http
+GET /_cat/master?v
+GET /_cat/nodes?v
+GET /_snapshot/backup_nfs
+POST /_snapshot/backup_nfs/_verify
+~~~
+
+**Résultat attendu avec le témoin non monté :** `_verify` peut échouer (repository non accessible sur tous les nœuds requis). Ne pas considérer `_verify` en échec comme un test réussi.
+
+Si le repository n'est **pas encore enregistré** et qu'on souhaite tester son enregistrement en contournant uniquement la vérification initiale :
+
+~~~http
+PUT /_snapshot/backup_nfs?verify=false
+{
+  "type": "fs",
+  "settings": {
+    "location": "/mnt/opensearch-backup",
+    "compress": true
+  }
+}
+~~~
+
+`path.repo: ["/mnt/opensearch-backup"]` doit être déclaré sur tous les nœuds master/data, y compris le témoin (redémarrage nécessaire). Le montage NFS, lui, reste absent sur le témoin dans **ce test de diagnostic**. Cela ne garantit pas la prise de snapshot.
+
+### 2. Index de test et contrôle des données
+
+~~~http
+PUT /test-snapshot
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  }
+}
+
+PUT /test-snapshot/_doc/1?refresh=true
+{
+  "message": "Test snapshot OpenSearch 1.3",
+  "valeur": 123
+}
+
+GET /test-snapshot/_count
+GET /_cat/shards/test-snapshot?v
+~~~
+
+Attendu : `count: 1` et primaire + réplica alloués aux deux nœuds data. Utiliser un autre suffixe si ces noms existent déjà.
+
+### 3. Snapshot et vérification du résultat
+
+~~~http
+PUT /_snapshot/backup_nfs/test-snapshot-001?wait_for_completion=true
+{
+  "indices": "test-snapshot",
+  "include_global_state": false,
+  "partial": false
+}
+
+GET /_snapshot/backup_nfs/test-snapshot-001
+GET /_snapshot/backup_nfs/test-snapshot-001/_status
+GET /_cat/snapshots/backup_nfs?v
+~~~
+
+Attendu en cas de réussite : `state: SUCCESS` et **0 shard en échec**. En cas d'erreur, lire `failures`, le statut du master et les logs OpenSearch. Un master élu sans accès NFS peut empêcher l'opération.
+
+### 4. Restaurer dans un autre index (sans écraser l'original)
+
+**Seulement si le snapshot est SUCCESS :**
+
+~~~http
+POST /_snapshot/backup_nfs/test-snapshot-001/_restore?wait_for_completion=true
+{
+  "indices": "test-snapshot",
+  "include_global_state": false,
+  "rename_pattern": "test-snapshot",
+  "rename_replacement": "test-snapshot-restore"
+}
+
+GET /test-snapshot-restore/_count
+GET /test-snapshot-restore/_doc/1
+GET /_cat/shards/test-snapshot-restore?v
+~~~
+
+Attendu : `count: 1`, document ID `1`, `valeur: 123`. Si la restauration est répétée, choisir un **nouveau nom de destination** pour éviter un conflit avec un index existant.
+
+**Interprétation :** une sauvegarde + restauration `SUCCESS` valide **ce test ponctuel** ; cela **ne valide pas** le fonctionnement après une élection du témoin comme master. **Pour des sauvegardes de production fiables, rendre le repository accessible à tous les nœuds master-éligibles et data.**
 
 ## Automatiser avec cron (OpenSearch 1.3)
 
