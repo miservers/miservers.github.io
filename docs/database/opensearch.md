@@ -10,7 +10,23 @@ has_toc: true
 
 **Chemins :** `/etc/opensearch` (config) · `/var/lib/opensearch` (data) · `/var/log/opensearch` (logs) · `/usr/share/opensearch` (binaires).
 
-**Notions :** *shard* = partition d'index ; *replica* = copie sur un autre data node ; *quorum* = majorité des nœuds éligibles au master.
+## Notions essentielles
+
+| Terme | Définition |
+|:--|:--|
+| **Document** | Enregistrement JSON identifié par un `_id`. |
+| **Index** | Ensemble logique de documents ; réparti en shards. |
+| **Primary shard** | Partition principale de l'index ; reçoit les écritures. |
+| **Replica shard** | Copie d'un primary, hébergée sur un autre data node ; disponibilité + lecture. |
+| **Data node** | Stocke les shards et traite les recherches/indexations. |
+| **Master élu** | Gère l'état du cluster : nœuds, index, allocation des shards. |
+| **Master-éligible** | Participe aux élections et peut devenir master (le témoin aussi). |
+| **Quorum** | Majorité des votants de la configuration électorale : ici **2 sur 3**. |
+| **Repository / Snapshot** | Emplacement des sauvegardes / sauvegarde ponctuelle des données et métadonnées sélectionnées. |
+
+**Exemple :** 1 primary + `number_of_replicas: 1` = **2 copies** du shard, placées sur les 2 data nodes. Le témoin ne stocke aucun shard. Une réplication **n'est pas une sauvegarde** : suppression ou corruption logique peut se répliquer.
+
+**Santé :** `green` = primaires + réplicas alloués ; `yellow` = au moins un réplica indisponible ; `red` = au moins un primary indisponible.
 
 ## Cluster : 2 data + 1 témoin
 
