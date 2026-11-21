@@ -1,6 +1,6 @@
 ---
 layout: default
-title: OpenSeaech
+title: OpenSearch
 parent: Data Base
 nav_order: 5
 ---
@@ -85,80 +85,247 @@ icl : ignore cluster name verif
   
 nhnv: no hostname verif
 
-### Configuration des Snapshots sur OpenSearch 1.3
+## Cluster OpenSearch 1.3 : 2 data + 1 témoin
 
-- Choisir un repository, Soit sur NFS,  S3(necessite un plugin), Ajouter dans `/etc/opensearch/opensearch.yml` :
+**Topologie :** os-node1 (10.0.0.11) et os-node2 (10.0.0.12) hébergent les données. os-witness (10.0.0.13) est dédié au rôle master. Les 3 participent aux élections : **quorum 2/3**. Ce n'est pas un témoin passif : il peut devenir le master élu.
 
-  ```yaml
-  path.repo: ["/mnt/snapshots"]
-  ```
+| Nœud | Rôles | Stockage de shards |
+|:--|:--|:--|
+| os-node1 | master, data, ingest | Oui |
+| os-node2 | master, data, ingest | Oui |
+| os-witness | master | Non |
 
-- Puis Redémarrer OpenSearch 
+**Commun aux trois nœuds** — /etc/opensearch/opensearch.yml :
 
-- Enregistrer le repository(une seule fois, depuis n'importe quel nœud):
+~~~yaml
+cluster.name: opensearch-prod
+discovery.seed_hosts:
+  - 10.0.0.11:9300
+  - 10.0.0.12:9300
+  - 10.0.0.13:9300
 
-  ```bash
-  curl -X PUT "localhost:9200/_snapshot/mon_repo" \
-    -H 'Content-Type: application/json' -d '{
-    "type": "fs",
-    "settings": {
-      "location": "/mnt/snapshots",
-      "compress": true
-    }
-  }'
-  ```
+# Seulement pour le tout premier bootstrap du cluster
+cluster.initial_master_nodes: [os-node1, os-node2, os-witness]
 
-- Créer un snapshot
+http.port: 9200
+transport.port: 9300
+path.repo: ["/mnt/opensearch-backup"]
+~~~
 
-  ```bash
-  curl -X PUT "localhost:9200/_snapshot/mon_repo/snapshot_01?wait_for_completion=true"
-  ```
+**Paramètres propres à chaque nœud** (à ajouter aux paramètres communs) :
 
+~~~yaml
+# os-node1
+node.name: os-node1
+node.roles: [master, data, ingest]
+network.host: 10.0.0.11
+~~~
 
-- Lister et restaurer
+~~~yaml
+# os-node2
+node.name: os-node2
+node.roles: [master, data, ingest]
+network.host: 10.0.0.12
+~~~
 
-  ```bash
-  # Lister tous les snapshots
-  curl -X GET "localhost:9200/_snapshot/mon_repo/_all"
-  
-  # Restaurer un snapshot
-  curl -X POST "localhost:9200/_snapshot/mon_repo/snapshot_01/_restore"
-  ```
+~~~yaml
+# os-witness
+node.name: os-witness
+node.roles: [master]
+network.host: 10.0.0.13
+~~~
 
----
+Configurer aussi le **TLS transport** et les certificats de nœuds (Security Plugin). Autoriser TCP/9300 entre les nœuds. Le témoin conserve l'état du cluster dans son répertoire data, mais aucun shard.
 
-- Automatiser avec cron (cron sur node-1 uniquement)
+**Après formation initiale du cluster, retirer cluster.initial_master_nodes** des configurations : ne jamais re-bootstrapper un cluster existant. Pour supporter la panne d'un data node, les index doivent avoir un primaire et au moins un réplica correctement alloué ; avec deux data nodes, vérifier que la réplication tient dans les ressources disponibles.
 
-  ```bash
-  crontab -e
-  # Snapshot quotidien à 2h00
-  0 2 * * * curl -X PUT "localhost:9200/_snapshot/mon_repo/snapshot_$(date +\%Y\%m\%d)?wait_for_completion=true"
-  ```
-  
-- Vérifications utiles
-  ```
-  # Vérifier l'état du cluster (depuis n'importe quel nœud)
-  curl -X GET "localhost:9200/_cluster/health?pretty"
-  # Liste des nœuds
-  curl -X GET "localhost:9200/_cat/nodes?v"
-  
-  # Nœud master élu
-  curl -X GET "localhost:9200/_cat/master?v"
-  
-  # État des shards
-  curl -X GET "localhost:9200/_cat/shards?v"
-  ```
+Contrôles via Dev Tools (ou requêtes HTTP authentifiées) :
 
-## Docs
+~~~http
+GET /_cat/nodes?v
+GET /_cat/master?v
+GET /_cluster/health?pretty
+GET /_cat/shards?v
+~~~
 
-- https://docs.opensearch.org/1.3/security/configuration/security-admin/
-- Troobleshooting: https://docs.opensearch.org/latest/troubleshoot/security-admin/
+## Snapshots NFS : dépôt, sauvegarde, restauration
 
+### 1. Préparer et déclarer le repository
 
+Monter **le même partage NFS au même chemin sur les 3 nœuds**, y compris os-witness : le master élu doit pouvoir accéder au dépôt. Les permissions doivent permettre à l'utilisateur OpenSearch de lire et écrire. Prévoir un montage persistant et un stockage de sauvegarde distinct du stockage des données.
 
+Exemple de montage Linux (adapter l'export et /etc/fstab) :
 
+~~~bash
+sudo mkdir -p /mnt/opensearch-backup
+sudo mount -t nfs4 nfs-backup:/exports/opensearch /mnt/opensearch-backup
+~~~
 
+Après configuration de path.repo et redémarrage OpenSearch sur chaque nœud, déclarer une seule fois le repository :
 
+~~~http
+PUT /_snapshot/backup_nfs
+{
+  "type": "fs",
+  "settings": {
+    "location": "/mnt/opensearch-backup",
+    "compress": true
+  }
+}
 
+POST /_snapshot/backup_nfs/_verify
+GET /_cat/repositories?v
+~~~
 
+La vérification doit retourner les nœuds participants ; sinon, contrôler montage, droits et connectivité.
 
+### 2. Snapshot manuel
+
+~~~http
+PUT /_snapshot/backup_nfs/manual-001?wait_for_completion=true
+{
+  "indices": "*",
+  "ignore_unavailable": false,
+  "include_global_state": false,
+  "partial": false
+}
+
+GET /_cat/snapshots/backup_nfs?v
+GET /_snapshot/backup_nfs/manual-001
+~~~
+
+Vérifier l'état **SUCCESS**. Les snapshots sont incrémentaux. L'exemple exclut l'état global ; prévoir séparément l'export des configurations et certificats nécessaires à une restauration complète.
+
+### 3. Tester une restauration sans écraser la source
+
+~~~http
+POST /_snapshot/backup_nfs/manual-001/_restore
+{
+  "indices": "logs-*",
+  "include_global_state": false,
+  "rename_pattern": "(.+)",
+  "rename_replacement": "restore-test-$1"
+}
+
+GET /_cat/indices/restore-test-*?v
+GET /_cat/recovery?v
+~~~
+
+Le snapshot doit contenir les index demandés. En recette, comparer aussi le nombre de documents et la santé des shards. Ne pas restaurer les index système en aveugle.
+
+## Automatiser avec cron (OpenSearch 1.3)
+
+**Politique de départ :** un snapshot chaque jour à 02h00, rétention 30 jours, nettoyage uniquement après un snapshot réussi, et un seul ordonnanceur actif. La fonctionnalité native Snapshot Management a été introduite en OpenSearch 2.1 : en 1.3, utiliser un cron externe.
+
+### Script complet
+
+Installer curl, jq, flock et l'outil GNU date. Placer le script dans **/usr/local/sbin/opensearch-snapshot.sh** sur un **seul** serveur d'administration capable d'accéder à l'API HTTPS (et non sur les trois nœuds).
+
+~~~bash
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+API="https://os-node1.example.local:9200"
+REPO="backup_nfs"
+PREFIX="auto-"
+RETENTION_DAYS=30
+CA="/etc/opensearch/certs/root-ca.pem"
+NETRC="/etc/opensearch/snapshot.netrc"
+
+SNAPSHOT="$(date -u +auto-%Y%m%dT%H%M%SZ)"
+
+api() {
+  curl -fsS --connect-timeout 10 --max-time 21600 \
+    --cacert "$CA" --netrc-file "$NETRC" "$@"
+}
+trap 'echo "$(date -Is) ERREUR ligne $LINENO" >&2' ERR
+
+echo "$(date -Is) Création du snapshot : $SNAPSHOT"
+
+response=$(api -X PUT -H 'Content-Type: application/json' \
+  -d '{"indices":"*","include_global_state":false,"partial":false}' \
+  "$API/_snapshot/$REPO/$SNAPSHOT?wait_for_completion=true")
+
+state=$(jq -r '.snapshot.state // "UNKNOWN"' <<<"$response")
+if [[ "$state" != "SUCCESS" ]]; then
+  echo "$(date -Is) ÉCHEC snapshot : $state" >&2
+  exit 1
+fi
+echo "$(date -Is) Snapshot SUCCESS : $SNAPSHOT"
+
+# Inventaire seulement après une sauvegarde réussie
+inventory=$(api "$API/_snapshot/$REPO/_all")
+cutoff=$(( $(date -u -d "$RETENTION_DAYS days ago" +%s) * 1000 ))
+
+# Ne supprimer que NOS snapshots, âgés de plus de N jours
+expired=$(jq -r --arg prefix "$PREFIX" --argjson cutoff "$cutoff" '
+  .snapshots[]
+  | select(.snapshot | startswith($prefix))
+  | select(.state == "SUCCESS")
+  | select(.start_time_in_millis < $cutoff)
+  | .snapshot
+' <<<"$inventory")
+
+while IFS= read -r old; do
+  [[ -n "$old" ]] || continue
+  echo "$(date -Is) Suppression de $old"
+  api -X DELETE "$API/_snapshot/$REPO/$old" >/dev/null
+done <<<"$expired"
+
+echo "$(date -Is) Sauvegarde terminée"
+~~~
+
+**Authentification :** créer /etc/opensearch/snapshot.netrc, uniquement lisible par le compte qui lance le cron :
+
+~~~text
+machine os-node1.example.local
+login snapshot_service
+password MOT_DE_PASSE_A_REMPLACER
+~~~
+
+~~~bash
+sudo chmod 600 /etc/opensearch/snapshot.netrc
+sudo chmod 750 /usr/local/sbin/opensearch-snapshot.sh
+~~~
+
+Le compte de service doit avoir les droits sur les API Snapshot ; adapter le certificat CA et le nom d'hôte à l'environnement réel. Ne jamais committer les vrais identifiants.
+
+### Crontab et contrôle
+
+Éditer la crontab **root sur un seul serveur** :
+
+~~~bash
+sudo crontab -e
+~~~
+
+~~~cron
+# Tous les jours à 02h00 (fuseau horaire du serveur)
+0 2 * * * /usr/bin/flock -n /run/lock/opensearch-snapshot.lock /usr/local/sbin/opensearch-snapshot.sh >> /var/log/opensearch-snapshot.log 2>&1
+~~~
+
+Le verrou flock empêche deux exécutions concurrentes **sur ce serveur**, mais pas sur plusieurs machines. Les caractères % restent dans le script (pas dans la ligne cron), et les noms de snapshots sont horodatés en UTC.
+
+~~~bash
+# Test manuel
+sudo /usr/local/sbin/opensearch-snapshot.sh
+
+# Vérifier le cron et les erreurs
+sudo tail -50 /var/log/opensearch-snapshot.log
+~~~
+
+~~~http
+GET /_cat/snapshots/backup_nfs?v
+GET /_snapshot/backup_nfs/_all
+GET /_cluster/health?pretty
+~~~
+
+**Exploitation :** alerter en cas de snapshot non SUCCESS ou d'absence de snapshot récent (ex. > 26 h), surveiller l'espace NFS, appliquer logrotate au log local et tester une restauration en recette régulièrement. La rétention s'applique uniquement aux snapshots auto- terminés en SUCCESS. Supprimer les snapshots avec l'API DELETE, jamais directement dans le NFS. Un cron local n'est pas hautement disponible : superviser aussi le serveur ordonnanceur.
+
+## Références
+
+- [OpenSearch 1.3 — création d'un cluster](https://eliatra.com/docs/1.3/tuning-your-cluster/)
+- [OpenSearch 1.3 — création de snapshot](https://eliatra.com/docs/1.3/api-reference/snapshots/create-snapshot/)
+- [OpenSearch 1.3 — suppression de snapshot](https://eliatra.com/docs/1.3/api-reference/snapshots/delete-snapshot/)
+- [OpenSearch — vérifier un repository](https://docs.opensearch.org/latest/api-reference/snapshots/verify-snapshot-repository/)
+- [OpenSearch — Snapshot Management disponible à partir de 2.1](https://opensearch.org/blog/snapshot-management/)
+- [OpenSearch 1.3 — outil Security Admin](https://docs.opensearch.org/1.3/security/configuration/security-admin/)
