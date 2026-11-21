@@ -203,7 +203,7 @@ filebeat.inputs:
     enabled: true
     paths:
       - /var/log/myapp/*.log
-    multiline.pattern: '^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}'
+    multiline.pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}'
     multiline.negate: true
     multiline.match: after
     multiline.max_lines: 100
