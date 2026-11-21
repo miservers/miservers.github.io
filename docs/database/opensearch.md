@@ -57,7 +57,7 @@ node.roles: [master]
 network.host: 10.0.0.13
 ~~~
 
-**À prévoir :** TLS inter-nœuds (Security Plugin), TCP 9300, `number_of_replicas: 1` sur les index concernés. `cluster.initial_master_nodes` ne doit **pas** rester après le bootstrap.
+**Prérequis :** TLS transport, TCP 9300, `number_of_replicas: 1`. Retirer `cluster.initial_master_nodes` après bootstrap.
 
 ### Diagnostic rapide (Dev Tools)
 
@@ -72,7 +72,7 @@ GET /_nodes/stats/jvm,fs,process
 GET /_cat/thread_pool?v
 ~~~
 
-**Lecture :** `green` = primaires + réplicas alloués ; `yellow` = réplique manquante ; `red` = primaire indisponible. Un nœud témoin perdu laisse le quorum à 2/3 ; deux nœuds perdus : plus de majorité.
+**États :** `green` = OK ; `yellow` = réplique manquante ; `red` = primaire manquant. Quorum : 2/3.
 
 ## Snapshots sur NFS
 
@@ -93,7 +93,7 @@ sudo -u opensearch test -w /mnt/opensearch-backup
 id opensearch
 ~~~
 
-**Attention :** ne pas tester l'écriture en modifiant manuellement les fichiers du repository. La validation OpenSearch se fait avec `_verify` et un snapshot de test.
+Ne pas modifier les fichiers du repository manuellement.
 
 ~~~http
 PUT /_snapshot/backup_nfs?verify=false
@@ -156,7 +156,7 @@ GET /test-snapshot-restore/_doc/1
 GET /_cat/recovery?v
 ~~~
 
-**Attendu :** 1 document, `valeur: 123`. Utiliser d'autres noms si le test a déjà été exécuté.
+**Attendu :** 1 document, `valeur: 123`. Adapter les noms si nécessaire.
 
 **Diagnostics en cas d'échec :**
 
@@ -226,7 +226,7 @@ login snapshot_service
 password MOT_DE_PASSE_A_REMPLACER
 ~~~
 
-Les droits du compte doivent autoriser la lecture du cluster et les opérations du repository. Un `401/403` est un problème d'authentification ou d'autorisation, pas un problème NFS.
+`401/403` : vérifier les droits du compte Snapshot.
 
 ~~~bash
 sudo chmod 600 /etc/opensearch/snapshot.netrc
@@ -279,7 +279,7 @@ echo "name=Custom Metrics|OpenSearch|Data Nodes,value=$data,aggregator=OBSERVATI
 echo "name=Custom Metrics|OpenSearch|Cluster Status,value=$level,aggregator=OBSERVATION,time-rollup=CURRENT,cluster-rollup=INDIVIDUAL"
 ~~~
 
-Pour l'âge de sauvegarde : extraire le dernier `end_time_in_millis` d'un snapshot `auto-*` en état `SUCCESS`, puis calculer `(now - end_time)/60` en minutes. Publier aussi une valeur `API Up` (0/1). Ajouter une alerte **absence de données Machine Agent** : un script arrêté ne doit pas masquer un incident.
+Snapshot : calculer `age_min=(now-end_time_in_millis/1000)/60` sur le dernier `auto-*` `SUCCESS`. Alerter aussi sur l'absence de métriques du Machine Agent.
 
 **Ne pas superviser uniquement le cron :** contrôler le dernier snapshot `SUCCESS`, l'échec de la collecte et l'âge de la dernière sauvegarde. Faire un test de restauration périodique.
 
