@@ -161,7 +161,56 @@ max(/host/item,period[:time_shift])
 
 Pour `web.test.fail` : **`min > 0` = tous KO** ; **`max = 0` = tous OK**. Le décalage `:time_shift` fait partie du **deuxième paramètre**, pas d'un troisième argument.
 
-## 4. Vérifications de production
+## 4. Fonctions de Trigger indispensables
+
+| Fonction | Rôle | Exemple |
+|:--|:--|:--|
+| `last()` | Dernière valeur reçue | `last(/srv/item)>90` |
+| `min()` | Plus petite valeur de la période | `min(/srv/item,5m)>90` : toutes les valeurs > 90 |
+| `max()` | Plus grande valeur de la période | `max(/srv/item,5m)=0` : toutes les valeurs = 0 |
+| `avg()` | Moyenne sur une période | `avg(/srv/item,5m)>80` |
+| `count()` | Nombre de valeurs, éventuellement filtrées | `count(/srv/item,#6)=6` : six échantillons disponibles |
+| `nodata()` | Absence de nouvelles données | `nodata(/srv/item,5m)=1` |
+
+**Lecture opérationnelle :** `last()` réagit immédiatement ; `min()` et `max()` imposent une condition sur une fenêtre ; `avg()` lisse les variations ; `count()` fiabilise le nombre d'échantillons.
+
+~~~zabbix
+# Processus absent sur toutes les mesures des 2 dernières minutes
+max(/Template HTTPD/proc.num[{$PROC.NAME}],2m)=0
+
+# Aucune mesure reçue depuis 3 minutes (alerte distincte)
+nodata(/Template HTTPD/proc.num[{$PROC.NAME}],3m)=1
+~~~
+
+**Attention :** une fonction calculée sur une fenêtre ne garantit pas un contrôle chaque minute. Associer `count(...,#N)` lorsqu'un nombre minimum de mesures est requis ; superviser `nodata()` séparément.
+
+## 5. Templates, macros et découverte automatique (LLD)
+
+- **Template** : centralise items, triggers et découvertes ; on l'associe à plusieurs hosts.
+- **Macro utilisateur** `{$PROC.NAME}` : paramètre réutilisable, surchargeable au niveau du host.
+- **LLD (Low-Level Discovery)** : découvre des ressources et instancie leurs *item prototypes* et *trigger prototypes* automatiquement.
+
+**Exemple de réutilisation** — le template `Template HTTPD` contient :
+
+~~~text
+Macro  {$PROC.NAME} = httpd
+Item   proc.num[{$PROC.NAME}]
+~~~
+
+Sur un host Ubuntu, définir `{$PROC.NAME}=apache2` : le même item supervisera `proc.num[apache2]`. Priorité des macros : **Host → Template direct → Templates hérités → Global** (voir le schéma plus haut).
+
+**Exemple LLD : découverte des systèmes de fichiers**
+
+~~~text
+Discovery rule : vfs.fs.discovery
+Macro LLD      : {#FSNAME}                 (/, /var, /home...)
+Item prototype : vfs.fs.size[{#FSNAME},pfree]
+~~~
+
+À chaque filesystem découvert, Zabbix crée un item de pourcentage libre ; un *trigger prototype* peut ouvrir une alerte si le seuil est franchi. La macro LLD `{#FSNAME}` représente la ressource découverte : elle est différente d'une macro utilisateur `{$...}`.
+
+Pour vérifier : **Data collection → Hosts → Discovery** (règles / prototypes) et **Monitoring → Latest data** (items créés).
+## 6. Vérifications de production
 
 - **Latest data** : valeurs et fréquence réellement reçues ; **Problems** : événements et récupération.
 - **Macros héritées** : contrôler la valeur effective sur le host.
