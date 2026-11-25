@@ -83,7 +83,7 @@ nodata(/Template HTTPD/proc.num[{$PROC.NAME}],3m)=1
 
 ## 2. Disponibilité HTTP /actuator/health
 
-Créer **`Template HTTP Health`** puis **Web → Create web scenario**. Ce contrôle part du **Zabbix Server/Proxy**, pas de la machine applicative.
+Dans **Data collection → Templates**, créer **`Template HTTP Health`** puis **Web → Create web scenario**. Ce contrôle part du **Zabbix Server/Proxy**, pas de la machine applicative.
 
 ![Web Scenario : Zabbix vers Spring Boot](/docs/images/zabbix/http-health-flow.svg)
 
@@ -96,14 +96,43 @@ Créer **`Template HTTP Health`** puis **Web → Create web scenario**. Ce contr
 | | URL / Timeout | `{$HEALTH.URL}` / `5s` |
 | | Required status codes | `200` |
 | | Required string (regex) | `"status"\s*:\s*"UP"` |
+| | Retrieve mode / Follow redirects | `Body` / Non |
+| Authentication (HTTPS) | SSL verify peer / SSL verify host | Oui / Oui |
 
 Un HTTP 200 avec `"status":"DOWN"` reste **KO**.
 
-L'item de décision est `web.test.fail[Application Health]` : **0 = OK**, **> 0 = numéro de l'étape en échec**.
+### Valeurs retournées par `web.test.fail`
+
+Zabbix génère automatiquement l'item `web.test.fail[Application Health]` (numérique non signé).
+
+| Valeur | Signification |
+|:--|:--|
+| `0` | Toutes les étapes ont réussi |
+| `1` | Échec de la première étape |
+| `2` | Échec de la deuxième étape |
+| `N` | Numéro de l'étape en échec (la première étape ayant échoué) |
+
+Pour ce scénario à une seule étape : **0 = OK**, **1 = KO** (timeout, DNS, TLS, code HTTP différent de 200 ou contenu attendu absent). Consulter `web.test.error[Application Health]` pour le détail de l'erreur.
 
 ### Stratégie d'alerte
 
-**PROBLEM : six échecs consécutifs.** À un contrôle par minute, ils couvrent cinq minutes entre le premier et le dernier relevé.
+Dans le template : **Triggers → Create trigger**. Nom : `Application: Healthcheck unavailable` ; sévérité : `High`.
+
+**Variante rapide : deux échecs consécutifs.**
+
+~~~zabbix
+min(/Template HTTP Health/web.test.fail[Application Health],#2)>0
+~~~
+
+`#2` = deux dernières valeurs, pas deux minutes. Ajouter `and count(/Template HTTP Health/web.test.fail[Application Health],#2)=2` pour exiger deux mesures disponibles dès la création de l'item. Avec **OK event generation → Expression**, le premier contrôle OK clôt l'alerte.
+
+| Valeurs successives (1 contrôle/min) | État |
+|:--|:--|
+| `0, 1` | OK |
+| `1, 1` | PROBLEM |
+| `1, 0` | OK |
+
+**Variante production : six échecs consécutifs.** À un contrôle par minute, ils couvrent cinq minutes entre le premier et le dernier relevé.
 
 ~~~zabbix
 count(/Template HTTP Health/web.test.fail[Application Health],#6)=6
